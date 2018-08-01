@@ -126,11 +126,6 @@ export default {
       }
     });
   },
-  // watch:{
-  //   clickLottery:function(){
-  //     this.loadCanvas();
-  //   }
-  // },
   methods: {
     clickToTheLottery() {
       this.clickLottery = true;
