@@ -1,6 +1,6 @@
 
 export const _check = {
-//校验手机号码的格式
+//校验手机号码的格式asdasdsa
   checkPhone:function (val) {
     console.log("校验手机号码")
     var myreg=/^[1][3,4,5,7,8][0-9]{9}$/;
