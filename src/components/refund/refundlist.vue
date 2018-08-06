@@ -2,11 +2,17 @@
 <div>
   <div class="refundlist" v-for="item in refund_list" :key="item">
     <div class="null_div"></div>
-      <p class="refund_time">{{item.goods_time}}</p>
+      <p class="refund_time">
+        <button class="_status">待收货</button>
+        <label class="_time">{{item.goods_time}}</label>
+      </p>
     <div class="refundlist_content">
       <img class="refund_img" :src="item.goods_img" alt="">
-      <p>{{item.goods_title}}</p>
-      <label class="num">x{{item.goods_count}}</label>
+      <p class="refund_de">{{item.goods_title}}</p>
+      <p class="refund_gui">
+        规格：盆
+        <label class="num">x{{item.goods_count}}</label>
+      </p>
     </div>
     <p class="refund_number">
       <label class="refund_font">订单号：</label>
@@ -18,22 +24,37 @@
       <label class="refund_money"><label class="refund_font">实付：</label><label class="real_money">￥{{item.goods_money}}</label></label>
     </p>
     <p class="refund_now">
-      <button v-on:click="gotodetail(item.goods_id)">申请退款</button>
+      <button class="refund_btn_one" v-on:click="gotocheck(item.goods_id)">确认收货</button>
+      <button class="refund_btn" v-on:click="gotodetail(item.goods_id)">申请退款</button>
     </p>
   </div>
 
-
+  <refund_dialog-view :checkStatus="checkStatus"></refund_dialog-view>
 </div>
 </template>
 
 <script>
+  import Vue from 'vue'
+  import refund_dialog from '../dialog/refund_dialog'
+  Vue.component('refund_dialog-view',refund_dialog)
     export default {
         name: "refundlist",
+      comments:{
+        refund_dialog
+      },
+        props:['refund_status'],
         data(){
           return{
-            refund_list:[]
+            refund_list:[],
+            checkStatus:''
           }
         },
+      watch:{
+        refund_status:function(newold,oldword){
+            console.log("新状态："+newold)
+            console.log("旧状态："+oldword)
+          }
+      },
       mounted(){
           this.refund_list = [
             {
@@ -68,11 +89,14 @@
             },
           ]
       },
-
       methods:{
         gotodetail:function (id) {
           console.log(id)
           this.$router.push('/refundindex/'+id)
+        },
+        gotocheck:function (id) {
+          console.log("id:"+id)
+          this.checkStatus = id
         }
       }
     }
@@ -80,29 +104,39 @@
 
 <style scoped>
   .num{
-    position: absolute;
-    right: 12px;
-    bottom: 12px;
     color: #999999;
+    font-size: 11px;
+    float: right;
   }
   .refund_now{
-    height: 35px;
-    line-height: 35px;
+    height: 49px;
+    line-height: 49px;
     padding-right: 12px;
   }
-  .refund_now button{
-    width: 70px;
-    height: 25px;
-    font-size: 10px;
-    border: 1px solid #ec414d;
-    background-color: white;
-    color: #ec414d;
+  .refund_btn{
+    width: 65px;
+    height: 28px;
+    font-size: 11px;
+    border: 1px solid #999999;
+    background-color: #ff9aff;
+    color: #333333;
     border-radius: 3px;
     float: right;
   }
+  .refund_btn_one{
+    width: 65px;
+    height: 28px;
+    font-size: 11px;
+    border: 1px solid #f10215;
+    background-color: #ff9aff;
+    color: #f10215;
+    border-radius: 3px;
+    margin-left: 10px;
+    float: right;
+  }
   .real_money{
-    color: #ec414d;
-    font-size: 13px;
+    color: #333333;
+    font-size: 14px;
   }
   .refund_font{
     font-size: 11px;
@@ -128,10 +162,24 @@
   .refund_time{
     text-align: left;
     margin: 0;
-    margin-left: 12px;
     font-size: 13px;
     height: 30px;
     line-height: 30px;
+  }
+  ._time{
+    float: right;
+    margin-right: 12px;
+  }
+  ._status{
+    height: 30px;
+    line-height: 30px;
+    font-size: 12px;
+    color: #f10215;
+    width: 82px;
+    text-align: center;
+    border: none;
+    border-right: 1px solid #eeeeee;
+    background-color: white;
   }
 .refund_img{
   float: left;
@@ -144,10 +192,18 @@
     padding: 12px 12px 12px 12px;
     position: relative;
   }
-  .refundlist_content p{
+  .refund_de{
     margin: 0;
     text-align: left;
     padding-left: 82px;
+  }
+  .refund_gui{
+    margin: 0;
+    text-align: left;
+    padding-left: 82px;
+    margin-top: 22px;
+    color: #999999;
+    font-size: 11px;
   }
 
 </style>
