@@ -10,6 +10,7 @@ import winning from '@/components/luckyDraw/winning'
 import refundlist from '@/components/refund/refundlist'
 import refundindex from '@/components/refund/refundindex'
 import freight from '@/components/refund/freight'
+import myorder from '@/components/refund/myorder'
 
 Vue.use(Router)
 
@@ -64,6 +65,11 @@ export default new Router({
       path: '/freight/:id',
       name: 'freight',
       component: freight
-    }
+    },
+    {
+      path: '/myorder',
+      name: 'myorder',
+      component: myorder
+    },
   ]
 })
