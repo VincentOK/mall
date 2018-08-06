@@ -9,7 +9,7 @@
         </p>
       </div>
       <div class="all_snap">
-        <div class="snap_list" v-for="item in snaplist" :key="item">
+        <div class="snap_list" v-for="(item,index) in snaplist" :key="index">
           <div class="snap_one">
             <div class="snap_one_left">
               <img :src="item.goods_img" alt="">

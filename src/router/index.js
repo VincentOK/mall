@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import index from '@/components/index/index'
+import index from '@/components/newIndex/index'
 import detail from '@/components/detail/detail'
 import myaddress from '@/components/adress/myaddress'
 import snapuplist from '@/components/snapUp/snapuplist'

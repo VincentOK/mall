@@ -10,8 +10,10 @@
       </div>
     </div>
     <div id="canvas" v-if="clickLottery">
-      <div class="apicCanvas">
+      <div class="canvas-backgrouncolor" style="background: antiquewhite">
+      <!-- <div class="apicCanvas" :style="styleBackground"> -->
           <canvas id="mask"></canvas>
+      <!-- </div> -->
       </div>
     </div>
     <div>
@@ -111,7 +113,7 @@ export default {
       whetherFree: false,
       clickLottery: false,
       winThePrice: "",
-      canvas: HTMLCanvasElement,
+      whetherPrice:true,
     };
   },
   comments: {
@@ -126,6 +128,15 @@ export default {
       }
     });
   },
+  // computed:{
+  //   styleBackground:function(){
+  //     if(this.whetherPrice){
+  //       return {backgroundImage:'url("./static/img/winning.png")'};
+  //     }else{
+  //       return {backgroundImage:'url("./static/img/notwinning.png")'};
+  //     }
+  //   }
+  // },
   methods: {
     clickToTheLottery() {
       this.clickLottery = true;
@@ -190,7 +201,7 @@ export default {
         }
       }
       function showResult(msg) {
-        self.winThePrice = "notWin";
+        self.winThePrice = "win";
       }
     }
   }
@@ -271,11 +282,14 @@ export default {
   box-shadow: 0 0 20px 1px rgba(255, 255, 255, 0.5);
   z-index: -1;
 } */
-.apicCanvas {
+.apicCanvas,.canvas-backgrouncolor {
   width: 100%;
   height: 149px;
   margin-top: 5px;
-  background: #ffcf64;
+  /* background-image: url("./static/img/notwinning.png"); */
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: 40%;
 }
 .stamp {
   width: 90%;

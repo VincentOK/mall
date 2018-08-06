@@ -15,7 +15,7 @@
               <label class="word_money">￥{{item.price}}</label>
               <label class="word_count_i">+</label>
               <label class="exchange_border">&nbsp;&nbsp;&nbsp;&nbsp;</label>
-              <label class="word_count_i">{{item.time_money,}}</label>
+              <label class="word_count_i">{{item.time_money}}</label>
             </p>
             <p class="word_name_th">
               <label class="word_count">剩余{{item.count}}件</label>
