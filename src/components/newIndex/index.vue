@@ -90,7 +90,7 @@ export default {
   },
   data() {
     return {
-      endTime: "2018-08-07 15:34:30",
+      endTime: "2018-08-20 09:45:30",
       endTimeChar: "距结束",
       indexStyle: "indexStyle",
       clearTime: false,

@@ -9,16 +9,18 @@
                     <p class="swiper_name">{{maxSlice(item.name)}}</p>
                     <p class="swiper_price">{{item.price | formatMoney}}</p>
                     <p class="swiper_del_price"><del>{{item.original_cost |formatMoney}}</del></p>
+                      <span class="swiper_goods_tag">即将开始</span>
+                      <span v-show="goods_tag">抢购结束</span>
                 </div>
                 </router-link>
             </div>
           </swiper-slide>
+          <router-link class="a_detail" :to="'/snapuplist'">
           <div class="view_more">
-            <router-link class="a_detail" :to="'/snapuplist'">
               <p>查看更多</p>
-              <p>view more</p>
-            </router-link>
+              <p>See more</p>
           </div>
+          </router-link>
         </swiper>
         <div class="last_explain">
             <span>扶贫商城</span>
@@ -33,6 +35,7 @@ export default {
   name: "flashSale",
   data() {
     return {
+      goods_tag:'',
       cash_list: [],
       maxLength: 15,
       swiperOption: {
@@ -71,7 +74,7 @@ export default {
       {
         id: "2",
         img_url: "/static/img/a1.jpg",
-        name: "海南贵妃特价海南贵妃 送货上门",
+        name: "货上门",
         price: "120.00",
         time_money: "356.58",
         original_cost: "345",
@@ -141,7 +144,7 @@ export default {
   margin-top: 15px;
 }
 .swiper_slide {
-  height: 209px;
+  height: 214px;
   width: 100px;
   text-align: left;
 }
@@ -157,6 +160,21 @@ export default {
   height: 100px;
   width: 100px;
   border-radius: 10px;
+  position: relative;
+}
+.image_border .swiper_goods_tag{
+  position: absolute;
+  bottom: 5px;
+  left: 5px;
+  display: inline-block;
+  color: #eee;
+  width: 50px;
+  height: 14px;
+  padding:0 2px 2px 2px;
+  border-radius: 2px;
+  font-size: 9px;
+  text-align: center;
+  background-color: #11bb55;
 }
 .image_border img {
   width: 100px;
@@ -167,19 +185,20 @@ export default {
   background-position: center center;
 }
 .swiper_name {
-  margin: 9px auto;
-  font-size: 12px;
+  height: 32px;
+  margin: 7px auto;
+  font-size: 11px;
   color: #333;
 }
 .swiper_price {
   margin: 0;
-  padding-bottom: 4px;
+  padding-bottom: 5px;
   font-size: 13px;
   color: #f10215;
 }
 .swiper_del_price {
   margin: 0;
-  font-size: 11px;
+  font-size: 9px;
   color: #9b9b9b;
 }
 .last_explain {
@@ -196,7 +215,7 @@ export default {
   color: #333;
 }
 .view_more {
-  height: 100px;
+  height: 185px;
   width: 100px;
   border: 1px solid #eee;
 }
@@ -205,17 +224,18 @@ export default {
   color: #9b9b9b;
 }
 .view_more p:first-child {
-  font-size: 10px;
-  width: 50px;
-  margin: 30px 0 0 25px;
-  padding: 0 0 3px 0;
-  border-bottom: 1px solid #eee;
+  font-size: 13px;
+  color: #f10215;
+  width: 55px;
+  margin: 42px 0 0 22px;
+  padding: 0 0 5px 0;
+  border-bottom: 1px solid #f10215;
 }
 .view_more p:last-child {
-  font-size: 9px;
+  font-size: 11px;
   width: 100px;
   margin: 0;
-  padding: 3px 0 0 0;
+  padding: 5px 0 0 0;
 }
 </style>
 
