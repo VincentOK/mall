@@ -3,7 +3,7 @@
   <div class="hello">
     <div class="header">
         <span class="my_order">
-          <router-link class="top_order" :to="'/refundlist'">
+          <router-link class="top_order" :to="'/myorder'">
             我的订单
             <img class="index_img" src="/static/img/chooseSelect.png">
           </router-link>
@@ -32,7 +32,7 @@
           </router-link>
         </div>
         <div class="header_title_right">
-          <router-link class="a_detail" :to="'/snapuplist'">
+          <router-link class="a_detail" :to="'/cash'">
           <div class="content_title">
             <img class="img_header" src="/static/img/lucky_draw.png" alt="">
           </div>
@@ -41,7 +41,7 @@
         </div>
 
         <div class="header_title_right">
-          <router-link class="a_detail" :to="'/snapuplist'">
+          <router-link class="a_detail" :to="'/exchange'">
           <div class="content_title">
             <img class="img_header" src="/static/img/lucky_draw.png" alt="">
           </div>
@@ -250,18 +250,4 @@ export default {
   font-size: 16px;
   color: #333;
 }
-/* .timeEnd {
-  line-height: 49px;
-  float: right;
-  margin-right: 26px;
-  font-size: 12px;
-  color: #f10215;
-} */
-/* .timeEnd >>> i{
-  color: white;
-  background-color: #f10215;
-  padding-right: 2px;
-  margin: 0 2px;
-  border-radius: 2px;
-} */
 </style>
