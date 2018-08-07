@@ -5,7 +5,7 @@
         <p class="exchange_number">共10256个商品</p>
       </div>
       <div class="exchange_content">
-        <router-link class="a_detail" v-for="item in ex_list" :to="'/detail/' + item.id">
+        <router-link class="a_detail" v-for="(item,index) in ex_list" :key="index" :to="'/detail/' + item.id">
           <div class="exchange_content_i">
             <img :src="item.img_url" alt="">
             <div class="word_i">
