@@ -39,11 +39,11 @@ export default {
       cash_list: [],
       maxLength: 15,
       swiperOption: {
-        slidesPerView: "auto",
-        slidesOffsetAfter: 120,
-        slidesPerView: 3.5,
-        loop: false,
-        grabCursor: true
+        slidesPerView : "auto",
+        slidesOffsetAfter: 110,
+        //  pagination: '.image_border'
+        // loop: false,
+        // grabCursor: true
       }
     };
   },
@@ -143,13 +143,15 @@ export default {
 .flash_sale {
   margin-top: 15px;
 }
+.swiper-slide{
+  width: 109px;
+}
 .swiper_slide {
   height: 214px;
   width: 100px;
   text-align: left;
 }
 .swiper-slide:first-child {
-  width: 29%;
   height: 100%;
   margin-left: 9px;
 }
