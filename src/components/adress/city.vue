@@ -4,8 +4,9 @@
   <section class="showChose" v-show="showChose">
     <section class="address">
       <section class="title">
-        <h4>居住地址</h4>
-        <span @click="closeAdd()">×</span>
+        <!--<div>居住地址</div>-->
+        <!--<span @click="closeAdd()">×</span>-->
+        <img  @click="closeAdd()" class="close_city" src="/static/img/delete.png" alt="">
       </section>
       <section class="title">
         <div class="area" @click="provinceSelected()">{{Province?Province:info[province-1].name}}</div>
@@ -3747,8 +3748,12 @@ export default {
 </script>
 
 <style scoped>
+  .close_city{
+    float: right;
+  }
   .title{
     text-align: left;
+    height: 32px;
   }
   .ul_city{
     list-style: none;

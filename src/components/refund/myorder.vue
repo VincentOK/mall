@@ -54,6 +54,7 @@
     border-bottom: 2px solid #f10215;
   }
   .tabs{
+    background-color: white;
     width: 375px;
     margin: 0;
     padding:0;

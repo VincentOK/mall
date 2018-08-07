@@ -27,11 +27,11 @@
       watch:{
         checkStatus:function (newword,oldword) {
           console.log("新退款ID："+newword)
+          console.log("原退款ID："+oldword)
           if(newword){
             this.refund_display = true
             this.id = newword
           }
-          console.log("原退款ID："+oldword)
         }
       },
       methods:{
