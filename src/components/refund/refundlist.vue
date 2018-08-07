@@ -1,6 +1,6 @@
 <template>
 <div>
-  <div class="refundlist" v-for="item in refund_list" :key="item">
+  <div class="refundlist" v-for="(item,index) in refund_list" :key="index">
     <div class="null_div"></div>
       <p class="refund_time">
         <button class="_status">待收货</button>
