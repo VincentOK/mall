@@ -11,6 +11,8 @@ import refundlist from '@/components/refund/refundlist'
 import refundindex from '@/components/refund/refundindex'
 import freight from '@/components/refund/freight'
 import myorder from '@/components/refund/myorder'
+import exchange from '@/components/exchange/exchange'
+import cash from '@/components/cash/cash'
 
 Vue.use(Router)
 
@@ -71,5 +73,15 @@ export default new Router({
       name: 'myorder',
       component: myorder
     },
+    {
+      path: '/exchange',
+      name: 'exchange',
+      component: exchange
+    },
+    {
+      path: '/cash',
+      name: 'cash',
+      component: cash
+    }
   ]
 })

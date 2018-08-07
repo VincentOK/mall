@@ -118,7 +118,7 @@
     height: 28px;
     font-size: 11px;
     border: 1px solid #999999;
-    background-color: #ff9aff;
+    background-color: white;
     color: #333333;
     border-radius: 3px;
     float: right;
@@ -128,7 +128,7 @@
     height: 28px;
     font-size: 11px;
     border: 1px solid #f10215;
-    background-color: #ff9aff;
+    background-color: white;
     color: #f10215;
     border-radius: 3px;
     margin-left: 10px;

@@ -34,17 +34,17 @@
         <img src="/static/img/colorborder.png" class="border_color" alt="">
       </p>
       <div class="myphoto">
-        <div class="myphoto_one" v-for="item in imgList" :key="item">
-          <img class="close_photo" src="/static/img/close_photo.png" alt="">
-          <img class="my_img" :src="item.img_url" alt="">
+        <div class="myphoto_one" v-for="(item,index) in imgList">
+          <img class="close_photo" v-on:click="closePhoto(index)" src="/static/img/close_photo.png" alt="">
+          <img class="my_img" v-bind:src="item.img_url" alt="">
         </div>
 
       </div>
     </div>
     <div class="question_des">
       <p class="photo">
-        <input type="file"  id="file_input" v-on:click="change" accept="image/*" >
-        <img src="/static/img/choosePhoto.png"  alt="">
+        <input type="file" v-if="imgList.length <5"  id="file_input" v-on:click="change" accept="image/*" >
+        <img :src="imgList.length <5 ? '/static/img/choosePhoto.png' : '/static/img/choosePhotoLast.png'"  alt="">
       </p>
     </div>
     <div class="null_div"></div>
@@ -132,29 +132,47 @@
       methods:{
         change:function (){
           let vm = this
-          console.log("选取图片:"+JSON.stringify(vm.imgList))
-          var imginput = document.getElementById("file_input");
-          imginput.onchange = function () {
-            var files = this.files;
-            var url = URL.createObjectURL(files[0]);
-            console.log(url)
-            console.log(files)
-            var reader=new FileReader();
-            reader.onload=function(e){
-              console.log( reader.result);
-              var str = JSON.stringify(reader.result)
-              var reg = new RegExp( "\"" , "g" )
-              str = str.replace( reg , '' );
-              console.log(str)
+          if(vm.imgList.length <5){
+            var imginput = document.getElementById("file_input");
+            imginput.onchange = function () {
+              var files = this.files;
+              var url = URL.createObjectURL(files[0]);
+              console.log(url)
+              let length = vm.imgList.length
+              console.log(vm.imgList.length)
               var obj = {
-                img_url:str
+                index:length,
+                img_url:url
               }
-              console.log(obj)
-              vm.imgList = vm.$set(vm.imgList, 1, obj);
+              if(length < 5 ){
+                vm.$set(vm.imgList, length, obj);
+              }
+              console.log("选取图片:"+JSON.stringify(vm.imgList))
+              console.log(files)
+              // var reader=new FileReader();
+              // reader.onload=function(e){
+              //   console.log( reader.result);
+              //   var str = JSON.stringify(reader.result)
+              //   var reg = new RegExp( "\"" , "g" )
+              //   str = str.replace( reg , '' );
+              //   console.log(str)
+              //   let length = vm.imgList.length
+              //   console.log(vm.imgList.length)
+              //   var obj = {
+              //     index:length,
+              //     img_url:str
+              //   }
+              //   if(length <4 ){
+              //     vm.$set(vm.imgList, length, obj);
+              //   }
+              // }
+              // var aa =  reader.readAsDataURL(this.files[0])
+              // // showimg.src=url;
             }
-            var aa =  reader.readAsDataURL(this.files[0])
-            // showimg.src=url;
           }
+        },
+        closePhoto:function(index){
+          this.imgList.splice(index,1);
         },
         whyNot:function () {
           this.whynot = true
