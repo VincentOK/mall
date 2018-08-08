@@ -233,7 +233,7 @@
 
 <style scoped>
   .myphoto{
-    width: 300px;
+    width: 80%;
     height: 80px;
     margin: auto;
   }
@@ -270,7 +270,7 @@
   text-align: left;
 }
 .refund_sub{
-  width: 270px;
+  width: 72%;
   height: 45px;
   line-height: 45px;
   margin: auto;
@@ -311,7 +311,7 @@
   text-indent: 10px;
 }
 .word_last{
-  width: 296px;
+  width: 79%;
   margin: auto;
   margin-top: -5px;
   padding: 0px 2px;
@@ -360,7 +360,7 @@
   margin: auto;
 }
 .desciption{
-  width: 296px;
+  width: 79%;
   height: 155px;
   margin: auto;
   background-color: #f4f4f4;

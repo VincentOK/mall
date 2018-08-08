@@ -6,7 +6,7 @@
         <div>
           <img v-on:click="closeModel" class="pay_money_close" src="/static/img/pay_close.png" alt="">
           <p class="pay_money_title">确认支付</p>
-          <p class="pay_money_m">￥33.33</p>
+          <p class="pay_money_m"><label class="pay_ch">￥</label>33.33</p>
         </div>
         <div class="pay_style">
           <p class="pay_style_one">请选择支付方式</p>
@@ -20,8 +20,14 @@
             <label class="pay_two">微信支付</label>
             <img class="pay_th" :src="wechatcheck" alt="">
           </p>
+
+          <p class="wechat"  v-on:click="chooseChina">
+            <img class="pay_one"  src="/static/img/card.png" alt="">
+            <label class="pay_two">银行卡支付</label>
+            <img class="pay_th" :src="chinacheck" alt="">
+          </p>
         </div>
-        <div class="pay_style">
+        <div class="pay_style_btn">
           <button>确认支付</button>
         </div>
       </div>
@@ -34,7 +40,8 @@
         data (){
           return {
             alicheck:'/static/img/select@2x.png',
-            wechatcheck:'/static/img/uncheck.png'
+            wechatcheck:'/static/img/uncheck.png',
+            chinacheck:'/static/img/uncheck.png'
           }
         },
       methods:{
@@ -44,10 +51,17 @@
         chooseAlipay:function () {
           this.alicheck = '/static/img/select@2x.png'
           this.wechatcheck = '/static/img/uncheck.png'
+          this.chinacheck = '/static/img/uncheck.png'
         },
         chooseWechat:function () {
           this.wechatcheck = '/static/img/select@2x.png'
           this.alicheck = '/static/img/uncheck.png'
+          this.chinacheck = '/static/img/uncheck.png'
+        },
+        chooseChina:function () {
+          this.chinacheck = '/static/img/select@2x.png'
+          this.alicheck = '/static/img/uncheck.png'
+          this.wechatcheck = '/static/img/uncheck.png'
         }
       }
     }
@@ -74,30 +88,42 @@
     border-top-right-radius: 8px;
   }
   .pay_money_title{
-    font-size: 14px;
+    font-size: 18px;
     text-align: center;
+    margin: 0;
+    margin-top: 24px;
+    margin-bottom: 33px;
   }
   .pay_money_close{
-    width: 20px;
-    margin-left: 15px;
+    width: 15px;
     position: absolute;
-    left: 5%;
-
+    top: 24px;
+    left: 28px;
   }
   .pay_money_m{
-    font-size: 18px;
+    font-size: 36px;
     font-weight: 600;
-    width: 90%;
-    margin: auto;
-    border-bottom: 1px solid #f9f9f9;
+    width: 100%;
+    text-align: center;
+    margin: 0;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #eeeeee;
+  }
+  .pay_ch{
+    font-size: 23px;
   }
   .pay_style{
     width: 90%;
     margin: auto;
     font-size: 14px;
-    border-bottom: 1px solid #f9f9f9;
   }
-  .pay_style button{
+  .pay_style_btn{
+    width: 100%;
+    margin: auto;
+    font-size: 14px;
+    border-top: 1px solid #eeeeee;
+  }
+  .pay_style_btn button{
     background-color: #ea3339;
     color: white;
     height: 45px;
@@ -110,8 +136,9 @@
   }
   .pay_style_one{
     text-align: left;
-    font-size: 12px;
+    font-size: 13px;
     color: #9b9b9b;
+    margin: 17px 0 17px 0;
   }
   .alipay,.wechat{
     height: 30px;
@@ -124,6 +151,7 @@
   .pay_two{
     float: left;
     height: 30px;
+    font-size: 14px;
     line-height: 30px;
     margin-left: 10px;
   }

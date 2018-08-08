@@ -15,7 +15,6 @@ import exchange from '@/components/exchange/exchange'
 import cash from '@/components/cash/cash'
 
 Vue.use(Router)
-
 export default new Router({
   routes: [
     {

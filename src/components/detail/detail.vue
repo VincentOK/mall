@@ -83,7 +83,7 @@
     <paymoney-view v-on:childByValue="childByValue" v-if="paymoney"></paymoney-view>
     <paytime-view v-on:childByValue="childByValue" v-if="paytime"></paytime-view>
     <div class="buy_it">
-      <button v-on:click="pay_money">立即购买</button>
+      <button v-on:click="pay_money" >立即购买</button>
     </div>
   </div>
 </template>

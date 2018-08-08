@@ -8,10 +8,9 @@
         <p class="pay_money_title">确认支付</p>
       </div>
       <div class="pay_style pay_time">
-        <label class="exchange_border">&nbsp;&nbsp;&nbsp;&nbsp;</label>
-        <label class="time_i">33.00</label>
+        <label class="time_i">33.00<label class="word_time">时间币</label></label>
       </div>
-      <div class="pay_style">
+      <div class="pay_style_btn">
         <button>确认支付</button>
       </div>
     </div>
@@ -45,7 +44,8 @@
     z-index: 10;
   }
   .pay_time{
-    padding: 40px 0;
+    /*padding: 40px 0;*/
+    padding-bottom: 30px;
   }
   .exchange_border{
     width: 70px;
@@ -55,7 +55,10 @@
     border-radius: 50%;
   }
   .time_i{
-    font-size: 20px;
+    font-size: 36px;
+  }
+  .word_time{
+    font-size: 23px;
   }
   .pay_money{
     background-color: white;
@@ -67,30 +70,30 @@
     border-top-right-radius: 8px;
   }
   .pay_money_title{
-    font-size: 14px;
+    font-size: 18px;
     text-align: center;
+    margin: 0;
+    margin-top: 24px;
+    margin-bottom: 33px;
   }
   .pay_money_close{
-    width: 20px;
-    margin-left: 15px;
+    width: 15px;
     position: absolute;
-    left: 5%;
-
-  }
-  .pay_money_m{
-    font-size: 18px;
-    font-weight: 600;
-    width: 90%;
-    margin: auto;
-    border-bottom: 1px solid #f9f9f9;
+    top: 24px;
+    left: 28px;
   }
   .pay_style{
     width: 90%;
     margin: auto;
     font-size: 14px;
-    border-bottom: 1px solid #f9f9f9;
   }
-  .pay_style button{
+  .pay_style_btn{
+    width: 100%;
+    margin: auto;
+    font-size: 14px;
+    border-top: 1px solid #eeeeee;
+  }
+  .pay_style_btn button{
     background-color: #ea3339;
     color: white;
     height: 45px;

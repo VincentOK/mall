@@ -55,7 +55,7 @@
   }
   .tabs{
     background-color: white;
-    width: 375px;
+    width: 100%;
     margin: 0;
     padding:0;
     height: 44px;
