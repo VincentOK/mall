@@ -1,7 +1,11 @@
 <template>
     <div>
         <div class="recommend">
-            <p class="recommend_title"><i>&mdash;</i>&bull;<span>为您推荐</span>&bull;<i>&mdash;</i></p>
+            <p class="recommend_title">
+              <i style="background-image: url('/static/img/recommend1.png')"></i>
+              <span>为您推荐</span>
+              <i style="background-image: url('/static/img/recommend2.png')"></i>
+            </p>
             <div class="commodity_details" v-for="(item,index) in commodity_list" :key="index">
                 <router-link class="a_detail" :to="'/detail/' + item.id">
                 <div class="img_wrap">
@@ -200,11 +204,18 @@ export default {
   font-size: 16px;
   display: flex;
   justify-content: center;
-  align-items: Center;
-  position: relative;
+  align-items: center;
 }
 .recommend_title span {
   margin: 0 10px;
+}
+.recommend_title i{
+  display: inline-block;
+  width: 25px;
+  height: 5px;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: 0 0;
 }
 .commodity_details {
   height: 113px;

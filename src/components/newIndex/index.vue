@@ -5,7 +5,7 @@
         <span class="my_order">
           <router-link class="top_order" :to="'/myorder'">
             我的订单
-            <img class="index_img" src="/static/img/chooseSelect.png">
+            <img class="index_img" src="/static/img/chooseSelect2.png">
           </router-link>
         </span>
         <img class="logo" src="/static/img/a1.jpg" alt="">
@@ -18,7 +18,7 @@
         <div class="header_title_left">
           <router-link class="a_detail" :to="'/luckylist'">
             <div class="content_title">
-              <img class="img_header" src="/static/img/gift.png" alt="">
+              <img class="img_header" src="/static/img/lottery.png" alt="">
             </div>
             <label class="word_header" for="">抽奖活动</label>
           </router-link>
@@ -26,7 +26,7 @@
         <div class="header_title_left">
           <router-link class="a_detail" :to="'/snapuplist'">
             <div class="content_title">
-              <img class="img_header" src="/static/img/gift.png" alt="">
+              <img class="img_header" src="/static/img/time_buy.png" alt="">
             </div>
             <label class="word_header" for="">限时抢购</label>
           </router-link>
@@ -34,7 +34,7 @@
         <div class="header_title_right">
           <router-link class="a_detail" :to="'/cash'">
           <div class="content_title">
-            <img class="img_header" src="/static/img/lucky_draw.png" alt="">
+            <img class="img_header" src="/static/img/cash.png" alt="">
           </div>
           <label  class="word_header"  for="">现金专区</label>
           </router-link>
@@ -43,7 +43,7 @@
         <div class="header_title_right">
           <router-link class="a_detail" :to="'/exchange'">
           <div class="content_title">
-            <img class="img_header" src="/static/img/lucky_draw.png" alt="">
+            <img class="img_header" src="/static/img/time_cash.png" alt="">
           </div>
           <label  class="word_header" for="">时间币专区</label>
           </router-link>
@@ -53,7 +53,6 @@
     <div class="null_div"></div>
     <div class="flashSale">
         <span class="flash_sale_char">限时抢购</span>
-        <!-- <span>距结束&nbsp;<i>{{timeH}}</i>:<i>{{timeM}}</i>:<i>{{timeS}}</i></span> -->
       <time-down-view @time-end="clearTime = true" :endTime='endTime' :endTimeChar='endTimeChar' :timeStyle='indexStyle'></time-down-view>
     </div>
     <flash-sale-view></flash-sale-view>
@@ -150,9 +149,8 @@ export default {
   text-decoration: none;
 }
 .header {
-  /*background-color: #FD695D;*/
   height: 144px;
-  background-image: url("/static/img/bg@2x.png");
+  background-image: url("/static/img/bg.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
@@ -165,15 +163,11 @@ export default {
   font-size: 12px;
 }
 .index_img {
-  width: 15px;
-  transform: rotate(-90deg);
-  -ms-transform: rotate(-90deg); /* IE 9 */
-  -moz-transform: rotate(-90deg); /* Firefox */
-  -webkit-transform: rotate(-90deg); /* Safari 和 Chrome */
-  -o-transform: rotate(-90deg); /* Opera */
+  width: 6px;
+  height: 9px;
 }
 .header_money {
-  padding-top: 10px;
+  font-size: 12px;
 }
 .header p {
   color: white;
@@ -183,10 +177,10 @@ export default {
   margin-left: 110px;
 }
 .header p:first-child {
-  font-size: 18px;
+  font-size: 24px;
   font-weight: bold;
   padding-top: 55px;
-  padding-bottom: 10px;
+  padding-bottom: 9px;
 }
 .logo {
   height: 70px;
@@ -198,7 +192,7 @@ export default {
 }
 .header_title {
   display: flex;
-  height: 100px;
+  height: 105px;
   margin: 0;
 }
 .header_title_left {
@@ -216,7 +210,7 @@ export default {
   bottom: 0;
   left: 0;
   width: 100%;
-  margin: 16px auto;
+  margin: 22px auto;
   margin-top: 0;
 }
 .content_title {
@@ -233,10 +227,8 @@ export default {
   margin: 12px auto;
 }
 .img_header {
-  display: block;
-  text-align: center;
-  margin: 10px auto;
-  height: 50%;
+ width: 100%;
+ height: 100%;
 }
 .flashSale {
   height: 49px;

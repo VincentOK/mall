@@ -23,9 +23,9 @@
           </router-link>
         </swiper>
         <div class="last_explain">
-            <span>扶贫商城</span>
-            <span>全场包邮</span>
-            <span>品质保障</span>
+            <span><i style="background-image: url('/static/img/store.png')"></i>扶贫商城</span>
+            <span><i style="background-image: url('/static/img/pinkage.png')"></i>全场包邮</span>
+            <span><i style="background-image: url('/static/img/quality.png')"></i>品质保障</span>
         </div>
     </div>
 </template>
@@ -41,9 +41,19 @@ export default {
       swiperOption: {
         slidesPerView : "auto",
         slidesOffsetAfter: 110,
-        //  pagination: '.image_border'
-        // loop: false,
-        // grabCursor: true
+        freeMode:true,
+        // freeModeMomentumRatio:0.5,
+        freeModeMomentumVelocityRatio:0.3,
+        freeModeMomentumBounce:false,
+        // touchRatio:0.5,
+        // longSwipesRatio:0.1,
+        // threshold:50,
+        // followFinger:false,
+        //  pagination: '.image_border',
+        loop: false,
+        // grabCursor: true,
+        observer: true,
+        observeParents: true,
       }
     };
   },
@@ -172,7 +182,7 @@ export default {
   color: #eee;
   width: 50px;
   height: 14px;
-  padding:0 2px 2px 2px;
+  padding:2px;
   border-radius: 2px;
   font-size: 9px;
   text-align: center;
@@ -215,6 +225,17 @@ export default {
   width: 33.3%;
   font-size: 13px;
   color: #333;
+  position: relative;
+}
+.last_explain span i{
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  position: absolute;
+  top: 2.5px;
+  left: 20px;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
 }
 .view_more {
   height: 185px;
