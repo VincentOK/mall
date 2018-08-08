@@ -3,11 +3,11 @@
   <div v-show="close">
     <div class="notwinning_out"></div>
     <div class="notwinning_in">
-      <img @click="closePage" class="notwinning_close" src="/static/img/close_win.png" alt="">
+      <img @click="closePage" class="notwinning_close" src="/static/img/close.png" alt="">
       <div class="notwinning_bg">
         <p class="notwining_title">哎呀，差那么一点点~</p>
         <p class="notwinining_word">别灰心，再来一次</p>
-        <img class="notwinning_img" src="/static/img/notwinning.png" alt="">
+        <img class="notwinning_img" src="/static/img/notwin.png" alt="">
         <button class="notwinning_again" @click="closePage">再抽一次</button>
       </div>
     </div>
@@ -55,7 +55,7 @@ export default {
   margin-left: 230px;
 }
 .notwinning_bg {
-  background-image: url("/static/img/notwinning_bg.png");
+  background-image: url("/static/img/notwin_bg.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   width: 276px;
@@ -84,7 +84,7 @@ export default {
   font-size: 18px;
   border: none;
   border-radius: 5px;
-  background-color: #ff5555;
+  background-color: #f10215;
   margin-top: 30px;
 }
 </style>

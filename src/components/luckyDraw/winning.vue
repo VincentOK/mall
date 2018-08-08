@@ -3,11 +3,13 @@
   <div v-show="close">
     <div class="notwinning_out"></div>
     <div class="notwinning_in">
-      <img @click="closePage" class="notwinning_close" src="/static/img/close_win.png" alt="">
-      <img class="winning_bg" src="/static/img/flower.png" alt="">
+      <div class="winning_postion">
+        <img @click="closePage" class="notwinning_close" src="/static/img/close.png" alt="">
+        <img class="winning_bg" src="/static/img/flower.png" alt="">
+      </div>
       <div class="notwinning_bg">
         <p class="notwining_title">恭喜您中奖啦！</p>
-        <img class="notwinning_img" src="/static/img/winning.png" alt="">
+        <img class="notwinning_img" src="/static/img/win.png" alt="">
         <p class="winning_word">越南小紫薯新鲜先挖x1</p>
         <router-link :to="'/luckycenter'">
           <button class="notwinning_again">去领奖</button>
@@ -45,18 +47,23 @@ export default {
 }
 .winning_bg {
   position: absolute;
-  top: 0px;
-  left: -30px;
-  right: 0;
+  top: 0;
+  left: -265px;
   width: 345px;
   height: 101px;
   margin: auto;
-  z-index: -1;
+  z-index: 1;
 }
 .winning_word {
   font-size: 14px;
   margin: 0;
   padding: 20px 0;
+}
+.winning_postion{
+  position: relative;
+  width: 24px;
+  height: 35.5px;
+  margin-left: 230px;
 }
 .notwinning_in {
   position: absolute;
@@ -67,14 +74,14 @@ export default {
   width: 276px;
 }
 .notwinning_close {
+  position: absolute;
   width: 24px;
   height: 35.5px;
   display: block;
-  margin-left: 230px;
-  z-index: 1px;
+  z-index: 2;
 }
 .notwinning_bg {
-  background-image: url("/static/img/notwinning_bg.png");
+  background-image: url("/static/img/notwin_bg.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   width: 276px;
@@ -104,6 +111,6 @@ export default {
   font-size: 18px;
   border: none;
   border-radius: 5px;
-  background-color: #ff5555;
+  background-color: #f10215;
 }
 </style>

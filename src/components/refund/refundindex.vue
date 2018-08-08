@@ -34,7 +34,7 @@
         <img src="/static/img/colorborder.png" class="border_color" alt="">
       </p>
       <div class="myphoto">
-        <div class="myphoto_one" v-for="(item,index) in imgList">
+        <div class="myphoto_one" v-for="(item,index) in imgList" :key="index">
           <img class="close_photo" v-on:click="closePhoto(index)" src="/static/img/close_photo.png" alt="">
           <img class="my_img" v-bind:src="item.img_url" alt="">
         </div>
