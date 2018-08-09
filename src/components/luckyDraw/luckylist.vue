@@ -1,6 +1,6 @@
 <!--抽奖列表-->
 <template>
-  <div>
+  <div  v-touch:swiperight="touchRight">
     <img id="scream" src="/static/img/lucky_ground.png">
     <img class="lucky_banner" src="/static/img/banner@2x.png" alt="">
     <div class="stamp" v-if="!clickLottery">
@@ -159,7 +159,7 @@ export default {
       context.font = '24px Arial';
       context.textAlign = 'center';
       context.fillStyle = '#fffefe';
-      context.fillText("使劲刮我", 120, 83);  
+      context.fillText("使劲刮我", 120, 83);
       context.globalCompositeOperation = "destination-out";
       canvas.addEventListener("mousedown", drawArcMouseHandle);
       canvas.addEventListener("mouseup", function(event) {

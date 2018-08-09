@@ -1,6 +1,6 @@
 <!--抢购列表页面-->
 <template>
-    <div>
+    <div  v-touch:swiperight="touchRight">
       <div class="snap_title">
         <p>
           <label>本轮抢购已结束，请等待下轮抢购开启</label>

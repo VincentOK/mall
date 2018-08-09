@@ -1,6 +1,6 @@
 <!--提交领奖信息-->
 <template>
-    <div>
+    <div  v-touch:swiperight="touchRight">
       <div class="all_snap">
         <div class="snap_list">
           <div class="snap_one">
