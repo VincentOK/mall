@@ -10,16 +10,11 @@ import directives from './commonJS/directives'
 Vue.use(VueAwesomeSwiper)
 // Vue.use(touch);
 directives(Vue)
+
 Vue.config.productionTip = false
-Vue.prototype.$setgoindex = function () {
-  console.log(window.history.length)
-  if (window.history.length <= 1) {
-    if (location.href.indexOf('?') === -1) {
-      window.location.href = location.href + '?goindex=true'
-    } else if (location.href.indexOf('?') !== -1 && location.href.indexOf('goindex') === -1) {
-      window.location.href = location.href + '&goindex=true'
-    }
-  }
+Vue.prototype.touchRight = function(){
+  console.log("8888888")
+  window.history.back()
 }
 /* eslint-disable no-new */
 new Vue({

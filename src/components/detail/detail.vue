@@ -1,6 +1,6 @@
 <!--商品详情-->
 <template>
-  <div class="detail">
+  <div class="detail"  v-touch:swiperight="touchRight">
     <div class="title_i">
       <swiper :options="swiperOption">
         <swiper-slide><img class="detail_img" src="/static/img/a1.jpg"></swiper-slide>

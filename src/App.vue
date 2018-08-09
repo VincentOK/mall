@@ -1,6 +1,8 @@
 <template>
-  <div id="app" class="container"  v-touch:swiperight="methodFunc">
-    <router-view></router-view>
+  <div id="app" class="container">
+    <transition :name="transitionName">
+      <router-view class="child-view"></router-view>
+    </transition>
   </div>
 </template>
 
@@ -9,6 +11,7 @@ export default {
   name: 'App',
   data(){
     return{
+      transitionName: 'slide-left'
     }
   },
   computed:{
@@ -16,28 +19,16 @@ export default {
     //   this.$setgoindex()
     // }
   },
-  methods: {
-    methodFunc:function (e) {
-      console.log("========"+window.location.href)
-
-      // if (this.$route.query.goindex === 'true') {
-      //   this.$router.push('/')
-      // } else {
-      //   this.$router.back(-1)
-      // }
-      // if (window.history.length <= 1) {
-      //   this.$router.push({path:'/'})
-      //   return false
-      // } else {
-      //   this.$router.go(-1)
-      // }
-      // //上面都没执行就说明卡在当前页不是最后一条， histroy记录数量大于1，又没有回退记录，只能返回首页，
-      // //如果上面都执行了 页面都跳走了，这个也就不用管了
-      // setTimeout(() => {
-      //   this.$router.push({path:'/'})
-      // },500)
-      // this.$router.go(-1)
+  watch: {
+    '$route' (to, from) {
+      if(to.path == '/'){
+        this.transitionName = 'slide-right';
+      }else{
+        this.transitionName = 'slide-left';
+      }
     }
+  },
+  methods: {
   }
 }
 </script>
@@ -50,6 +41,7 @@ export default {
     width:100%;
     height:100%
   }
+
   #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -65,4 +57,22 @@ export default {
   width: 100%;
   background-color: #f4f4f4;
 }
+  .child-view {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    transition: all .5s cubic-bezier(.55,0,.1,1);
+  }
+  .slide-left-enter, .slide-right-leave-active {
+    opacity: 0;
+    -webkit-transform: translate(30px, 0);
+    transform: translate(30px, 0);
+  }
+  .slide-left-leave-active, .slide-right-enter {
+    opacity: 0;
+    -webkit-transform: translate(-30px, 0);
+    transform: translate(-30px, 0);
+  }
 </style>

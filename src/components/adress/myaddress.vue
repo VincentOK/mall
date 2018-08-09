@@ -1,6 +1,6 @@
 <!--添加收货地址-->
 <template>
-    <div>
+    <div  v-touch:swiperight="touchRight">
       <div class="address_one">
         <div class="address_left">
           收货人：
