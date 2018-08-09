@@ -24,6 +24,9 @@ export default {
   },
   methods: {
     closePage() {
+      var body = document.getElementsByTagName('body')
+      body[0].style.height = '';
+      body[0].style.overflow = '';
       this.close = false;
       this.$emit("toDraw", null);
     }
@@ -32,6 +35,9 @@ export default {
 </script>
 
 <style scoped>
+.fixed_mask{
+  overflow: hidden;
+}
 .notwinning_out {
   width: 100%;
   height: 100%;
