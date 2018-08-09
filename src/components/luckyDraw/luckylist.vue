@@ -210,7 +210,12 @@ export default {
         }
       }
       function showResult(msg) {
-        self.winThePrice = "notWin";
+        self.winThePrice = "win";
+        // document.getElementById("app").setAttribute("class","fixed_mask");
+        var body = document.getElementsByTagName('body')
+        body[0].style.height = '700px';
+        body[0].style.overflow = 'hidden';
+        // document.getElementsByTagName('body').style.overflow = 'hidden';
       }
     }
   }
@@ -218,6 +223,10 @@ export default {
 </script>
 
 <style scoped>
+.fixed_mask{
+  height: 100%;
+  overflow: hidden;
+}
 .lucky_title {
   margin-top: 15px;
   font-size: 16px;
@@ -286,7 +295,7 @@ export default {
   height: 100%;
   background-repeat: no-repeat;
   background-position: 50% 50%;
-  background-size: 40%;
+  background-size: 35%;
 }
 .stamp {
   width: 90%;

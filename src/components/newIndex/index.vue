@@ -36,7 +36,7 @@
           <div class="content_title">
             <img class="img_header" src="/static/img/cash.png" alt="">
           </div>
-          <label  class="word_header"  for="">现金专区</label>
+          <label class="word_header"  for="">现金专区</label>
           </router-link>
         </div>
 

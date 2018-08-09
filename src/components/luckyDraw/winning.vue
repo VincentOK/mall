@@ -12,7 +12,7 @@
         <img class="notwinning_img" src="/static/img/win.png" alt="">
         <p class="winning_word">越南小紫薯新鲜先挖x1</p>
         <router-link :to="'/luckycenter'">
-          <button class="notwinning_again">去领奖</button>
+          <button class="notwinning_again" @click="closePage">去领奖</button>
         </router-link>
       </div>
     </div>
@@ -31,7 +31,13 @@ export default {
     closePage() {
       this.close = false;
       this.$emit("toDraw", null);
+      var body = document.getElementsByTagName('body')
+      body[0].style.height = '';
+      body[0].style.overflow = '';
     }
+  },
+  mounted(){
+    // let body = document.getElementsByTagName("body");
   }
 };
 </script>
