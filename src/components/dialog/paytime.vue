@@ -1,7 +1,7 @@
 <!--时间币支付-->
 <template>
   <div class="paymoney">
-    <div class="pay_fiex"></div>
+    <div class="pay_fiex" v-on:click="closeModel"></div>
     <div class="pay_money">
       <div>
         <img  v-on:click="closeModel" class="pay_money_close" src="/static/img/pay_close.png" alt="">

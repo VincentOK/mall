@@ -9,6 +9,10 @@
         </p>
       </div>
       <div class="all_snap">
+
+        <scroller style="margin-top: 50px" :on-infinite="infinite"  :on-refresh = "refresh" ref="myscroller">
+          <div style="height: 1px;"></div>
+
         <div class="snap_list" v-for="(item,index) in snaplist" :key="index">
           <div class="snap_one">
             <div class="snap_one_left">
@@ -27,6 +31,8 @@
             </div>
           </div>
         </div>
+        </scroller>
+
       </div>
     </div>
 </template>
@@ -80,6 +86,53 @@
             }
           ]
       },
+      methods:{
+        infinite (done) {
+          console.log("向上滑动")
+
+          this.offset++    //每当向上滑动的时候就让页数加1
+          console.log("向上滑动页码:"+ this.offset)
+          console.log("done:"+done)
+          if(this.noData) {
+            setTimeout(()=>{
+              this.$refs.myscroller.finishInfinite(2);
+            })
+            return;
+          }
+          let self = this;//this指向问题
+          let start = this.snaplist.length;
+          let obj = {
+            goods_id:4,
+            goods_img:'/static/img/a1.jpg',
+            goods_title:'越南美女限时抢购越南美女限时抢购越南美女限时抢购',
+            goods_realmoney:33.00,
+            goods_anothmoney:28.00,
+            goods_courier:'免邮',
+            goods_status:4
+          }
+          setTimeout(() => {
+            self.snaplist.push(obj)
+            self.snaplist.push(obj)
+            if(start > 10) {
+              self.noData = "没有更多数据"
+            }
+            self.$refs.myscroller.resize();
+            done()
+          }, 1500)
+          // done(function (e) {
+          //   console.log(e)
+          // })
+          // this.getDate(this.offset, done)
+        },
+        refresh (done) { //这是向下滑动的时候请求最新的数据
+          console.log("向下滑动")
+          setTimeout(() => {
+            done()
+          }, 1500)
+          // this.offset = 0
+          // this.getDate(1, done)
+        },
+      }
     }
 </script>
 
@@ -87,6 +140,10 @@
 .snap_title{
   width: 100%;
   margin: auto;
+  position: fixed;
+  top: 0;
+  z-index: 99999;
+  background-color: white;
 }
   .snap_list{
     width: 100%;
