@@ -27,7 +27,7 @@
             </div>
             <div class="adress_right" @click="addAdress">
               <p><label>{{addressName}}</label><label class="adress_tel">{{addressPhone}}</label><img class="right_img" src="/static/img/right.png" alt=""></p>
-              <p><img src="/static/img/address.png" alt=""><label>{{addressDetail}}</label></p>
+              <p><img class="left_img" src="/static/img/position_icon.png" alt=""><label>{{addressDetail}}</label></p>
             </div>
           </div>
           <div class="adress_detail">
@@ -184,11 +184,13 @@ export default {
 .adress_detail p:first-child {
   padding: 10px 0;
 }
-.adress_detail p img {
-  width: 15px;
-}
 .right_img {
   float: right;
+  width: 15px;
+}
+.left_img{
+  width: 11px;
+  margin-right: 5px;
 }
 .adress_left {
   flex: 1;

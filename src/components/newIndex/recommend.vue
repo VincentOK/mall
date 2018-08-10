@@ -6,26 +6,9 @@
               <span>为您推荐</span>
               <i style="background-image: url('/static/img/recommend2.png')"></i>
             </p>
-            <!-- <div class="commodity_details" v-for="(item,index) in commodity_list" :key="index">
-                <router-link class="a_detail" :to="'/detail/' + item.id">
-                <div class="img_wrap">
-                    <img :src="item.img_url" alt="">
-                    <span class="swiper_goods_tag" v-if="item.goods_tag!='0'" :class="goodsTagStyle(item.goods_tag)">
-                      <span>{{item.goods_tag | formatGoodTags}}</span>
-                    </span>
-                </div>
-                <div class="img_wrap_right">
-                    <p class="commidity_name">{{maxSlice(item.name)}}</p>
-                    <div class="commodity_price">
-                        <span>{{item.price | formatMoney}}</span>
-                        <span><del>{{item.original_cost | formatMoney}}</del></span>
-                    <p class="surplus">剩余{{item.count}}件</p>
-                    </div>
-                </div>
-                </router-link>
-            </div> -->
+            <div v-for="(item,index) in commodityCount" :key="index">
             <div class="exchange_content">
-              <router-link class="a_detail" v-for="(item,index) in commodity_list" :key="index" :to="'/detail/' + item.id">
+              <router-link class="a_detail" v-for="(item,index) in commodityList" :key="index" :to="'/detail/' + item.id">
                 <div class="exchange_content_i">
                   <div class="img_wrap">
                     <img :src="item.img_url" alt="">
@@ -46,7 +29,7 @@
           </div>
             <div class="flashSale_slide">
              <div class="swiper_wrapper">
-                <div class="swiper_image" v-for="(item,index) in commodity_time_list" :key="index">
+                <div class="swiper_image" v-for="(item,index) in commodityTimeList" :key="index">
                     <div class="image_border">
                         <router-link class="a_detail" :to="'/detail/' + item.id">
                         <img src="/static/img/a1.jpg">
@@ -59,7 +42,8 @@
                 </div>
             </div>
         </div>
-            <div class="null_div"></div>
+        <div class="null_div"></div>
+        </div>
         </div>
     </div>
 </template>
@@ -78,6 +62,17 @@ export default {
       maxLength: 20,
       maxHorizontalLength: 15
     };
+  },
+  props: {
+    commodityList: {
+      type: Array
+    },
+    commodityTimeList: {
+      type: Array
+    },
+    commodityCount: {
+      type: Number
+    }
   },
   filters: {
     formatMoney: function(price) {
@@ -126,101 +121,7 @@ export default {
         : parm;
     }
   },
-  mounted() {
-    this.commodity_list = [
-      {
-        id: "1",
-        img_url: "/static/img/a1.jpg",
-        name:
-          "海南贵妃特价海南贵妃特价海南贵南贵妃特价海南贵妃妃南贵妃海南贵妃特价海南贵妃特价海南贵南贵妃特价海南贵妃妃南贵妃海南贵妃特价海南贵妃特价海南贵南贵妃特价海南贵妃妃南贵妃 送货上门",
-        price: "120.00",
-        time_money: "356.58",
-        original_cost: "345",
-        goods_tag: "1",
-        count: "121"
-      },
-      {
-        id: "2",
-        img_url: "/static/img/a1.jpg",
-        name: "海南贵妃特价海南贵妃 送货上门",
-        price: "120.00",
-        time_money: "356.58",
-        original_cost: "345",
-        goods_tag: "2",
-        count: "122"
-      },
-      {
-        id: "3",
-        img_url: "/static/img/a1.jpg",
-        name: "海南贵妃特价海南贵妃 送货上门",
-        price: "120.00",
-        time_money: "356.58",
-        original_cost: "345",
-        goods_tag: "3",
-        count: "123"
-      },
-      {
-        id: "4",
-        img_url: "/static/img/a1.jpg",
-        name: "海南贵妃特价海南贵妃 送货上门",
-        price: "120.00",
-        time_money: "356.58",
-        original_cost: "345",
-        goods_tag: "0",
-        count: "124"
-      },
-      {
-        id: "5",
-        img_url: "/static/img/a1.jpg",
-        name: "海南贵妃特价海南贵妃 送货上门",
-        price: "120.00",
-        time_money: "356.58",
-        original_cost: "345",
-        goods_tag: "3",
-        count: "125"
-      },
-      {
-        id: "6",
-        img_url: "/static/img/a1.jpg",
-        name: "海南贵妃特价海南贵妃 送货上门",
-        price: "120.00",
-        time_money: "356.58",
-        original_cost: "345",
-        goods_tag: "3",
-        count: "125"
-      }
-    ];
-    this.commodity_time_list = [
-      {
-        id: "1",
-        img_url: "/static/img/a1.jpg",
-        name:
-          "海南贵妃特价海南贵妃特价海南贵南贵妃特价海南贵妃妃南贵妃海南贵妃特价海南贵妃特价海南贵南贵妃特价海南贵妃妃南贵妃海南贵妃特价海南贵妃特价海南贵南贵妃特价海南贵妃妃南贵妃 送货上门",
-        price: "120.00",
-        time_money: "356.58",
-        count: "121",
-        original_cost: "345"
-      },
-      {
-        id: "2",
-        img_url: "/static/img/a1.jpg",
-        name: "海南贵妃特价海南贵妃 送货上门",
-        price: "120.00",
-        time_money: "356.58",
-        count: "122",
-        original_cost: "345"
-      },
-      {
-        id: "3",
-        img_url: "/static/img/a1.jpg",
-        name: "海南贵妃特价海南贵妃 送货上门",
-        price: "120.00",
-        time_money: "356.58",
-        original_cost: "345",
-        count: "123"
-      }
-    ];
-  }
+  mounted() {}
 };
 </script>
 
@@ -387,7 +288,6 @@ export default {
 .exchange_content_i {
   display: inline-block;
   width: 171px;
-  /*width: 46%;*/
   background-color: white;
   border-radius: 8px;
   margin-left: 1%;

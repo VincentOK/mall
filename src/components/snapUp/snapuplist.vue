@@ -3,16 +3,13 @@
     <div  v-touch:swiperight="touchRight">
       <div class="snap_title">
         <p>
-          <label>本轮抢购已结束，请等待下轮抢购开启</label>
-          <label>距下轮开启</label>
-          <label>07:51:27</label>
+          <label class="end_title">本轮抢购已结束，请等待下轮抢购开启</label>
+          <time-down-view @time-end="clearTime = true" :endTime='endTime' :endTimeChar='endTimeChar' :timeStyle='indexStyle'></time-down-view>
         </p>
       </div>
       <div class="all_snap">
-
         <scroller style="margin-top: 50px" :on-infinite="infinite"  :on-refresh = "refresh" ref="myscroller">
-          <div style="height: 1px;"></div>
-
+        <div style="height: 1px;"></div>
         <div class="snap_list" v-for="(item,index) in snaplist" :key="index">
           <div class="snap_one">
             <div class="snap_one_left">
@@ -32,112 +29,119 @@
           </div>
         </div>
         </scroller>
-
       </div>
     </div>
 </template>
 
 <script>
-    export default {
-        name: "snapuplist",
-      data(){
-          return{
-            snaplist:[]
-
-          }
+import timeDown from "../publicComponent/timeDown";
+export default {
+  name: "snapuplist",
+  data() {
+    return {
+      snaplist: [],
+      clearTime: false,
+      endTime: "2018-08-20 05:40:20",
+      endTimeChar: "距下轮开启",
+      indexStyle: "snapupList"
+    };
+  },
+  components: {
+    timeDown
+  },
+  mounted() {
+    this.snaplist = [
+      {
+        goods_id: 1,
+        goods_img: "/static/img/a1.jpg",
+        goods_title: "越南美女限时抢购越南美女限时抢购越南美女限时抢购",
+        goods_realmoney: 33.0,
+        goods_anothmoney: 28.0,
+        goods_courier: "免邮",
+        goods_status: 2
       },
-      mounted(){
-          this.snaplist=[
-            {
-              goods_id:1,
-              goods_img:'/static/img/a1.jpg',
-              goods_title:'越南美女限时抢购越南美女限时抢购越南美女限时抢购',
-              goods_realmoney:33.00,
-              goods_anothmoney:28.00,
-              goods_courier:'免邮',
-              goods_status:2
-            },
-            {
-              goods_id:2,
-              goods_img:'/static/img/a1.jpg',
-              goods_title:'越南美女限时抢购越南美女限时抢购越南美女限时抢购',
-              goods_realmoney:33.00,
-              goods_anothmoney:28.00,
-              goods_courier:'免邮',
-              goods_status:3
-            },
-            {
-              goods_id:3,
-              goods_img:'/static/img/a1.jpg',
-              goods_title:'越南美女限时抢购越南美女限时抢购越南美女限时抢购',
-              goods_realmoney:33.00,
-              goods_anothmoney:28.00,
-              goods_courier:'免邮',
-              goods_status:1
-            },
-            {
-              goods_id:4,
-              goods_img:'/static/img/a1.jpg',
-              goods_title:'越南美女限时抢购越南美女限时抢购越南美女限时抢购',
-              goods_realmoney:33.00,
-              goods_anothmoney:28.00,
-              goods_courier:'免邮',
-              goods_status:4
-            }
-          ]
+      {
+        goods_id: 2,
+        goods_img: "/static/img/a1.jpg",
+        goods_title: "越南美女限时抢购越南美女限时抢购越南美女限时抢购",
+        goods_realmoney: 33.0,
+        goods_anothmoney: 28.0,
+        goods_courier: "免邮",
+        goods_status: 3
       },
-      methods:{
-        infinite (done) {
-          console.log("向上滑动")
-
-          this.offset++    //每当向上滑动的时候就让页数加1
-          console.log("向上滑动页码:"+ this.offset)
-          console.log("done:"+done)
-          if(this.noData) {
-            setTimeout(()=>{
-              this.$refs.myscroller.finishInfinite(2);
-            })
-            return;
-          }
-          let self = this;//this指向问题
-          let start = this.snaplist.length;
-          let obj = {
-            goods_id:4,
-            goods_img:'/static/img/a1.jpg',
-            goods_title:'越南美女限时抢购越南美女限时抢购越南美女限时抢购',
-            goods_realmoney:33.00,
-            goods_anothmoney:28.00,
-            goods_courier:'免邮',
-            goods_status:4
-          }
-          setTimeout(() => {
-            self.snaplist.push(obj)
-            self.snaplist.push(obj)
-            if(start > 10) {
-              self.noData = "没有更多数据"
-            }
-            self.$refs.myscroller.resize();
-            done()
-          }, 1500)
-          // done(function (e) {
-          //   console.log(e)
-          // })
-          // this.getDate(this.offset, done)
-        },
-        refresh (done) { //这是向下滑动的时候请求最新的数据
-          console.log("向下滑动")
-          setTimeout(() => {
-            done()
-          }, 1500)
-          // this.offset = 0
-          // this.getDate(1, done)
-        },
+      {
+        goods_id: 3,
+        goods_img: "/static/img/a1.jpg",
+        goods_title: "越南美女限时抢购越南美女限时抢购越南美女限时抢购",
+        goods_realmoney: 33.0,
+        goods_anothmoney: 28.0,
+        goods_courier: "免邮",
+        goods_status: 1
+      },
+      {
+        goods_id: 4,
+        goods_img: "/static/img/a1.jpg",
+        goods_title: "越南美女限时抢购越南美女限时抢购越南美女限时抢购",
+        goods_realmoney: 33.0,
+        goods_anothmoney: 28.0,
+        goods_courier: "免邮",
+        goods_status: 4
       }
+    ];
+  },
+  methods: {
+    infinite(done) {
+      console.log("向上滑动");
+
+      this.offset++; //每当向上滑动的时候就让页数加1
+      console.log("向上滑动页码:" + this.offset);
+      console.log("done:" + done);
+      if (this.noData) {
+        setTimeout(() => {
+          this.$refs.myscroller.finishInfinite(2);
+        });
+        return;
+      }
+      let self = this; //this指向问题
+      let start = this.snaplist.length;
+      let obj = {
+        goods_id: 4,
+        goods_img: "/static/img/a1.jpg",
+        goods_title: "越南美女限时抢购越南美女限时抢购越南美女限时抢购",
+        goods_realmoney: 33.0,
+        goods_anothmoney: 28.0,
+        goods_courier: "免邮",
+        goods_status: 4
+      };
+      setTimeout(() => {
+        self.snaplist.push(obj);
+        self.snaplist.push(obj);
+        if (start > 10) {
+          self.noData = "没有更多数据";
+        }
+        self.$refs.myscroller.resize();
+        done();
+      }, 1500);
+      // done(function (e) {
+      //   console.log(e)
+      // })
+      // this.getDate(this.offset, done)
+    },
+    refresh(done) {
+      //这是向下滑动的时候请求最新的数据
+      console.log("向下滑动");
+      setTimeout(() => {
+        done();
+      }, 1500);
+      // this.offset = 0
+      // this.getDate(1, done)
     }
+  }
+};
 </script>
 
 <style scoped>
-.snap_title{
+.snap_title {
   width: 100%;
   margin: auto;
   position: fixed;
@@ -145,70 +149,75 @@
   z-index: 99999;
   background-color: white;
 }
-  .snap_list{
-    width: 100%;
-    border-top: 1px solid #f9f9f9;
-    padding-bottom: 8px;
-  }
-  .snap_one{
-    display: flex;
-    width: 95%;
-    margin: auto;
-    margin-top: 8px;
-  }
-  .snap_one_left{
-    flex: 2;
-  }
-  .snap_one_left img{
-    width: 100%;
-    height: 100%;
-  }
-  .snap_one_right{
-    flex: 4;
-  }
-  .snap_one_right p{
-    margin: 0;
-    margin-left: 13px;
-    text-align: left;
-  }
-  .snap_one_right p:first-child{
-    color: #333333;
-    font-size: 14px;
-    padding-bottom: 10px;
-  }
-  .snap_one_right p:nth-child(2){
-    padding-bottom: 10px;
-  }
-  .snap_title_on{
-    height: 35px;
-    padding-bottom: 0;
-    margin-bottom: 0;
-    line-height: 35px;
-    overflow: hidden;
-  }
-  .snap_real_money{
-    color: #ea3339;
-    font-size: 16px;
-    font-weight: 600;
-  }
-  .snap_money_i{
-    color: darkgray;
-    text-decoration: line-through;
-    margin-left: 8px;
-  }
-  .snap_style{
-    color: #ea3339;
-    padding: 3px 8px;
-    background-color: #fff4ec;
-  }
-  .snap_button{
-    float: right;
-    /*padding: 5px;*/
-    height: 35px;
-    line-height: 35px;
-    padding: 0 10px;
-    background-color: #11bb55;
-    color: white;
-    border-radius: 5px;
-  }
+.end_title {
+  font-size: 12px;
+  color: #333;
+  float: left;
+  margin-left: 10px;
+}
+.snap_list {
+  width: 100%;
+  border-top: 1px solid #f9f9f9;
+  padding-bottom: 8px;
+}
+.snap_one {
+  display: flex;
+  width: 95%;
+  margin: auto;
+  margin-top: 8px;
+}
+.snap_one_left {
+  flex: 2;
+}
+.snap_one_left img {
+  width: 100%;
+  height: 100%;
+}
+.snap_one_right {
+  flex: 4;
+}
+.snap_one_right p {
+  margin: 0;
+  margin-left: 13px;
+  text-align: left;
+}
+.snap_one_right p:first-child {
+  color: #333333;
+  font-size: 14px;
+  padding-bottom: 10px;
+}
+.snap_one_right p:nth-child(2) {
+  padding-bottom: 10px;
+}
+.snap_title_on {
+  height: 35px;
+  padding-bottom: 0;
+  margin-bottom: 0;
+  line-height: 35px;
+  overflow: hidden;
+}
+.snap_real_money {
+  color: #ea3339;
+  font-size: 16px;
+  font-weight: 600;
+}
+.snap_money_i {
+  color: darkgray;
+  text-decoration: line-through;
+  margin-left: 8px;
+}
+.snap_style {
+  color: #ea3339;
+  padding: 3px 8px;
+  background-color: #fff4ec;
+}
+.snap_button {
+  float: right;
+  height: 35px;
+  line-height: 35px;
+  padding: 0 10px;
+  background-color: #11bb55;
+  color: white;
+  border-radius: 5px;
+}
 </style>
