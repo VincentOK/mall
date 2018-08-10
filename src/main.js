@@ -6,6 +6,8 @@ import router from './router'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
 import directives from './commonJS/directives'
+import VueScroller from 'vue-scroller'
+Vue.use(VueScroller)
 Vue.use(VueAwesomeSwiper)
 directives(Vue)
 

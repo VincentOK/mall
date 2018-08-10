@@ -37,8 +37,6 @@
 
 <script>
   import Vue from 'vue'
-  import VueScroller from 'vue-scroller'
-  Vue.use(VueScroller)
   import refund_dialog from '../dialog/refund_dialog'
   Vue.component('refund_dialog-view',refund_dialog)
     export default {
