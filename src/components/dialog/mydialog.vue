@@ -4,7 +4,7 @@
   <div class="wai"  v-if="displayNone">
     <div class="mydialog">
         <img src="/static/img/prompt.png" alt="">
-        <p>{{tismsg}}</p>
+        <div>{{tismsg}}</div>
     </div>
   </div>
   <div class="prize_dialog"  v-if="prizedialog">
@@ -89,8 +89,9 @@ export default {
   margin-top: 16px;
   width: 37px;
 }
-.mydialog p {
+.mydialog div {
   margin: 0;
+  color: white;
   padding: 18px 0 20px 0;
   font-size: 16px;
 }

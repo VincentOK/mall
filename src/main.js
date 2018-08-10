@@ -6,14 +6,16 @@ import router from './router'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
 import directives from './commonJS/directives'
+import clientHeight from './commonJS/getClientHeight'
 import VueScroller from 'vue-scroller'
 Vue.use(VueScroller)
 Vue.use(VueAwesomeSwiper)
 directives(Vue)
+clientHeight(Vue)
 
 Vue.config.productionTip = false
 Vue.prototype.touchRight = function(){
-  console.log("8888888")
+  console.log("9999999")
   window.history.back()
 }
 /* eslint-disable no-new */
