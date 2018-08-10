@@ -4,11 +4,9 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
-// import touch from 'vue-directive-touch';
 import 'swiper/dist/css/swiper.css'
 import directives from './commonJS/directives'
 Vue.use(VueAwesomeSwiper)
-// Vue.use(touch);
 directives(Vue)
 
 Vue.config.productionTip = false

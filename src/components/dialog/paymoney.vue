@@ -1,7 +1,7 @@
 <!--选择支付方式-->
 <template>
     <div class="paymoney">
-      <div class="pay_fiex"></div>
+      <div class="pay_fiex" v-on:click="closeModel"></div>
       <div class="pay_money">
         <div>
           <img v-on:click="closeModel" class="pay_money_close" src="/static/img/pay_close.png" alt="">
@@ -39,6 +39,7 @@
         name: "paymoney",
         data (){
           return {
+            paymoney_status:false,
             alicheck:'/static/img/select@2x.png',
             wechatcheck:'/static/img/uncheck.png',
             chinacheck:'/static/img/uncheck.png'
@@ -46,7 +47,7 @@
         },
       methods:{
         closeModel:function () {
-          this.$emit('childByValue',false)
+          this.$emit('childByValue',this.paymoney_status)
         },
         chooseAlipay:function () {
           this.alicheck = '/static/img/select@2x.png'

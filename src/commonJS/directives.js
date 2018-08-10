@@ -66,10 +66,10 @@ export default(Vue) => {
         var endX, endY;
         endX = ev.changedTouches[0].pageX;
         endY = ev.changedTouches[0].pageY;
-        console.log("左滑开始："+startX)
-        console.log("左滑结束："+endX)
-        console.log("上滑开始："+startY)
-        console.log("下滑结束："+endY)
+        // console.log("左滑开始："+startX)
+        // console.log("左滑结束："+endX)
+        // console.log("上滑开始："+startY)
+        // console.log("下滑结束："+endY)
         direction = GetSlideDirection(startX, startY, endX, endY);
 
         clearTimeout(timeOutEvent)

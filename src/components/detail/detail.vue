@@ -1,6 +1,6 @@
 <!--商品详情-->
 <template>
-  <div class="detail"  v-touch:swiperight="touchRight">
+  <div class="detail">
     <div class="title_i">
       <swiper :options="swiperOption">
         <swiper-slide><img class="detail_img" src="/static/img/a1.jpg"></swiper-slide>
@@ -12,78 +12,80 @@
       <div class="swiper-pagination" style="width: 40px;height: 22.5px;text-align: center;line-height: 22.5px;background-color: #A9A9A9;font-size: 11px;border-radius: 12px;color: white;left: 323px" slot="pagination"></div>
 
     </div>
-    <div class="title_j">
-      <p class="detail_tatle">
-        <label class="detail_hot">热门</label>
-        <label class="word_hot">越南美女包邮越南美女包邮越南美女包邮越南美女包邮越南美女包邮越南美女包邮越南美女包邮</label>
-      </p>
-      <p class="detail_money">
-        <label class="money_real"><label class="fontM">￥</label>60.00</label>
-        <label class="money_over"><label class="fontM_i">￥</label>33.00</label>
-        <label class="money_over_count">剩余99件</label>
-      </p>
-    </div>
-    <div class="null_div"></div>
-    <div class="adress_detail_all">
-      <div class="adress_detail">
-        <div class="adress_left">
-          <p class="word_moren">送至</p>
+    <div   v-touch:swiperight="touchRight">
+        <div class="title_j">
+          <p class="detail_tatle">
+            <label class="detail_hot">热门</label>
+            <label class="word_hot">越南美女包邮越南美女包邮越南美女包邮越南美女包邮越南美女包邮越南美女包邮越南美女包邮</label>
+          </p>
+          <p class="detail_money">
+            <label class="money_real"><label class="fontM">￥</label>60.00</label>
+            <label class="money_over"><label class="fontM_i">￥</label>33.00</label>
+            <label class="money_over_count">剩余99件</label>
+          </p>
         </div>
-        <div class="adress_right" v-on:click="addAdress">
-          <p><label>Vincent</label><label class="adress_tel">18376614866</label><img class="right_img" src="/static/img/right.png" alt=""></p>
-          <p class="adress_relative"><img src="/static/img/address.png" alt=""><label>广东省深圳市南山区田厦金牛广场1402</label></p>
-        </div>
-      </div>
-      <div class="adress_detail">
-        <div class="adress_left">
-          <p class="word_moren">规格</p>
-        </div>
-        <div class="adress_right">
-          <p>每份300克</p>
-        </div>
-      </div>
-      <div class="adress_detail">
-        <div class="adress_left">
-          <p class="word_moren">运费</p>
-        </div>
-        <div class="adress_right">
-          <p>包邮</p>
-        </div>
-      </div>
-    </div>
-    <div class="null_div"></div>
-    <div class="adress_detail_all">
-      <div class="adress_detail last_count">
-      <div class="adress_left">
-        <p class="word_moren">数量</p>
-      </div>
-      <div class="adress_right">
-        <div class="right_count">
-          <div class="add_count" v-on:click="counter ++">
-            <img src="/static/img/add.png" alt="">
+        <div class="null_div"></div>
+        <div class="adress_detail_all">
+          <div class="adress_detail">
+            <div class="adress_left">
+              <p class="word_moren">送至</p>
+            </div>
+            <div class="adress_right" v-on:click="addAdress">
+              <p><label>Vincent</label><label class="adress_tel">18376614866</label><img class="right_img" src="/static/img/right.png" alt=""></p>
+              <p class="adress_relative"><img src="/static/img/address.png" alt=""><label>广东省深圳市南山区田厦金牛广场1402</label></p>
+            </div>
           </div>
-          <input class="number" type="number" v-model="counter">
-          <div  class="reduction" v-on:click="remove_i()">
-            <img src="/static/img/reduction.png" alt="">
+          <div class="adress_detail">
+            <div class="adress_left">
+              <p class="word_moren">规格</p>
+            </div>
+            <div class="adress_right">
+              <p>每份300克</p>
+            </div>
+          </div>
+          <div class="adress_detail">
+            <div class="adress_left">
+              <p class="word_moren">运费</p>
+            </div>
+            <div class="adress_right">
+              <p>包邮</p>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    </div>
-    <div class="null_div"></div>
-    <div class="detail_detail">
-      <p>商品详情</p>
-      <p>
-        商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品
-        详情商品详情商品详情商品详情商品详情商品详情商品详情
-        商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品
-        详情商品详情商品详情商品详情商品详情商品详情商品详情
-      </p>
-    </div>
-    <paymoney-view v-on:childByValue="childByValue" v-if="paymoney"></paymoney-view>
-    <paytime-view v-on:childByValue="childByValue" v-if="paytime"></paytime-view>
-    <div class="buy_it">
-      <button v-on:click="pay_money" >立即购买</button>
+        <div class="null_div"></div>
+        <div class="adress_detail_all">
+          <div class="adress_detail last_count">
+          <div class="adress_left">
+            <p class="word_moren">数量</p>
+          </div>
+          <div class="adress_right">
+            <div class="right_count">
+              <div class="add_count" v-on:click="counter ++">
+                <img src="/static/img/add.png" alt="">
+              </div>
+              <input class="number" type="number" v-model="counter">
+              <div  class="reduction" v-on:click="remove_i()">
+                <img src="/static/img/reduction.png" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+        <div class="null_div"></div>
+        <div class="detail_detail">
+          <p>商品详情</p>
+          <p>
+            商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品
+            详情商品详情商品详情商品详情商品详情商品详情商品详情
+            商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品
+            详情商品详情商品详情商品详情商品详情商品详情商品详情
+          </p>
+        </div>
+        <paymoney-view v-on:childByValue="childByValue" v-if="paymoney"></paymoney-view>
+        <paytime-view v-on:childByValue="childByValue" v-if="paytime"></paytime-view>
+        <div class="buy_it">
+          <button v-on:click="pay_money" >立即购买</button>
+        </div>
     </div>
   </div>
 </template>
@@ -147,6 +149,7 @@ export default {
   },
   mounted(){
     console.log("页面初始化")
+    this.hidden_btn = true
   },
   methods:{
     remove_i:function () {
@@ -169,7 +172,7 @@ export default {
     addAdress:function () {
       this.$router.push('/add/myaddress');
     }
-  }
+  },
 }
 </script>
 
