@@ -1,6 +1,6 @@
 <!--中奖-->
 <template>
-  <div v-show="close" class="bg">
+  <div v-show="close" :class="{noScroll: isShowPopup}">
     <div class="notwinning_out"></div>
     <div class="notwinning_in">
       <div class="winning_postion">
@@ -24,28 +24,37 @@ export default {
   name: "winning",
   data() {
     return {
-      close: true
+      close: true,
     };
+  },
+  props: {
+    isShowPopup:Boolean
   },
   methods: {
     closePage() {
       this.close = false;
       this.$emit("toDraw", null);
-      var body = document.getElementsByTagName('body')
-      body[0].style.height = '';
-      body[0].style.overflow = '';
+      document.body.style.height = '';
+      document.body.style.overflowY = '';
     }
   },
+   watch: {
+    isShowPopup(newVal, oldVal) {
+      if (newVal) {
+       document.body.style.height = '100%';
+       document.body.style.overflowY = 'hidden';
+      }
+      // 下面需要这两行代码，兼容不同浏览器
+      document.body.scrollTop = this.pageScrollYoffset;
+      window.scroll(0, this.pageScrollYoffset);
+    }
+   },
   mounted(){
-    // let body = document.getElementsByTagName("body");
   }
 };
 </script>
 
 <style scoped>
-/* .bg{
-  position: relative;
-} */
 .notwinning_out {
   width: 100%;
   height: 100%;

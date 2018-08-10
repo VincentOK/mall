@@ -1,5 +1,5 @@
 <template>
-  <span :class="timeStyle">{{endTimeChar}}&nbsp;<i >{{timeH}}</i>:<i>{{timeM}}</i>:<i>{{timeS}}</i></span>
+  <span :class="timeStyle">{{endTimeChar}}&nbsp;<span>{{timeH}}</span>:<span>{{timeM}}</span>:<span>{{timeS}}</span></span>
 </template>
 
 <script>
@@ -43,7 +43,7 @@ export default {
       let s = this.formate(parseInt(leftTime % 60));
       if (leftTime <= 0) {
         this.flag = true;
-        this.$emit("time-end");
+        this.$emit("time-end",true);
         this.timeH = `00`;
         this.timeM = `00`;
         this.timeS = `00`;
@@ -67,14 +67,27 @@ export default {
 .indexStyle {
   line-height: 49px;
   float: right;
-  margin-right: 26px;
+  margin-right: 15px;
   font-size: 12px;
   color: #f10215;
 }
-.indexStyle i {
+.indexStyle span {
   color: white;
   background-color: #f10215;
-  padding-right: 2px;
+  padding: 0 2px;
+  margin: 0 2px;
+  border-radius: 2px;
+}
+.snapupList{
+  float: right;
+  margin-right: 10px;
+  font-size: 12px;
+  color: #333;
+}
+.snapupList span {
+  color: white;
+  background-color: #333;
+  padding: 0 2px;
   margin: 0 2px;
   border-radius: 2px;
 }

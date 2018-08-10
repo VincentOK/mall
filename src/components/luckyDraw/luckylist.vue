@@ -7,7 +7,7 @@
       <div class="apic">
         <button @click="clickToTheLottery">开始刮奖</button><br><br>
         <label v-show="whetherFree">今日免费<span class="free-times">3</span>次</label>
-        <label v-show="!whetherFree"><span class="lucky_money">0.5</span>时间币/每次</label>
+        <label v-show="!whetherFree"><span class="lucky_money">0.5</span>时间币/次</label>
       </div>
     </div>
     <div id="canvas" v-if="clickLottery">
@@ -20,59 +20,22 @@
     </div>
     <div>
       <p class="lucky_title">奖品说明</p>
-      <div class="lucky_all_list">
-        <div class="lucky_one">
-          <div class="lucky_one_left">
-            <img src="/static/img/a1.jpg" alt="">
+      <div class="lucky_all_list" v-for="(item,index) in lucky_list" :key="index">
+        <router-link class="top_order" :to="'/detail/' + item.id">
+          <div class="lucky_one">
+            <div class="lucky_one_left">
+              <img src="/static/img/a1.jpg" alt="">
+            </div>
+            <div class="lucky_one_right">
+              <p>{{item.name}}</p>
+              <p>
+                <label>规格：</label>
+                <label>{{item.standard}}瓶</label>
+              </p>
+              <p><label class="lucky_num">x{{item.lucky_num}}</label></p>
+            </div>
           </div>
-          <div class="lucky_one_right">
-            <p>夏季水培植物留香薄荷柠檬盆栽驱蚊草玻璃盆景</p>
-            <p>
-              <label>规格：</label>
-              <label>1瓶</label>
-            </p>
-            <p><label class="lucky_num">x1</label></p>
-          </div>
-        </div>
-        <div class="lucky_one">
-          <div class="lucky_one_left">
-            <img src="/static/img/a1.jpg" alt="">
-          </div>
-          <div class="lucky_one_right">
-            <p>夏季水培植物留香薄荷柠檬盆栽驱蚊草玻璃盆景</p>
-            <p>
-              <label>规格：</label>
-              <label>1瓶</label>
-            </p>
-            <p><label class="lucky_num">x1</label></p>
-          </div>
-        </div>
-        <div class="lucky_one">
-          <div class="lucky_one_left">
-            <img src="/static/img/a1.jpg" alt="">
-          </div>
-          <div class="lucky_one_right">
-            <p>夏季水培植物留香薄荷柠檬盆栽驱蚊草玻璃盆景</p>
-            <p>
-              <label>规格：</label>
-              <label>1瓶</label>
-            </p>
-            <p><label class="lucky_num">x1</label></p>
-          </div>
-        </div>
-        <div class="lucky_one">
-          <div class="lucky_one_left">
-            <img src="/static/img/a1.jpg" alt="">
-          </div>
-          <div class="lucky_one_right">
-            <p>夏季水培植物留香薄荷柠檬盆栽驱蚊草玻璃盆景</p>
-            <p>
-              <label>规格：</label>
-              <label>1瓶</label>
-            </p>
-            <p><label class="lucky_num">x1</label></p>
-          </div>
-        </div>
+        </router-link>
       </div>
     </div>
     <div class="activity-description" v-show="!clickLottery">
@@ -97,7 +60,7 @@
         </div>
       </div>
     </div>
-    <winning-view v-show="winThePrice === 'win'" v-on:toDraw="toDrawwing"></winning-view>
+    <winning-view v-show="winThePrice === 'win'" v-on:toDraw="toDrawwing" :isShowPopup="!!winThePrice"></winning-view>
     <notwinning-view v-show="winThePrice === 'notWin'" v-on:toDraw="toDrawwing"></notwinning-view>
   </div>
 </template>
@@ -116,6 +79,7 @@ export default {
       clickLottery: false,
       winThePrice: "",
       whetherPrice: false,
+      lucky_list:[],
       win_name:'杨天宝',
       win_gift:'芭比娃娃X1'
     };
@@ -123,6 +87,39 @@ export default {
   comments: {
     notwinning,
     winning
+  },
+  mounted(){
+    this.lucky_list = [
+      {
+        id:'1',
+        name:'夏季水培植物留香薄荷柠檬盆栽驱蚊草玻璃盆景',
+        standard:"1",
+        lucky_num:'1'
+      },
+      {
+        id:'2',
+        name:'夏季水培植物留香薄荷柠檬盆栽驱蚊草玻璃盆景',
+        standard:"1",
+        lucky_num:'1'
+      },
+      {
+        id:'3',
+        name:'夏季水培植物留香薄荷柠檬盆栽驱蚊草玻璃盆景',
+        standard:"1",
+        lucky_num:'1'
+      },
+      {
+        id:'4',
+        name:'夏季水培植物留香薄荷柠檬盆栽驱蚊草玻璃盆景',
+        standard:"1",
+        lucky_num:'1'
+      },{
+        id:'5',
+        name:'夏季水培植物留香薄荷柠檬盆栽驱蚊草玻璃盆景',
+        standard:"1",
+        lucky_num:'1'
+      }
+    ]
   },
   updated() {
     this.$nextTick(function() {
@@ -146,7 +143,7 @@ export default {
       this.clickLottery = true;
     },
     toDrawwing(rawData) {
-      this.winThePrice = "rawData";
+      this.winThePrice = "";
       this.clickLottery = rawData;
     },
     loadCanvas() {
@@ -211,11 +208,6 @@ export default {
       }
       function showResult(msg) {
         self.winThePrice = "win";
-        // document.getElementById("app").setAttribute("class","fixed_mask");
-        var body = document.getElementsByTagName('body')
-        body[0].style.height = '700px';
-        body[0].style.overflow = 'hidden';
-        // document.getElementsByTagName('body').style.overflow = 'hidden';
       }
     }
   }
@@ -223,6 +215,10 @@ export default {
 </script>
 
 <style scoped>
+.top_order{
+  text-decoration: none;
+  color:#333
+}
 .fixed_mask{
   height: 100%;
   overflow: hidden;
