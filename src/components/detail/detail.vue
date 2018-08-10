@@ -83,7 +83,7 @@
         </div>
         <paymoney-view v-on:childByValue="childByValue" v-if="paymoney"></paymoney-view>
         <paytime-view v-on:childByValue="childByValue" v-if="paytime"></paytime-view>
-        <div class="buy_it">
+        <div class="buy_it"  v-bind:class="hidden_btn">
           <button v-on:click="pay_money" >立即购买</button>
         </div>
     </div>
@@ -108,6 +108,7 @@ export default {
   },
   data () {
     return {
+      hidden_btn:'block',
       counter:1,
       goodsStatus:0,
       paymoney:false,
@@ -149,7 +150,6 @@ export default {
   },
   mounted(){
     console.log("页面初始化")
-    this.hidden_btn = true
   },
   methods:{
     remove_i:function () {
@@ -170,6 +170,7 @@ export default {
       this.paytime = childByValue
     },
     addAdress:function () {
+      this.hidden_btn = 'none'
       this.$router.push('/add/myaddress');
     }
   },
@@ -177,6 +178,12 @@ export default {
 </script>
 
 <style scoped>
+  .block{
+    display: block;
+  }
+  .none{
+    display: none;
+  }
   .detail{
     /*font-size: 13px;*/
   }
