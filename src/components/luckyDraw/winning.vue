@@ -1,6 +1,6 @@
 <!--中奖-->
 <template>
-  <div v-show="close">
+  <div v-show="close" class="bg">
     <div class="notwinning_out"></div>
     <div class="notwinning_in">
       <div class="winning_postion">
@@ -43,6 +43,9 @@ export default {
 </script>
 
 <style scoped>
+/* .bg{
+  position: relative;
+} */
 .notwinning_out {
   width: 100%;
   height: 100%;
@@ -75,7 +78,7 @@ export default {
   position: absolute;
   left: 0;
   right: 0;
-  top: 100px;
+  top: 10%;
   margin: auto;
   width: 276px;
 }
