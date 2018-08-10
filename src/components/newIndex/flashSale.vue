@@ -6,11 +6,11 @@
               <router-link class="a_detail" :to="'/detail/' + item.id">
                 <div class="image_border">
                     <img :src="item.img_url" alt="">
-                    <p class="swiper_name">{{maxSlice(item.name)}}</p>
-                    <p class="swiper_price">{{item.price | formatMoney}}</p>
-                    <p class="swiper_del_price"><del>{{item.original_cost |formatMoney}}</del></p>
-                      <span class="swiper_goods_tag">即将开始</span>
-                      <span v-show="goods_tag">抢购结束</span>
+                  <p class="swiper_name">{{maxSlice(item.name)}}</p>
+                  <p class="swiper_price">{{item.price | formatMoney}}</p>
+                  <p class="swiper_del_price"><del>{{item.original_cost |formatMoney}}</del></p>
+                  <span :class="goodsTagStyle(item.goods_tag)" class="swiper_goods_tag"><span>{{item.goods_tag | formatGoodTags}}</span></span>
+                  <span v-show="goods_tag">抢购结束</span>
                 </div>
                 </router-link>
             </div>
@@ -24,8 +24,9 @@
         </swiper>
         <div class="last_explain">
             <span><i style="background-image: url('/static/img/store.png')"></i>扶贫商城</span>
-            <span><i style="background-image: url('/static/img/pinkage.png')"></i>全场包邮</span>
-            <span><i style="background-image: url('/static/img/quality.png')"></i>品质保障</span>
+            <span><i style="background-image: url('/static/img/pinkage.png')"></i>价格实惠</span>
+            <span><i style="background-image: url('/static/img/quality.png')"></i>正品保证</span>
+            <span><i style="background-image: url('/static/img/quality2.png')"></i>品质溯源</span>
         </div>
     </div>
 </template>
@@ -35,25 +36,21 @@ export default {
   name: "flashSale",
   data() {
     return {
-      goods_tag:'',
+      goods_tag: "",
+      swiper_goods_tag: "",
+      isGreenGoodsTag: false,
+      isBlackGoodsTag: false,
       cash_list: [],
       maxLength: 15,
       swiperOption: {
-        slidesPerView : "auto",
+        slidesPerView: "auto",
         slidesOffsetAfter: 110,
-        freeMode:true,
-        // freeModeMomentumRatio:0.5,
-        freeModeMomentumVelocityRatio:0.3,
-        freeModeMomentumBounce:false,
-        // touchRatio:0.5,
-        // longSwipesRatio:0.1,
-        // threshold:50,
-        // followFinger:false,
-        //  pagination: '.image_border',
+        freeMode: true,
+        freeModeMomentumVelocityRatio: 0.3,
+        freeModeMomentumBounce: false,
         loop: false,
-        // grabCursor: true,
         observer: true,
-        observeParents: true,
+        observeParents: true
       }
     };
   },
@@ -62,11 +59,35 @@ export default {
       return parm.length > this.maxLength
         ? parm.slice(0, this.maxLength) + "..."
         : parm;
+    },
+    goodsTagStyle(id) {
+      switch (id) {
+        case "1":
+          return { isGreenGoodsTag: true };
+          break;
+        case "2":
+          return { isBlackGoodsTag: true };
+          break;
+        default:
+          return "";
+      }
     }
   },
   filters: {
     formatMoney: function(price) {
       return "￥" + Number(price).toFixed(2);
+    },
+    formatGoodTags(goodId) {
+      switch (goodId) {
+        case "1":
+          return "即将开始";
+          break;
+        case "2":
+          return "抢购结束";
+          break;
+        default:
+          return "";
+      }
     }
   },
   mounted() {
@@ -79,6 +100,7 @@ export default {
         price: "120.00",
         time_money: "356.58",
         original_cost: "345",
+        goods_tag: "1",
         count: "121"
       },
       {
@@ -88,6 +110,7 @@ export default {
         price: "120.00",
         time_money: "356.58",
         original_cost: "345",
+        goods_tag: "1",
         count: "122"
       },
       {
@@ -97,6 +120,7 @@ export default {
         price: "120.00",
         time_money: "356.58",
         original_cost: "345",
+        goods_tag: "2",
         count: "123"
       },
       {
@@ -106,6 +130,7 @@ export default {
         price: "120.00",
         time_money: "356.58",
         original_cost: "345",
+        goods_tag: "2",
         count: "124"
       },
       {
@@ -115,6 +140,7 @@ export default {
         price: "120.00",
         time_money: "356.58",
         original_cost: "345",
+        goods_tag: "1",
         count: "125"
       },
       {
@@ -124,6 +150,7 @@ export default {
         price: "120.00",
         time_money: "356.58",
         original_cost: "345",
+        goods_tag: "1",
         count: "126"
       },
       {
@@ -133,6 +160,7 @@ export default {
         price: "120.00",
         time_money: "356.58",
         original_cost: "345",
+        goods_tag: "2",
         count: "126"
       },
       {
@@ -142,6 +170,7 @@ export default {
         price: "120.00",
         time_money: "356.58",
         original_cost: "345",
+        goods_tag: "1",
         count: "126"
       }
     ];
@@ -153,7 +182,7 @@ export default {
 .flash_sale {
   margin-top: 15px;
 }
-.swiper-slide{
+.swiper-slide {
   width: 109px;
 }
 .swiper_slide {
@@ -174,19 +203,31 @@ export default {
   border-radius: 10px;
   position: relative;
 }
-.image_border .swiper_goods_tag{
+.image_border .swiper_goods_tag {
   position: absolute;
-  bottom: 5px;
+  top: 0;
   left: 5px;
-  display: inline-block;
-  color: #eee;
-  width: 50px;
-  height: 14px;
-  padding:2px;
-  border-radius: 2px;
-  font-size: 9px;
-  text-align: center;
-  background-color: #11bb55;
+  width: 25px;
+  height: 26px;
+  background-position: 0 0;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  color: aliceblue;
+}
+.image_border .swiper_goods_tag span {
+  position: absolute;
+  top: -4px;
+  left: 0;
+  height: 26px;
+  width: 25px;
+  font-size: 8px;
+  transform: scale(0.7,0.65);
+}
+.isGreenGoodsTag {
+  background-image: url("/static/img/buy_star_icon.png");
+}
+.isBlackGoodsTag {
+  background-image: url("/static/img/buy_end_icon.png");
 }
 .image_border img {
   width: 100px;
@@ -216,24 +257,25 @@ export default {
 .last_explain {
   height: 28px;
   width: 100%;
-  background-color: #f4f4f4;
+  background-color: #fff;
   display: flex;
   justify-content: center;
   align-items: Center;
 }
 .last_explain span {
-  width: 33.3%;
-  font-size: 13px;
-  color: #333;
+  width: 25%;
+  font-size: 12px;
+  color: #5f5f5f;
   position: relative;
+  margin-left: 20px;
 }
-.last_explain span i{
+.last_explain span i {
   display: inline-block;
   width: 13px;
   height: 13px;
   position: absolute;
-  top: 2.5px;
-  left: 20px;
+  top: 2px;
+  left: -5px;
   background-size: 100% 100%;
   background-repeat: no-repeat;
 }

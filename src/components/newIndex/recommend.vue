@@ -6,7 +6,7 @@
               <span>为您推荐</span>
               <i style="background-image: url('/static/img/recommend2.png')"></i>
             </p>
-            <div class="commodity_details" v-for="(item,index) in commodity_list" :key="index">
+            <!-- <div class="commodity_details" v-for="(item,index) in commodity_list" :key="index">
                 <router-link class="a_detail" :to="'/detail/' + item.id">
                 <div class="img_wrap">
                     <img :src="item.img_url" alt="">
@@ -23,8 +23,27 @@
                     </div>
                 </div>
                 </router-link>
-            </div>
-            <div class="null_div"></div>
+            </div> -->
+            <div class="exchange_content">
+              <router-link class="a_detail" v-for="(item,index) in commodity_list" :key="index" :to="'/detail/' + item.id">
+                <div class="exchange_content_i">
+                  <div class="img_wrap">
+                    <img :src="item.img_url" alt="">
+                    <span class="swiper_goods_tag" v-if="item.goods_tag!='0'" :class="goodsTagStyle(item.goods_tag)">
+                      <span>{{item.goods_tag | formatGoodTags}}</span>
+                    </span>
+                  </div>
+                  <div class="word_i">
+                    <p class="word_name">{{maxSlice(item.name)}}</p>
+                    <p class="word_name_two">
+                      <label class="word_money"><label class="time">￥</label>{{item.price}}</label>
+                      <label class="be_money">￥150</label>
+                    </p>
+                    <p class="last"> <label class="word_count">剩余{{item.count}}件</label></p>
+                  </div>
+                </div>
+              </router-link>
+          </div>
             <div class="flashSale_slide">
              <div class="swiper_wrapper">
                 <div class="swiper_image" v-for="(item,index) in commodity_time_list" :key="index">
@@ -50,10 +69,10 @@ export default {
   name: "recommend",
   data() {
     return {
-      isRedGoodsTag:false,
-      isGreenGoodsTag:false,
-      isOriginGoodsTag:false,
-      goods_tag:'',
+      isRedGoodsTag: false,
+      isGreenGoodsTag: false,
+      isOriginGoodsTag: false,
+      goods_tag: "",
       commodity_list: [],
       commodity_time_list: [],
       maxLength: 20,
@@ -64,36 +83,36 @@ export default {
     formatMoney: function(price) {
       return "￥" + Number(price).toFixed(2);
     },
-    formatGoodTags(goodId){
-      switch(goodId){
+    formatGoodTags(goodId) {
+      switch (goodId) {
         case "1":
-        return '热销'
-        break;
+          return "热销";
+          break;
         case "2":
-        return '新品'
-        break
+          return "新品";
+          break;
         case "3":
-        return '特价'
-        break
-        default :
-        return ''
+          return "特价";
+          break;
+        default:
+          return "";
       }
-    },
+    }
   },
   methods: {
-    goodsTagStyle(id){
-      switch(id){
+    goodsTagStyle(id) {
+      switch (id) {
         case "1":
-        return {isRedGoodsTag:true}
-        break;
+          return { isRedGoodsTag: true };
+          break;
         case "2":
-        return {isGreenGoodsTag:true}
-        break
+          return { isGreenGoodsTag: true };
+          break;
         case "3":
-        return {isOriginGoodsTag:true}
-        break
-        default :
-        return ''
+          return { isOriginGoodsTag: true };
+          break;
+        default:
+          return "";
       }
     },
     maxSlice(parm) {
@@ -112,11 +131,12 @@ export default {
       {
         id: "1",
         img_url: "/static/img/a1.jpg",
-        name:"海南贵妃特价海南贵妃特价海南贵南贵妃特价海南贵妃妃南贵妃海南贵妃特价海南贵妃特价海南贵南贵妃特价海南贵妃妃南贵妃海南贵妃特价海南贵妃特价海南贵南贵妃特价海南贵妃妃南贵妃 送货上门",
+        name:
+          "海南贵妃特价海南贵妃特价海南贵南贵妃特价海南贵妃妃南贵妃海南贵妃特价海南贵妃特价海南贵南贵妃特价海南贵妃妃南贵妃海南贵妃特价海南贵妃特价海南贵南贵妃特价海南贵妃妃南贵妃 送货上门",
         price: "120.00",
         time_money: "356.58",
         original_cost: "345",
-        goods_tag:'1',
+        goods_tag: "1",
         count: "121"
       },
       {
@@ -126,7 +146,7 @@ export default {
         price: "120.00",
         time_money: "356.58",
         original_cost: "345",
-        goods_tag:'2',
+        goods_tag: "2",
         count: "122"
       },
       {
@@ -136,7 +156,7 @@ export default {
         price: "120.00",
         time_money: "356.58",
         original_cost: "345",
-        goods_tag:'3',
+        goods_tag: "3",
         count: "123"
       },
       {
@@ -146,7 +166,7 @@ export default {
         price: "120.00",
         time_money: "356.58",
         original_cost: "345",
-        goods_tag:'0',
+        goods_tag: "0",
         count: "124"
       },
       {
@@ -156,7 +176,17 @@ export default {
         price: "120.00",
         time_money: "356.58",
         original_cost: "345",
-        goods_tag:'3',
+        goods_tag: "3",
+        count: "125"
+      },
+      {
+        id: "6",
+        img_url: "/static/img/a1.jpg",
+        name: "海南贵妃特价海南贵妃 送货上门",
+        price: "120.00",
+        time_money: "356.58",
+        original_cost: "345",
+        goods_tag: "3",
         count: "125"
       }
     ];
@@ -197,9 +227,9 @@ export default {
 <style scoped>
 .recommend_title {
   margin: 0;
-  height: 74px;
+  height: 70px;
   width: 100%;
-  border-bottom: 1px solid #eee;
+  background-color: #f5f7f9;
   color: #f10215;
   font-size: 16px;
   display: flex;
@@ -209,7 +239,7 @@ export default {
 .recommend_title span {
   margin: 0 10px;
 }
-.recommend_title i{
+.recommend_title i {
   display: inline-block;
   width: 25px;
   height: 5px;
@@ -217,18 +247,10 @@ export default {
   background-repeat: no-repeat;
   background-position: 0 0;
 }
-.commodity_details {
-  height: 113px;
-  padding: 12px 20px 12px 12px;
-  border-bottom: 1px solid #eee;
-}
 .a_detail {
   text-decoration: none;
 }
 .img_wrap {
-  float: left;
-  width: 113px;
-  height: 100%;
   position: relative;
 }
 .swiper_goods_tag {
@@ -240,23 +262,21 @@ export default {
   height: 0px;
   width: 0px;
   text-align: left;
-  border-top-left-radius: 5px;
+  border-top-left-radius: 8px;
   border-bottom: 30px solid transparent;
   border-top: 10px solid red;
   border-left: 30px solid red;
   border-right: 10px solid transparent;
-  /* border-top-color: blue;
-  border-left-color: blue; */
 }
-.isRedGoodsTag{
+.isRedGoodsTag {
   border-top-color: #f10215;
   border-left-color: #f10215;
 }
-.isGreenGoodsTag{
+.isGreenGoodsTag {
   border-top-color: #11bb55;
   border-left-color: #11bb55;
 }
-.isOriginGoodsTag{
+.isOriginGoodsTag {
   border-top-color: #fb7539;
   border-left-color: #fb7539;
 }
@@ -273,80 +293,46 @@ export default {
   -webkit-transform: rotate(-50deg);
   -o-transform: rotate(7deg);
 }
-.img_wrap img {
-  width: 113px;
-  height: 100%;
-  background-size: cover;
-  border-radius: 5px;
-}
-.img_wrap_right {
-  height: 100%;
-  margin-left: 130px;
-  position: relative;
-  overflow: hidden;
-  text-align: left;
-}
-.commidity_name {
-  width: 100%;
-  font-size: 14px;
-  color: #333;
-  margin: 11px 0 0 0;
-}
-.commodity_price {
-  position: absolute;
-  bottom: 0;
-}
-.commodity_price span:first-child {
-  color: #f10215;
-  font-size: 13px;
-  margin-right: 6px;
-}
-.commodity_price span {
-  color: #9b9b9b;
-  font-size: 11px;
-}
-.surplus {
-  color: #9b9b9b;
-  font-size: 12px;
-  margin: 6px 0 00;
-}
 .flashSale_slide {
   height: 100%;
+  width: 100%;
+  background-color: #f5f7f9;
 }
 .swiper_wrapper {
+  background-color: #fff;
   display: flex;
-  height: 238px;
+  height: 245px;
+  margin: 0 15px;
+  border-radius: 8px;
 }
 .swiper_wrapper .swiper_image {
-  height:112px;
+  height: 107px;
   width: 33%;
-  border-radius: 10px;
-  margin: 15px 0 0 9px;
+  margin: 0 0 0 9px;
+  margin-top: 9px;
+}
+.swiper_wrapper .swiper_image:first-child {
+  margin-left: 5px;
 }
 .swiper_wrapper .swiper_image:last-child {
-  margin-right: 9px;
+  margin-right: 5px;
 }
 .swiper_wrapper .image_border {
   width: 100%;
-  height: 113px;
+  height: 107px;
 }
 .swiper_wrapper img {
   width: 100%;
   height: 100%;
-  /* padding-bottom: 100%;
-        overflow:hidden;
-        background-position: center center;
-        background-repeat: no-repeat;
-        -webkit-background-size:cover;
-        -moz-background-size:cover; */
   background-size: cover;
-  border-radius: 5px;
 }
 .image_border p {
   text-align: left;
 }
 .swiper_name {
-  margin: 7px auto;
+  margin: 0 auto;
+  margin-top: 4px;
+  margin-bottom: 11px;
   font-size: 11px;
   color: #333;
 }
@@ -355,6 +341,7 @@ export default {
   padding-bottom: 5px;
   font-size: 13px;
   color: #f10215;
+  font-weight: bold;
 }
 .swiper_price span {
   margin-left: 2px;
@@ -366,8 +353,8 @@ export default {
   font-size: 9px;
   color: #9b9b9b;
 }
-.swiper_surplus_count{
-  margin:0;
+.swiper_surplus_count {
+  margin: 0;
   padding: 0;
   color: #9b9b9b;
   font-size: 9px;
@@ -384,6 +371,67 @@ export default {
   width: 33.3%;
   font-size: 13px;
   color: #333;
+}
+.exchange_content {
+  width: 100%;
+  margin: auto;
+  background-color: #f5f7f9;
+  padding-bottom: 9px;
+}
+.exchange_content_i img {
+  width: 171px;
+  height: 171px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+.exchange_content_i {
+  display: inline-block;
+  width: 171px;
+  /*width: 46%;*/
+  background-color: white;
+  border-radius: 8px;
+  margin-left: 1%;
+  margin-right: 1%;
+  margin-top: 10px;
+}
+.word_i {
+  width: 90%;
+  margin: auto;
+  text-align: left;
+}
+.word_name {
+  padding: 0;
+  margin: 0;
+  color: #333333;
+  padding-top: 11px;
+  font-size: 13px;
+}
+.word_name_two {
+  margin: 0;
+  padding: 12px 0 6px 0;
+  width: 100%;
+}
+.word_money {
+  color: #f10215;
+  font-size: 16px;
+  font-weight: 600;
+}
+.time {
+  font-size: 9px;
+}
+.be_money {
+  font-size: 11px;
+  color: #9b9b9b;
+  margin-left: 6px;
+  text-decoration: line-through;
+}
+.last {
+  margin: 0;
+  padding-bottom: 12px;
+}
+.word_count {
+  color: #9b9b9b;
+  font-size: 11px;
 }
 </style>
 
