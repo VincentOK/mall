@@ -61,7 +61,7 @@
       </div>
     </div>
     <winning-view v-show="winThePrice === 'win'" v-on:toDraw="toDrawwing" :isShowPopup="!!winThePrice"></winning-view>
-    <notwinning-view v-show="winThePrice === 'notWin'" v-on:toDraw="toDrawwing"></notwinning-view>
+    <notwinning-view v-show="winThePrice === 'notWin'" v-on:toDraw="toDrawwing" :isShowPopup="!!winThePrice"></notwinning-view>
   </div>
 </template>
 
@@ -207,7 +207,7 @@ export default {
         }
       }
       function showResult(msg) {
-        self.winThePrice = "win";
+        self.winThePrice = "notWin";
       }
     }
   }
