@@ -7,7 +7,7 @@
  *
  */
 
-let baseUrl = '';
+let baseUrl = 'http://192.168.0.129:8080/studyBoat/';
 let imgBaseUrl = '';
 
 
@@ -15,8 +15,8 @@ if (process.env.NODE_ENV == 'development') {
   imgBaseUrl = '/img/';
 
 }else if(process.env.NODE_ENV == 'production'){
-  baseUrl = 'http://www.ninhaotime.com/';
-  imgBaseUrl = 'http://www.ninhaotime.com/';
+  baseUrl = 'http://192.168.0.145:8080/studyBoat/';
+  // imgBaseUrl = 'http://www.ninhaotime.com/';
 }
 
 export {

@@ -64,6 +64,7 @@
 
 <script>
 import Vue from "vue";
+import { test  } from '../../config/request'
 import flashSale from "./flashSale";
 import recommend from "./recommend";
 import timeDown from "../publicComponent/timeDown";
@@ -90,6 +91,12 @@ export default {
     };
   },
   mounted() {
+    test('a39b9eb22d4c4dbcb4ef2c843df205f4').then(res =>{
+      console.log("a39b9eb22d4c4dbcb4ef2c843df205f4:"+JSON.stringify(res))
+    })
+    // searchplace(function (res) {
+    //   console.log(JSON.stringify(res))
+    // })
      this.commodity_list = [
       {
         id: "1",

@@ -1,6 +1,6 @@
 <!--抽奖列表-->
 <template>
-  <div  v-touch:swiperight="touchRight">
+  <div  v-touch:swiperight="_protypeJs.touchRight">
     <img id="scream" src="/static/img/lucky_ground.png">
     <img class="lucky_banner" src="/static/img/banner@2x.png" alt="">
     <div class="stamp" v-if="!clickLottery">

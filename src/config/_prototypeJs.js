@@ -102,4 +102,19 @@ export default(Vue) => {
       }, false);
     }
   })
+
+  Vue.prototype._protypeJs = {
+    /**
+     * 右滑返回
+     */
+    touchRight:() => {window.history.back()},
+    /**
+     * 弹框出现固定body高度
+     */
+    addBodyHeight:() => {document.body.style.height = '100%';document.body.style.overflowY = 'hidden';},
+    /**
+     * 弹框取消body高度自适应
+     */
+    removeBodyHeight:() => {document.body.style.height = '';document.body.style.overflowY = '';}
+  }
 }

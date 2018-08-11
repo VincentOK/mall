@@ -1,6 +1,6 @@
 <!--仅限时间币兑换-->
 <template>
-    <div class="exchange"  v-touch:swiperight="touchRight">
+    <div class="exchange"  v-touch:swiperight="_protypeJs.touchRight">
       <div>
         <p class="exchange_number">共10256个商品</p>
       </div>

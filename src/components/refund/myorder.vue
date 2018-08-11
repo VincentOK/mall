@@ -1,5 +1,5 @@
 <template>
-  <div  v-touch:swiperight="touchRight">
+  <div  v-touch:swiperight="_protypeJs.touchRight">
     <ul class="tabs">
       <li class="li-tab" v-for="(item,index) in tabsParam"
           @click="toggleTabs(index)"

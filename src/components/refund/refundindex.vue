@@ -1,6 +1,6 @@
 <!--退款首页-->
 <template>
-  <div  v-touch:swiperight="touchRight">
+  <div  v-touch:swiperight="_protypeJs.touchRight">
     <title-view :getId="getId"></title-view>
     <div class="refund_all">
       <div class="refund_title">

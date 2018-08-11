@@ -12,7 +12,7 @@
       <div class="swiper-pagination" style="width: 40px;height: 22.5px;text-align: center;line-height: 22.5px;background-color: #A9A9A9;font-size: 11px;border-radius: 12px;color: white;left: 323px" slot="pagination"></div>
 
     </div>
-    <div   v-touch:swiperight="touchRight">
+    <div   v-touch:swiperight="_protypeJs.touchRight">
         <div class="title_j">
           <p class="detail_tatle">
             <label class="detail_hot">热门</label>

@@ -1,6 +1,6 @@
 <!--申请退还运费-->
 <template>
-    <div class="freight_all">
+    <div class="freight_all" v-touch:swiperight="_protypeJs.touchRight">
       <div class="freight_one">
         <label>运费（元）</label>
         <input type="number" placeholder="请输入您所垫付的运费" v-model="money">
@@ -75,7 +75,7 @@
 
 <style scoped>
 .freight_all{
-  width: 95%;
+  width: 100%;
   margin: auto;
 }
   .freight_one{
@@ -83,6 +83,8 @@
     line-height: 55px;
     text-align: left;
     border-bottom: 1px solid #eeeeee;
+    width: 95%;
+    margin: auto;
   }
   .freight_one label{
     width: 150px;

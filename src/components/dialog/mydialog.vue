@@ -30,6 +30,7 @@ export default {
   },
   watch: {
     dialogblock: function(newVal, oldVal) {
+      this._protypeJs.addBodyHeight();
       console.log("aaaaaaaaaa" + JSON.stringify(newVal));
       console.log("bbbbbbbbbbbb" + JSON.stringify(oldVal));
       this.displayNone = newVal.flag;
@@ -55,6 +56,7 @@ export default {
       let time = setTimeout(function() {
         vm.displayNone = false;
         vm.prizedialog = false;
+        vm._protypeJs.removeBodyHeight()
       }, 2000);
     }
   }
