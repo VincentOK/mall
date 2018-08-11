@@ -28,8 +28,7 @@ export default {
   watch: {
     isShowPopup(newVal, oldVal) {
       if (newVal) {
-       document.body.style.height = '100%';
-       document.body.style.overflowY = 'hidden';
+       this._protypeJs.addBodyHeight();
       }
       // 下面需要这两行代码，兼容不同浏览器
       document.body.scrollTop = this.pageScrollYoffset;
@@ -40,8 +39,7 @@ export default {
     closePage() {
       this.close = false;
       this.$emit("toDraw", null);
-      document.body.style.height = '';
-      document.body.style.overflowY = '';
+      this._protypeJs.removeBodyHeight();
     }
   }
 };
