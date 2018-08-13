@@ -1,4 +1,6 @@
-export default(Vue) => {
+import VueRouter from "../../node_modules/vue-router";
+
+export default (Vue) => {
   Vue.directive('touch', {
     bind: function (el, binding, vnode) {
       var touchType = binding.arg; //传入的模式 press swipeRight swipeLeft swipeTop swipeDowm Tap
@@ -34,9 +36,9 @@ export default(Vue) => {
         // else if ((angle >= 135 && angle <= 180) || (angle >= -180 && angle < -135)) {
         //   result = 'swipeleft';
         // }
-        console.log("angle:::"+angle)
-        console.log("dx:::"+dx)
-        if (dx >250) {
+        console.log("angle:::" + angle)
+        console.log("dx:::" + dx)
+        if (dx > 250) {
           result = 'swiperight';
         }
         return result;
@@ -48,16 +50,16 @@ export default(Vue) => {
         startY = ev.touches[0].pageY;
 
         //判断长按
-        timeOutEvent = setTimeout(() =>{
-          timeOutEvent = 0 ;
-          if(touchType === 'press'){
+        timeOutEvent = setTimeout(() => {
+          timeOutEvent = 0;
+          if (touchType === 'press') {
             binding.value()
           }
-        } , 500);
+        }, 500);
 
       }, false);
 
-      el.addEventListener('touchmove' , function (ev) {
+      el.addEventListener('touchmove', function (ev) {
         clearTimeout(timeOutEvent)
         timeOutEvent = 0;
       });
@@ -78,22 +80,22 @@ export default(Vue) => {
           case 0:
             break;
           case 'swipeup':
-            if(touchType === 'swipeup'){
+            if (touchType === 'swipeup') {
               binding.value()
             }
             break;
           case 'swipedown':
-            if(touchType === 'swipedown'){
+            if (touchType === 'swipedown') {
               binding.value()
             }
             break;
           case 'swipeleft':
-            if(touchType === 'swipeleft'){
+            if (touchType === 'swipeleft') {
               binding.value()
             }
             break;
           case 'swiperight':
-            if(touchType === 'swiperight'){
+            if (touchType === 'swiperight') {
               binding.value()
             }
             break;
@@ -101,17 +103,31 @@ export default(Vue) => {
         }
       }, false);
     }
-  })
-
+  });
+  Vue.filter('formatMoney',function(value){
+    return "￥" + Number(value).toFixed(2);
+  });
   Vue.prototype._protypeJs = {
+    /**
+     * 字符长度最长20
+     */
+    maxSlice20:(item) =>{
+      return item.length > 20 ? item.slice(0, 20) + "..." : item;
+    },
+    /**
+     * 字符长度最长15
+     */
+    maxSlice15:(item) =>{
+      return item.length > 15 ? item.slice(0, 15) + "..." : item;
+    },
     /**
      * 右滑返回
      */
-    touchRight:() => {window.history.back()},
+    touchRight: () => { window.history.back() },
     /**
      * 弹框出现固定body高度
      */
-    addBodyHeight:() => {document.body.style.height = '100%';document.body.style.overflowY = 'hidden';},
+    addBodyHeight: () => { document.body.style.height = '100%'; document.body.style.overflowY = 'hidden'; },
     /**
      * 弹框取消body高度自适应
      */
@@ -128,5 +144,6 @@ export default(Vue) => {
     addDialog:() =>{
       document.getElementById("loading").style.display = 'block'
     }
+
   }
 }

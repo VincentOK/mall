@@ -17,10 +17,10 @@
                     </span>
                   </div>
                   <div class="word_i">
-                    <p class="word_name">{{maxSlice(item.name)}}</p>
+                    <p class="word_name">{{_protypeJs.maxSlice20(item.name)}}</p>
                     <p class="word_name_two">
                       <label class="word_money"><label class="time">￥</label>{{item.price}}</label>
-                      <label class="be_money">￥150</label>
+                      <label class="be_money"><del>{{item.original_cost | formatMoney}}</del></label>
                     </p>
                     <p class="last"> <label class="word_count">剩余{{item.count}}件</label></p>
                   </div>
@@ -33,7 +33,7 @@
                     <div class="image_border">
                         <router-link class="a_detail" :to="'/detail/' + item.id">
                         <img src="/static/img/a1.jpg">
-                        <p class="swiper_name">{{maxHorizontalSlice(item.name)}}</p>
+                        <p class="swiper_name">{{_protypeJs.maxSlice15(item.name)}}</p>
                         <p class="swiper_price">{{item.price}}<span>时间币</span></p>
                         <p class="swiper_del_price"><del>{{item.original_cost | formatMoney}}</del></p>
                         <p class="swiper_surplus_count">剩余{{item.count}}件</p>
@@ -59,8 +59,8 @@ export default {
       goods_tag: "",
       commodity_list: [],
       commodity_time_list: [],
-      maxLength: 20,
-      maxHorizontalLength: 15
+      // maxLength: 20,
+      // maxHorizontalLength: 15
     };
   },
   props: {
@@ -75,9 +75,9 @@ export default {
     }
   },
   filters: {
-    formatMoney: function(price) {
-      return "￥" + Number(price).toFixed(2);
-    },
+    // formatMoney: function(price) {
+    //   return "￥" + Number(price).toFixed(2);
+    // },
     formatGoodTags(goodId) {
       switch (goodId) {
         case "1":
@@ -110,16 +110,16 @@ export default {
           return "";
       }
     },
-    maxSlice(parm) {
-      return parm.length > this.maxLength
-        ? parm.slice(0, this.maxLength) + "..."
-        : parm;
-    },
-    maxHorizontalSlice(parm) {
-      return parm.length > this.maxHorizontalLength
-        ? parm.slice(0, this.maxHorizontalLength) + "..."
-        : parm;
-    }
+    // maxSlice(parm) {
+    //   return parm.length > this.maxLength
+    //     ? parm.slice(0, this.maxLength) + "..."
+    //     : parm;
+    // },
+    // maxHorizontalSlice(parm) {
+    //   return parm.length > this.maxHorizontalLength
+    //     ? parm.slice(0, this.maxHorizontalLength) + "..."
+    //     : parm;
+    // }
   },
   mounted() {}
 };

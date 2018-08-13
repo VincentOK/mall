@@ -7,7 +7,6 @@ import qs from 'qs'
 export default async(url, data = {}, type = 'GET') => {
   return new Promise((resolve, reject) => {
     url = baseUrl + url
-    console.log(url)
     if(type == 'GET'){
       let dataStr = ''
       Object.keys(data).forEach(key => {

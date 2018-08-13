@@ -6,7 +6,7 @@
               <router-link class="a_detail" :to="'/detail/' + item.id">
                 <div class="image_border">
                     <img :src="item.img_url" alt="">
-                  <p class="swiper_name">{{maxSlice(item.name)}}</p>
+                  <p class="swiper_name">{{_protypeJs.maxSlice15(item.name)}}</p>
                   <p class="swiper_price">{{item.price | formatMoney}}</p>
                   <p class="swiper_del_price"><del>{{item.original_cost |formatMoney}}</del></p>
                   <span :class="goodsTagStyle(item.goods_tag)" class="swiper_goods_tag"><span>{{item.goods_tag | formatGoodTags}}</span></span>
@@ -55,11 +55,6 @@ export default {
     };
   },
   methods: {
-    maxSlice(parm) {
-      return parm.length > this.maxLength
-        ? parm.slice(0, this.maxLength) + "..."
-        : parm;
-    },
     goodsTagStyle(id) {
       switch (id) {
         case "1":
@@ -74,9 +69,6 @@ export default {
     }
   },
   filters: {
-    formatMoney: function(price) {
-      return "￥" + Number(price).toFixed(2);
-    },
     formatGoodTags(goodId) {
       switch (goodId) {
         case "1":
