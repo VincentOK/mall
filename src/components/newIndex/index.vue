@@ -95,15 +95,13 @@ export default {
     };
   },
   mounted() {
-
+    let vm = this
+    vm._protypeJs.addDialog();
     test('a39b9eb22d4c4dbcb4ef2c843df205f4').then(res =>{
       console.log("a39b9eb22d4c4dbcb4ef2c843df205f4:"+JSON.stringify(res))
+      vm._protypeJs.removeDialog();
     })
-    // this._protypeJs.addDialog();
-    // let vm = this
-    // setTimeout(function () {
-    //   vm._protypeJs.removeDialog();
-    // },2000)
+
 
      this.commodity_list = [
       {
