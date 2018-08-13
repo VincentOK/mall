@@ -3,15 +3,21 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import * as filters from './config/filter'
+Object.keys(filters).forEach(key => {
+  Vue.filter(key, filters[key])
+})
+import instruction from './config/instruction'
+Vue.use(instruction)
 import   _protypeJs   from './config/_prototypeJs'
+Vue.use(_protypeJs)
 import Loading from './components/publicComponent/loading/loading'
+Vue.use(Loading)
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
+Vue.use(VueAwesomeSwiper)
 import VueScroller from 'vue-scroller'
 Vue.use(VueScroller)
-Vue.use(VueAwesomeSwiper)
-Vue.use(_protypeJs)
-Vue.use(Loading)
 Vue.config.productionTip = false
 /* eslint-disable no-new */
 new Vue({
