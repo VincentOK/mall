@@ -1,5 +1,6 @@
 <template>
   <div id="app" class="container">
+    <Loading id="loading" style="display: none"></Loading>
     <transition :name="transitionName">
       <router-view class="child-view"></router-view>
     </transition>

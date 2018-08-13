@@ -4,12 +4,14 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import   _protypeJs   from './config/_prototypeJs'
+import Loading from './components/publicComponent/loading/loading'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
 import VueScroller from 'vue-scroller'
 Vue.use(VueScroller)
 Vue.use(VueAwesomeSwiper)
 Vue.use(_protypeJs)
+Vue.use(Loading)
 Vue.config.productionTip = false
 /* eslint-disable no-new */
 new Vue({

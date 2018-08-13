@@ -58,6 +58,7 @@
     </div>
     <flash-sale-view></flash-sale-view>
     <recommend-view :commodityList='commodity_list' :commodityTimeList='commodity_time_list' :commodityCount='commodity_count'></recommend-view>
+      <!--<loading-view></loading-view>-->
     </scroller>
   </div>
 </template>
@@ -67,16 +68,19 @@ import Vue from "vue";
 import { test  } from '../../config/request'
 import flashSale from "./flashSale";
 import recommend from "./recommend";
+import loading from '../publicComponent/loading/loading'
 import timeDown from "../publicComponent/timeDown";
 Vue.component("flash-sale-view", flashSale);
 Vue.component("recommend-view", recommend);
 Vue.component("time-down-view", timeDown);
+Vue.component("loading-view", loading);
 export default {
   name: "index",
   components: {
     flashSale,
     recommend,
-    timeDown
+    timeDown,
+    loading
   },
   data() {
     return {
@@ -91,12 +95,16 @@ export default {
     };
   },
   mounted() {
+
     test('a39b9eb22d4c4dbcb4ef2c843df205f4').then(res =>{
       console.log("a39b9eb22d4c4dbcb4ef2c843df205f4:"+JSON.stringify(res))
     })
-    // searchplace(function (res) {
-    //   console.log(JSON.stringify(res))
-    // })
+    // this._protypeJs.addDialog();
+    // let vm = this
+    // setTimeout(function () {
+    //   vm._protypeJs.removeDialog();
+    // },2000)
+
      this.commodity_list = [
       {
         id: "1",

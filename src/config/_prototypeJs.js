@@ -115,6 +115,18 @@ export default(Vue) => {
     /**
      * 弹框取消body高度自适应
      */
-    removeBodyHeight:() => {document.body.style.height = '';document.body.style.overflowY = '';}
+    removeBodyHeight:() => {document.body.style.height = '';document.body.style.overflowY = '';},
+    /**
+     * 弹框消失事件
+     */
+    removeDialog:() =>{
+      document.getElementById("loading").style.display = 'none'
+    },
+    /**
+     * 弹框显示事件
+     */
+    addDialog:() =>{
+      document.getElementById("loading").style.display = 'block'
+    }
   }
 }
