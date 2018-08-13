@@ -30,9 +30,6 @@ export default {
       if (newVal) {
        this._protypeJs.addBodyHeight();
       }
-      // 下面需要这两行代码，兼容不同浏览器
-      document.body.scrollTop = this.pageScrollYoffset;
-      window.scroll(0, this.pageScrollYoffset);
     }
    },
   methods: {
