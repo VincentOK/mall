@@ -35,6 +35,22 @@ export default {
 </script>
 
 <style>
+  * {
+    -webkit-touch-callout:none; /*系统默认菜单被禁用*/
+    -webkit-tap-highlight-color:transparent; /*取消点击链接或者JavaScript可点击元素赋给的高亮背景色*/
+  }
+  * {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+  }
+
+  *:not(input,textarea) {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+  }
   body,html {
     background-color: #ffffff;
   }

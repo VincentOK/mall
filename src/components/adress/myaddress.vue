@@ -135,9 +135,9 @@
 }
 .delete_tel{
   width: 20px;
-  float: right;
-  margin-top: 10px;
-  margin-right: 10px;
+  position: absolute;
+  right: 10px;
+  top: 15px;
 }
   .address_left{
     flex: 2;
@@ -146,6 +146,7 @@
   .address_right{
     flex: 5;
     text-align: left;
+    position: relative;
   }
   .adress_name{
     width: 85%;

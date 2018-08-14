@@ -9,7 +9,7 @@
         <swiper-slide><img class="detail_img"  src="/static/img/a1.jpg"></swiper-slide>
       </swiper>
 
-      <div class="swiper-pagination" style="width: 40px;height: 22.5px;text-align: center;line-height: 22.5px;background-color: #A9A9A9;font-size: 11px;border-radius: 12px;color: white;left: 323px" slot="pagination"></div>
+      <div class="swiper-pagination" style="width: 40px;height: 22.5px;text-align: center;line-height: 22.5px;background-color: black;opacity:0.5;font-size: 11px;border-radius: 12px;color: white;left: 85%" slot="pagination"></div>
 
     </div>
     <div   v-touch:swiperight="_protypeJs.touchRight">
@@ -60,13 +60,13 @@
           </div>
           <div class="adress_right">
             <div class="right_count">
-              <div class="add_count" v-on:click="counter ++">
+              <button class="add_count" v-on:click="counter ++">
                 <img src="/static/img/add.png" alt="">
-              </div>
+              </button>
               <input class="number" type="number" v-model="counter">
-              <div  class="reduction" v-on:click="remove_i()">
+              <button  class="reduction" v-on:click="remove_i()">
                 <img src="/static/img/reduction.png" alt="">
-              </div>
+              </button>
             </div>
           </div>
         </div>
@@ -150,16 +150,30 @@ export default {
   },
   mounted(){
     console.log("页面初始化")
+    console.log(document.documentElement.clientWidth)
+    console.log(document.documentElement.clientHeight)
+    console.log(document.documentElement.clientWidth)
+    console.log(document.documentElement.clientHeight)
+    let height = document.documentElement.clientHeight
+    let width = document.documentElement.clientWidth
+    // document.body.style.position = 'fixed';
+    // document.body.style.height =height+'px';
+    // document.body.style.width = width+'px';
+    // document.body.style.overflowY = 'scroll';
+
   },
   methods:{
     remove_i:function () {
+
       let count = this.counter
+      console.log(count)
       if(count > 0){
         this.counter = count-1
       }
     },
     pay_money:function () {
       if(this.goodsStatus == 0){
+        // this._protypeJs.addBodyHeight();
         this.paymoney = true;
       }else {
         this.paytime = true;
@@ -226,28 +240,33 @@ export default {
   .right_count img{
     width: 20px;
     margin-top: 5px;
-    margin-left: 5px;
+    margin-left: -5px;
   }
   .add_count{
+    /*border: 1px solid red;*/
     float: right;
     background-color: #f5f5f5;
     margin-left: 3px;
     width: 33px;
     height: 30px;
+    border: none;
   }
   .number{
     float: right;
     width: 38px;
-    height: 25px;
+    height: 30px;
     margin-left: 3px;
+    border: none;
     background-color: #f5f5f5;
     text-align: center;
   }
   .reduction{
+    /*border: 1px solid black;*/
     float: right;
     margin-left: 3px;
     background-color: #f5f5f5;
     width: 33px;
+    border: none;
     height: 30px;
   }
   .adress_detail_all{
@@ -310,16 +329,21 @@ export default {
     font-size: 15px;
     text-align: left;
     margin-top: 15px;
+    position: relative;
   }
   .detail_hot{
     color: white;
     background-color: #ec414d;
     border-radius: 12px;
-    font-size: 12px;
-    padding: 2px 8px;
+    font-size: 9px;
+    padding: 0px 5px;
+    position: absolute;
+    left: 0;
+    top: 3px;
   }
   .word_hot{
     font-weight: 600;
+    margin-left: 35px;
   }
   .detail_money{
     margin: 0;

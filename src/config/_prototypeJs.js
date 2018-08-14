@@ -19,7 +19,16 @@ export default (Vue) => {
     /**
      * 弹框出现固定body高度
      */
-    addBodyHeight: () => { document.body.style.height = '100%'; document.body.style.overflowY = 'hidden'; },
+    addBodyHeight: () => {
+      console.log(document.documentElement.clientWidth)
+      console.log(document.documentElement.clientHeight)
+      let height = document.documentElement.clientHeight
+      document.body.style.height = height+'px';
+      // document.body.style.position = 'fixed';
+      // document.body.style.top = '0';
+      document.body.style.overflow = 'hidden';
+
+      },
     /**
      * 弹框取消body高度自适应
      */

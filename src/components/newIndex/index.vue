@@ -95,12 +95,30 @@ export default {
     };
   },
   mounted() {
-    let vm = this
-    vm._protypeJs.addDialog();
-    test('a39b9eb22d4c4dbcb4ef2c843df205f4').then(res =>{
-      console.log("a39b9eb22d4c4dbcb4ef2c843df205f4:"+JSON.stringify(res))
-      vm._protypeJs.removeDialog();
-    })
+
+
+    console.log("页面初始化")
+    console.log(document.documentElement.clientWidth)
+    console.log(document.documentElement.clientHeight)
+    console.log(document.documentElement.clientWidth)
+    console.log(document.documentElement.clientHeight)
+    let height = document.documentElement.clientHeight
+    let width = document.documentElement.clientWidth
+    // document.getElementById("scroller").style.position = 'fixed';
+    // document.getElementById("scroller").style.height =height+'px';
+    // document.getElementById("scroller").style.width = width+'px';
+    // document.getElementById("scroller").style.overflowY = 'scroll';
+
+
+
+
+
+    // let vm = this
+    // vm._protypeJs.addDialog();
+    // test('a39b9eb22d4c4dbcb4ef2c843df205f4').then(res =>{
+    //   console.log("a39b9eb22d4c4dbcb4ef2c843df205f4:"+JSON.stringify(res))
+    //   vm._protypeJs.removeDialog();
+    // })
 
 
      this.commodity_list = [

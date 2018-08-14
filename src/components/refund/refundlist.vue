@@ -1,6 +1,6 @@
 <template>
 <div>
-  <scroller style="margin-top: 50px" :on-infinite="infinite"  :on-refresh = "refresh" ref="myscroller">
+  <scroller class="scrollerList" :on-infinite="infinite"  :on-refresh = "refresh" ref="myscroller">
     <div style="height: 1px;"></div>
   <div class="refundlist" v-for="(item,index) in refund_list" :key="index">
     <div class="null_div"></div>
@@ -152,6 +152,11 @@
 </script>
 
 <style scoped>
+  .scrollerList{
+    margin-top: 45px;
+    height: 100%;
+    width: 100%;
+  }
   .num{
     color: #999999;
     font-size: 11px;
@@ -163,7 +168,7 @@
     padding-right: 12px;
   }
   .refund_btn{
-    width: 65px;
+    width: 70px;
     height: 28px;
     font-size: 11px;
     border: 1px solid #999999;
@@ -173,7 +178,7 @@
     float: right;
   }
   .refund_btn_one{
-    width: 65px;
+    width: 70px;
     height: 28px;
     font-size: 11px;
     border: 1px solid #f10215;
@@ -237,7 +242,7 @@
 }
   .refundlist_content{
     background-color: #f4f4f4;
-    height: 70px;
+    height: 94px;
     padding: 12px 12px 12px 12px;
     position: relative;
   }
@@ -250,9 +255,8 @@
     margin: 0;
     text-align: left;
     padding-left: 82px;
-    margin-top: 22px;
+    margin-top: 18px;
     color: #999999;
     font-size: 11px;
   }
-
 </style>
