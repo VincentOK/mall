@@ -7,10 +7,10 @@ export default (Vue) => {
       return item.length > 20 ? item.slice(0, 20) + "..." : item;
     },
     /**
-     * 字符长度最长15
+     * 字符长度最长10
      */
-    maxSlice15:(item) =>{
-      return item.length > 15 ? item.slice(0, 15) + "..." : item;
+    maxSlice13:(item) =>{
+      return item.length > 13 ? item.slice(0, 13) + "..." : item;
     },
     /**
      * 右滑返回

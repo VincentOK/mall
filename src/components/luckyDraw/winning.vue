@@ -79,6 +79,7 @@ export default {
   margin-left: 230px;
 }
 .notwinning_in {
+  z-index: 9999;
   position: absolute;
   left: 0;
   right: 0;

@@ -20,7 +20,7 @@
                     <p class="word_name">{{_protypeJs.maxSlice20(item.name)}}</p>
                     <p class="word_name_two">
                       <label class="word_money"><label class="time">￥</label>{{item.price}}</label>
-                      <label class="be_money"><del>{{item.original_cost | formatMoney}}</del></label>
+                      <label class="be_money"><del>￥{{item.original_cost | formatMoney}}</del></label>
                     </p>
                     <p class="last"> <label class="word_count">剩余{{item.count}}件</label></p>
                   </div>
@@ -33,9 +33,9 @@
                     <div class="image_border">
                         <router-link class="a_detail" :to="'/detail/' + item.id">
                         <img src="/static/img/a1.jpg">
-                        <p class="swiper_name">{{_protypeJs.maxSlice15(item.name)}}</p>
+                        <p class="swiper_name">{{_protypeJs.maxSlice13(item.name)}}</p>
                         <p class="swiper_price">{{item.price}}<span>时间币</span></p>
-                        <p class="swiper_del_price"><del>{{item.original_cost | formatMoney}}</del></p>
+                        <p class="swiper_del_price"><del>￥{{item.original_cost | formatMoney}}</del></p>
                         <p class="swiper_surplus_count">剩余{{item.count}}件</p>
                         </router-link>
                     </div>
@@ -132,7 +132,8 @@ export default {
   width: 100%;
   background-color: #f5f7f9;
   color: #f10215;
-  font-size: 16px;
+  font-size: 18px;
+  font-weight: bold;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -183,10 +184,10 @@ export default {
 }
 .swiper_goods_tag span {
   position: absolute;
-  top: -5px;
-  left: -30px;
+  top: -4px;
+  left: -28px;
   display: inline-block;
-  font-size: 9px;
+  font-size: 12px;
   width: 25px;
   transform: rotate(7deg);
   -ms-transform: rotate(7deg);
@@ -232,8 +233,7 @@ export default {
 }
 .swiper_name {
   margin: 0 auto;
-  margin-top: 4px;
-  margin-bottom: 11px;
+  padding:7px 5px 12px 0;
   font-size: 11px;
   color: #333;
 }
@@ -303,12 +303,12 @@ export default {
   padding: 0;
   margin: 0;
   color: #333333;
-  padding-top: 11px;
+  padding-top: 8px;
   font-size: 13px;
 }
 .word_name_two {
   margin: 0;
-  padding: 12px 0 6px 0;
+  padding: 10px 0 6px 0;
   width: 100%;
 }
 .word_money {
@@ -317,7 +317,7 @@ export default {
   font-weight: 600;
 }
 .time {
-  font-size: 9px;
+  font-size: 12.5px;
 }
 .be_money {
   font-size: 11px;

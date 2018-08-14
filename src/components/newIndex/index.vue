@@ -96,11 +96,11 @@ export default {
   },
   mounted() {
     let vm = this
-    vm._protypeJs.addDialog();
-    test('a39b9eb22d4c4dbcb4ef2c843df205f4').then(res =>{
-      console.log("a39b9eb22d4c4dbcb4ef2c843df205f4:"+JSON.stringify(res))
-      vm._protypeJs.removeDialog();
-    })
+    // vm._protypeJs.addDialog();
+    // test('a39b9eb22d4c4dbcb4ef2c843df205f4').then(res =>{
+    //   console.log("a39b9eb22d4c4dbcb4ef2c843df205f4:"+JSON.stringify(res))
+    //   vm._protypeJs.removeDialog();
+    // })
 
 
      this.commodity_list = [
@@ -109,7 +109,7 @@ export default {
         img_url: "/static/img/a1.jpg",
         name:
           "海南贵妃特价海南贵妃特价海南贵南贵妃特价海南贵妃妃南贵妃海南贵妃特价海南贵妃特价海南贵南贵妃特价海南贵妃妃南贵妃海南贵妃特价海南贵妃特价海南贵南贵妃特价海南贵妃妃南贵妃 送货上门",
-        price: "120.00",
+        price: "120",
         time_money: "356.58",
         original_cost: "345",
         goods_tag: "1",
@@ -129,7 +129,7 @@ export default {
         id: "3",
         img_url: "/static/img/a1.jpg",
         name: "海南贵妃特价海南贵妃 送货上门",
-        price: "120.00",
+        price: "120",
         time_money: "356.58",
         original_cost: "345",
         goods_tag: "3",
@@ -139,7 +139,7 @@ export default {
         id: "4",
         img_url: "/static/img/a1.jpg",
         name: "海南贵妃特价海南贵妃 送货上门",
-        price: "120.00",
+        price: "120",
         time_money: "356.58",
         original_cost: "345",
         goods_tag: "0",
@@ -159,7 +159,7 @@ export default {
         id: "6",
         img_url: "/static/img/a1.jpg",
         name: "海南贵妃特价海南贵妃 送货上门",
-        price: "120.00",
+        price: "120",
         time_money: "356.58",
         original_cost: "345",
         goods_tag: "3",
@@ -172,7 +172,7 @@ export default {
         img_url: "/static/img/a1.jpg",
         name:
           "海南贵妃特价海南贵妃特价海南贵南贵妃特价海南贵妃妃南贵妃海南贵妃特价海南贵妃特价海南贵南贵妃特价海南贵妃妃南贵妃海南贵妃特价海南贵妃特价海南贵南贵妃特价海南贵妃妃南贵妃 送货上门",
-        price: "120.00",
+        price: "120",
         time_money: "356.58",
         count: "121",
         original_cost: "345"
@@ -181,7 +181,7 @@ export default {
         id: "2",
         img_url: "/static/img/a1.jpg",
         name: "海南贵妃特价海南贵妃 送货上门",
-        price: "120.00",
+        price: "120",
         time_money: "356.58",
         count: "122",
         original_cost: "345"
@@ -190,7 +190,7 @@ export default {
         id: "3",
         img_url: "/static/img/a1.jpg",
         name: "海南贵妃特价海南贵妃 送货上门",
-        price: "120.00",
+        price: "120",
         time_money: "356.58",
         original_cost: "345",
         count: "123"
@@ -211,7 +211,7 @@ export default {
         id: "2",
         img_url: "/static/img/a1.jpg",
         name: "海南贵妃特价海南贵妃 送货上门",
-        price: "120.00",
+        price: "120",
         time_money: "356.58",
         count: "122",
         original_cost: "345"
@@ -329,6 +329,8 @@ export default {
   position: relative;
 }
 .word_header {
+  font-size: 11px;
+  color: #333;
   position: absolute;
   bottom: 0;
   left: 0;

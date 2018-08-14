@@ -1,6 +1,6 @@
 <!--抽奖列表-->
 <template>
-  <div  v-touch:swiperight="_protypeJs.touchRight">
+  <div v-touch:swiperight="_protypeJs.touchRight">
     <img id="scream" src="/static/img/lucky_ground.png">
     <img class="lucky_banner" src="/static/img/banner@2x.png" alt="">
     <div class="stamp" v-if="!clickLottery">
@@ -16,7 +16,11 @@
       </div>
     </div>
     <div class="win_name">
-        <p>恭喜<span>{{win_name}}</span>抽中了<span>{{win_gift}}</span></p>
+      <swiper :options="luckySwiperOption">
+        <swiper-slide  v-for="(item,index) in win_list" :key="index">
+        <p class="win_name_p">恭喜<span class="win_name_span">{{item.win_name}}</span>抽中了<span class="win_name_lastspan">{{item.win_gift}}</span></p>
+      </swiper-slide>
+      </swiper>
     </div>
     <div>
       <p class="lucky_title">奖品说明</p>
@@ -79,47 +83,92 @@ export default {
       clickLottery: false,
       winThePrice: "",
       whetherPrice: false,
-      lucky_list:[],
-      win_name:'杨天宝',
-      win_gift:'芭比娃娃X1'
+      lucky_list: [],
+      win_list: [],
+      win_name: "杨天宝",
+      win_gift: "芭比娃娃X1",
+      luckySwiperOption: {
+        autoplay: {
+          delay: 50,
+          stopOnLastSlide: false,
+          disableOnInteraction: false
+        },
+        direction: "vertical",
+        grabCursor: true,
+        autoplayDisableOnInteraction: false,
+        mousewheelControl: true,
+        autoHeight: true,
+        speed: 500,
+      }
     };
   },
   comments: {
     notwinning,
     winning
   },
-  mounted(){
+  mounted() {
+    this.win_list = [
+      {
+        win_name: "水果",
+        win_gift: "水果"
+      },
+      {
+        win_name: "g杠杠的sgs",
+        win_gift: "干豆腐干豆腐干豆腐"
+      },
+      {
+        win_name: "十多个",
+        win_gift: "很多第三方个人X1"
+      },
+      {
+        win_name: "发送给",
+        win_gift: "是个很反感娃X1"
+      },
+      {
+        win_name: "个地方官的",
+        win_gift: "更多发挥发挥额1"
+      },
+      {
+        win_name: "杨广东省",
+        win_gift: "给对方回房间娃X1"
+      },
+      {
+        win_name: "司的",
+        win_gift: "更多发挥发挥烦得很1"
+      }
+    ];
     this.lucky_list = [
       {
-        id:'1',
-        name:'夏季水培植物留香薄荷柠檬盆栽驱蚊草玻璃盆景',
-        standard:"1",
-        lucky_num:'1'
+        id: "1",
+        name: "夏季水培植物留香薄荷柠檬盆栽驱蚊草玻璃盆景",
+        standard: "1",
+        lucky_num: "1"
       },
       {
-        id:'2',
-        name:'夏季水培植物留香薄荷柠檬盆栽驱蚊草玻璃盆景',
-        standard:"1",
-        lucky_num:'1'
+        id: "2",
+        name: "夏季水培植物留香薄荷柠檬盆栽驱蚊草玻璃盆景",
+        standard: "1",
+        lucky_num: "1"
       },
       {
-        id:'3',
-        name:'夏季水培植物留香薄荷柠檬盆栽驱蚊草玻璃盆景',
-        standard:"1",
-        lucky_num:'1'
+        id: "3",
+        name: "夏季水培植物留香薄荷柠檬盆栽驱蚊草玻璃盆景",
+        standard: "1",
+        lucky_num: "1"
       },
       {
-        id:'4',
-        name:'夏季水培植物留香薄荷柠檬盆栽驱蚊草玻璃盆景',
-        standard:"1",
-        lucky_num:'1'
-      },{
-        id:'5',
-        name:'夏季水培植物留香薄荷柠檬盆栽驱蚊草玻璃盆景',
-        standard:"1",
-        lucky_num:'1'
+        id: "4",
+        name: "夏季水培植物留香薄荷柠檬盆栽驱蚊草玻璃盆景",
+        standard: "1",
+        lucky_num: "1"
+      },
+      {
+        id: "5",
+        name: "夏季水培植物留香薄荷柠檬盆栽驱蚊草玻璃盆景",
+        standard: "1",
+        lucky_num: "1"
       }
-    ]
+    ];
   },
   updated() {
     this.$nextTick(function() {
@@ -129,12 +178,12 @@ export default {
       }
     });
   },
-  computed:{
-    styleBackground:function(){
-      if(this.whetherPrice){
-        return {backgroundImage:'url("./static/img/win.png")'};
-      }else{
-        return {backgroundImage:'url("./static/img/notwin.png")'};
+  computed: {
+    styleBackground: function() {
+      if (this.whetherPrice) {
+        return { backgroundImage: 'url("./static/img/win.png")' };
+      } else {
+        return { backgroundImage: 'url("./static/img/notwin.png")' };
       }
     }
   },
@@ -151,11 +200,11 @@ export default {
       var canvas = document.getElementById("mask");
       var context = canvas.getContext("2d");
       var img = new Image();
-      img.src = '/static/img/lucky_ground.png';
+      img.src = "/static/img/lucky_ground.png";
       context.drawImage(img, 0, 0, 300, 150);
-      context.font = '24px Arial';
-      context.textAlign = 'center';
-      context.fillStyle = '#fffefe';
+      context.font = "24px Arial";
+      context.textAlign = "center";
+      context.fillStyle = "#fffefe";
       context.fillText("使劲刮我", 120, 83);
       context.globalCompositeOperation = "destination-out";
       canvas.addEventListener("mousedown", drawArcMouseHandle);
@@ -215,11 +264,14 @@ export default {
 </script>
 
 <style scoped>
-.top_order{
-  text-decoration: none;
-  color:#333
+.swiper-container-autoheight {
+  height: 100%;
 }
-.fixed_mask{
+.top_order {
+  text-decoration: none;
+  color: #333;
+}
+.fixed_mask {
   height: 100%;
   overflow: hidden;
 }
@@ -286,7 +338,7 @@ export default {
   background-size: 100% 99%;
   background-position-y: 2px;
 }
-.apicCanvas{
+.apicCanvas {
   width: 100%;
   height: 100%;
   background-repeat: no-repeat;
@@ -306,7 +358,7 @@ export default {
   background-size: 100% 100%;
   background-repeat: no-repeat;
 }
-.win_name{
+.win_name {
   height: 32px;
   width: 80%;
   margin: auto;
@@ -314,22 +366,24 @@ export default {
   background-size: 100% 100%;
   background-repeat: no-repeat;
 }
-.win_name p {
-  margin: 5px 0 0 0;
+.win_name_p {
+  margin: auto;
+  margin-left: 45px;
   padding-top: 1px;
   height: 100%;
   width: 90%;
   line-height: 32px;
   font-size: 11px;
   color: #333;
+  text-align: left;
 }
-.win_name p span{
+.win_name_span {
   margin: 3px;
 }
-.win_name p span:last-child{
-    font-size: 12px;
-    color: #f10215;
-    font-weight: bold;
+.win_name_lastspan {
+  font-size: 12px;
+  color: #f10215;
+  font-weight: bold;
 }
 .apic > button {
   width: 130px;
@@ -379,7 +433,7 @@ export default {
   margin-left: 20px;
   margin-top: 20px;
 }
-.activity-introduction p:first-child{
+.activity-introduction p:first-child {
   font-size: 13px;
 }
 .activity-introduction p {
@@ -407,7 +461,7 @@ export default {
   margin-bottom: 10px;
   border-bottom: 1px dashed white;
 }
-.call_address{
+.call_address {
   width: 94%;
   text-align: center;
 }
