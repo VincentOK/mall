@@ -6,10 +6,10 @@
               <router-link class="a_detail" :to="'/detail/' + item.id">
                 <div class="image_border">
                     <img :src="item.img_url" alt="">
-                  <p class="swiper_name">{{_protypeJs.maxSlice15(item.name)}}</p>
-                  <p class="swiper_price">{{item.price | formatMoney}}</p>
-                  <p class="swiper_del_price"><del>{{item.original_cost |formatMoney}}</del></p>
-                  <span :class="goodsTagStyle(item.goods_tag)" class="swiper_goods_tag"><span>{{item.goods_tag | formatGoodTags}}</span></span>
+                  <p class="swiper_name">{{_protypeJs.maxSlice13(item.name)}}</p>
+                  <p class="swiper_price">{{item.price,item.goods_tag | formatMoney}}</p>
+                  <p class="swiper_del_price"><del>￥{{item.original_cost}}</del></p>
+                  <span :class="goodsTagStyle(item.goods_tag)" class="swiper_goods_tag"><span></span></span>
                   <span v-show="goods_tag">抢购结束</span>
                 </div>
                 </router-link>
@@ -46,7 +46,7 @@ export default {
         slidesPerView: "auto",
         slidesOffsetAfter: 110,
         freeMode: true,
-        freeModeMomentumVelocityRatio: 0.3,
+        freeModeMomentumVelocityRatio: 0.5,
         freeModeMomentumBounce: false,
         loop: false,
         observer: true,
@@ -89,7 +89,7 @@ export default {
         img_url: "/static/img/a1.jpg",
         name:
           "海南贵妃特价海南贵妃特价海南贵南贵妃特价海南贵妃妃南贵妃海南贵妃特价海南贵妃特价海南贵南贵妃特价海南贵妃妃南贵妃 送货上门",
-        price: "120.00",
+        price: "120.233",
         time_money: "356.58",
         original_cost: "345",
         goods_tag: "1",
@@ -98,7 +98,7 @@ export default {
       {
         id: "2",
         img_url: "/static/img/a1.jpg",
-        name: "货上门",
+        name: "货上门huo",
         price: "120.00",
         time_money: "356.58",
         original_cost: "345",
@@ -109,7 +109,7 @@ export default {
         id: "3",
         img_url: "/static/img/a1.jpg",
         name: "海南贵妃特价海南贵妃 送货上门",
-        price: "120.00",
+        price: "120",
         time_money: "356.58",
         original_cost: "345",
         goods_tag: "2",
@@ -119,7 +119,7 @@ export default {
         id: "4",
         img_url: "/static/img/a1.jpg",
         name: "海南贵妃特价海南贵妃 送货上门",
-        price: "120.00",
+        price: "120",
         time_money: "356.58",
         original_cost: "345",
         goods_tag: "2",
@@ -129,7 +129,7 @@ export default {
         id: "5",
         img_url: "/static/img/a1.jpg",
         name: "海南贵妃特价海南贵妃 送货上门",
-        price: "120.00",
+        price: "120",
         time_money: "356.58",
         original_cost: "345",
         goods_tag: "1",
@@ -149,7 +149,7 @@ export default {
         id: "7",
         img_url: "/static/img/a1.jpg",
         name: "海南贵妃特价海南贵妃 送货上门",
-        price: "120.00",
+        price: "120",
         time_money: "356.58",
         original_cost: "345",
         goods_tag: "2",
@@ -213,7 +213,7 @@ export default {
   height: 26px;
   width: 25px;
   font-size: 8px;
-  transform: scale(0.7,0.65);
+  transform: scale(0.8);
 }
 .isGreenGoodsTag {
   background-image: url("/static/img/buy_star_icon.png");
@@ -231,7 +231,7 @@ export default {
 }
 .swiper_name {
   height: 32px;
-  margin: 7px auto;
+  margin: 4px 7px 4px 0;
   font-size: 11px;
   color: #333;
 }
@@ -266,7 +266,7 @@ export default {
   width: 13px;
   height: 13px;
   position: absolute;
-  top: 2px;
+  top: 1px;
   left: -5px;
   background-size: 100% 100%;
   background-repeat: no-repeat;

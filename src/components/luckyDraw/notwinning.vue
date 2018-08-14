@@ -55,6 +55,7 @@ export default {
   opacity: 0.5;
 }
 .notwinning_in {
+  z-index: 9999;
   position: absolute;
   left: 0;
   right: 0;
