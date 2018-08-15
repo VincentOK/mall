@@ -1,9 +1,10 @@
 <template>
   <div id="app" class="container">
     <Loading id="loading" style="display: none"></Loading>
-    <transition :name="transitionName">
-      <router-view class="child-view"></router-view>
-    </transition>
+    <router-view class="child-view"></router-view>
+    <!--<transition :name="transitionName">-->
+      <!--<router-view class="child-view"></router-view>-->
+    <!--</transition>-->
   </div>
 </template>
 
@@ -58,7 +59,12 @@ export default {
     width:100%;
     height:100%
   }
-
+  .heightAuto{
+    height: 90%;
+  }
+.conent_all_h5{
+  margin-top: 40px;
+}
   #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

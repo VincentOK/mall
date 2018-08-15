@@ -20,26 +20,17 @@
       props:['checkStatus'],
       data(){
           return{
-            refund_display:false,
-            id:''
+            refund_display:true,
           }
-      },
-      watch:{
-        checkStatus:function (newword,oldword) {
-          console.log("新退款ID："+newword)
-          console.log("原退款ID："+oldword)
-          if(newword){
-            this.refund_display = true
-            this.id = newword
-          }
-        }
       },
       methods:{
         refundCancel:function () {
           this.refund_display = false
+          this.$emit('childByValue',this.refund_display)
+
         },
         refundSure:function () {
-          console.log(this.id)
+          console.log("退货ID："+this.checkStatus)
         }
       }
     }

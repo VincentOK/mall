@@ -1,7 +1,8 @@
 <!--主页列表-->
 <template>
   <div class="hello">
-    <scroller :on-infinite="infinite" ref="indexScroller">
+    <indexTitle-view></indexTitle-view>
+    <scroller class="conent_all_h5" :on-infinite="infinite" ref="indexScroller">
     <div class="header">
         <span class="my_order">
           <router-link class="top_order" :to="'/myorder'">
@@ -68,19 +69,19 @@ import Vue from "vue";
 import { test  } from '../../config/request'
 import flashSale from "./flashSale";
 import recommend from "./recommend";
-import loading from '../publicComponent/loading/loading'
 import timeDown from "../publicComponent/timeDown";
+import indexTitle from '../publicComponent/indexTitle'
 Vue.component("flash-sale-view", flashSale);
 Vue.component("recommend-view", recommend);
 Vue.component("time-down-view", timeDown);
-Vue.component("loading-view", loading);
+Vue.component("indexTitle-view",indexTitle)
 export default {
   name: "index",
   components: {
     flashSale,
     recommend,
     timeDown,
-    loading
+    indexTitle
   },
   data() {
     return {

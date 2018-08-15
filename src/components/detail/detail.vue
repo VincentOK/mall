@@ -1,6 +1,8 @@
 <!--商品详情-->
 <template>
-  <div class="detail">
+  <div>
+    <shoptitle v-bind:childTitleword="childTitleword"></shoptitle>
+  <div class="conent_all_h5">
     <div class="title_i">
       <swiper :options="swiperOption">
         <swiper-slide><img class="detail_img" src="/static/img/a1.jpg"></swiper-slide>
@@ -88,6 +90,7 @@
         </div>
     </div>
   </div>
+  </div>
 </template>
 
 <script>
@@ -108,6 +111,7 @@ export default {
   },
   data () {
     return {
+      childTitleword:'商品详情',
       hidden_btn:'block',
       counter:1,
       goodsStatus:0,
@@ -172,14 +176,15 @@ export default {
       }
     },
     pay_money:function () {
+      this._protypeJs.addBodyHeight();
       if(this.goodsStatus == 0){
-        // this._protypeJs.addBodyHeight();
         this.paymoney = true;
       }else {
         this.paytime = true;
       }
     },
     childByValue:function (childByValue) {
+      this._protypeJs.removeBodyHeight();
       this.paymoney = childByValue
       this.paytime = childByValue
     },

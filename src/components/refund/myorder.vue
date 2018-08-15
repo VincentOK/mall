@@ -1,5 +1,7 @@
 <template>
-  <div  v-touch:swiperight="_protypeJs.touchRight">
+  <div>
+  <shoptitle :childTitleword="childTitleword"></shoptitle>
+  <div class="conent_all_h5" v-touch:swiperight="_protypeJs.touchRight">
     <ul class="tabs">
       <li class="li-tab" v-for="(item,index) in tabsParam"
           @click="toggleTabs(index)"
@@ -18,6 +20,7 @@
       我是已取消
     </div>
   </div>
+  </div>
 </template>
 
 <script>
@@ -32,6 +35,7 @@
       },
         data(){
           return{
+            childTitleword:'我的订单',
             tabsParam:['全部','待收货','已完成','已取消'],//（这个也可以用对象key，value来实现）
             nowIndex:0,//默认第一个tab为激活状态
             refundDialog:false
@@ -64,8 +68,8 @@
     border-bottom: 1px solid #eeeeee;
     border-top: 1px solid #eeeeee;
     position: fixed;
-    top: 0;
-    z-index: 999999;
+    top: 40px;
+    z-index: 99999;
   }
   .li-tab{
     width: 25%;
@@ -74,6 +78,6 @@
     text-align: center;
   }
   .divTab{
-    margin-top: 45px;
+    margin-top: 85px;
   }
 </style>

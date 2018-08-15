@@ -31,7 +31,7 @@
     </p>
   </div>
   </scroller>
-  <refund_dialog-view :checkStatus="checkStatus"></refund_dialog-view>
+  <refund_dialog-view :checkStatus="checkStatus" v-on:childByValue="childByValue"  v-if="checkStatus_i"></refund_dialog-view>
 </div>
 </template>
 
@@ -47,6 +47,7 @@
         props:['refund_status'],
         data(){
           return{
+            checkStatus_i:false,
             refund_list:[],
             offset:1,
             checkStatus:'',
@@ -139,12 +140,17 @@
           // this.offset = 0
           // this.getDate(1, done)
         },
+        childByValue:function(childByValue){
+          console.log(childByValue)
+          this.checkStatus_i = childByValue
+        },
         gotodetail:function (id) {
           console.log(id)
           this.$router.push('/refundindex/'+id)
         },
         gotocheck:function (id) {
           console.log("id:"+id)
+          this.checkStatus_i = true
           this.checkStatus = id
         }
       }
@@ -153,7 +159,7 @@
 
 <style scoped>
   .scrollerList{
-    margin-top: 45px;
+    margin-top: 85px;
     height: 100%;
     width: 100%;
   }

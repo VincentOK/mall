@@ -1,6 +1,9 @@
 <!--添加收货地址-->
 <template>
-    <div  v-touch:swiperight="_protypeJs.touchRight">
+  <div>
+
+    <shoptitle v-bind:childTitleword="childTitleword"></shoptitle>
+    <div class="conent_all_h5 heightAuto" v-touch:swiperight="_protypeJs.touchRight">
       <div class="address_one">
         <div class="address_left">
           收货人：
@@ -41,6 +44,7 @@
         <button v-on:click="saveAdress">保存</button>
       </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -54,6 +58,7 @@
     name: 'myaddress',
     data(){
       return{
+        childTitleword:'收货地址',
         cityStatus:false,
         dialogblock:{
           flag:false,

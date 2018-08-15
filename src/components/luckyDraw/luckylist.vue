@@ -1,6 +1,9 @@
 <!--抽奖列表-->
 <template>
-  <div v-touch:swiperight="_protypeJs.touchRight">
+  <div>
+    <shoptitle :childTitleword="childTitleword"></shoptitle>
+
+  <div class="conent_all_h5" v-touch:swiperight="_protypeJs.touchRight">
     <img id="scream" src="/static/img/lucky_ground.png">
     <img class="lucky_banner" src="/static/img/banner@2x.png" alt="">
     <div class="stamp" v-if="!clickLottery">
@@ -67,6 +70,7 @@
     <winning-view v-show="winThePrice === 'win'" v-on:toDraw="toDrawwing" :isShowPopup="!!winThePrice"></winning-view>
     <notwinning-view v-show="winThePrice === 'notWin'" v-on:toDraw="toDrawwing" :isShowPopup="!!winThePrice"></notwinning-view>
   </div>
+  </div>
 </template>
 
 <script>
@@ -79,6 +83,7 @@ export default {
   name: "luckylist",
   data() {
     return {
+      childTitleword:'抽奖',
       whetherFree: false,
       clickLottery: false,
       winThePrice: "",
