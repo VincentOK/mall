@@ -2,6 +2,7 @@
 <template>
   <div class="hello">
     <scroller :on-infinite="infinite" ref="indexScroller">
+      <img src="/static/img/lucky_ground.png" id="canvasImg" style="display: none;">
     <div class="header">
         <span class="my_order">
           <router-link class="top_order" :to="'/myorder'">

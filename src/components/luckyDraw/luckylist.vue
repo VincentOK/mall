@@ -3,6 +3,7 @@
   <div v-touch:swiperight="_protypeJs.touchRight">
     <img id="scream" src="/static/img/lucky_ground.png">
     <img class="lucky_banner" src="/static/img/banner@2x.png" alt="">
+    <img src="/static/img/lucky_ground.png" id="canvasImg" style="display: none;">
     <div class="stamp" v-if="!clickLottery">
       <div class="apic">
         <button @click="clickToTheLottery">开始刮奖</button><br><br>
@@ -199,8 +200,7 @@ export default {
       let self = this;
       var canvas = document.getElementById("mask");
       var context = canvas.getContext("2d");
-      var img = new Image();
-      img.src = "/static/img/lucky_ground.png";
+      var img = document.getElementById('canvasImg');
       context.drawImage(img, 0, 0, 300, 150);
       context.font = "24px Arial";
       context.textAlign = "center";
@@ -402,7 +402,6 @@ export default {
 }
 .activity-description {
   width: 100%;
-  height: 410px;
   display: inline-block;
   position: relative;
   margin-top: 20px;
