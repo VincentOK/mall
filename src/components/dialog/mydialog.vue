@@ -28,7 +28,7 @@ export default {
       prizeMsg: ""
     };
   },
-  computed(){
+  computed:{
   },
   watch: {
     dialogblock: function(newVal, oldVal) {

@@ -2,7 +2,6 @@
 <template>
   <div>
     <shoptitle :childTitleword="childTitleword"></shoptitle>
-
   <div class="conent_all_h5" v-touch:swiperight="_protypeJs.touchRight">
     <img id="scream" src="/static/img/lucky_ground.png">
     <img class="lucky_banner" src="/static/img/banner@2x.png" alt="">
@@ -20,7 +19,7 @@
       </div>
     </div>
     <div class="win_name">
-      <swiper :options="luckySwiperOption">
+      <swiper :options="luckySwiperOption" class="swiper-no-swiping">
         <swiper-slide  v-for="(item,index) in win_list" :key="index">
         <p class="win_name_p">恭喜<span class="win_name_span">{{item.win_name}}</span>抽中了<span class="win_name_lastspan">{{item.win_gift}}</span></p>
       </swiper-slide>
@@ -84,7 +83,7 @@ export default {
   name: "luckylist",
   data() {
     return {
-      childTitleword:'抽奖',
+      childTitleword: "抽奖",
       whetherFree: false,
       clickLottery: false,
       winThePrice: "",
@@ -95,7 +94,7 @@ export default {
       win_gift: "芭比娃娃X1",
       luckySwiperOption: {
         autoplay: {
-          delay: 50,
+          delay: 2000,
           stopOnLastSlide: false,
           disableOnInteraction: false
         },
@@ -104,7 +103,7 @@ export default {
         autoplayDisableOnInteraction: false,
         mousewheelControl: true,
         autoHeight: true,
-        speed: 500,
+        speed: 2000
       }
     };
   },
@@ -205,7 +204,7 @@ export default {
       let self = this;
       var canvas = document.getElementById("mask");
       var context = canvas.getContext("2d");
-      var img = document.getElementById('canvasImg');
+      var img = document.getElementById("canvasImg");
       context.drawImage(img, 0, 0, 300, 150);
       context.font = "24px Arial";
       context.textAlign = "center";
@@ -351,8 +350,8 @@ export default {
   background-size: 35%;
 }
 .stamp {
-  width: 90%;
-  height: 136px;
+  width: 96%;
+  height: 156px;
   margin-top: 10px;
   margin-bottom: 10px;
   padding: 10px;
