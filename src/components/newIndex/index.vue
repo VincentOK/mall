@@ -1,13 +1,9 @@
 <!--主页列表-->
 <template>
   <div class="hello">
-<<<<<<< HEAD
-    <scroller :on-infinite="infinite" ref="indexScroller">
-      <img src="/static/img/lucky_ground.png" id="canvasImg" style="display: none;">
-=======
+    <img src="/static/img/lucky_ground.png" id="canvasImg" style="display: none;">
     <indexTitle-view></indexTitle-view>
     <scroller class="conent_all_h5" :on-infinite="infinite" ref="indexScroller">
->>>>>>> 30b1391c50067d0f2cf6a232d71991554c68f5be
     <div class="header">
         <span class="my_order">
           <router-link class="top_order" :to="'/myorder'">
