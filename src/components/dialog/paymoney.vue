@@ -134,6 +134,11 @@
 </script>
 
 <style scoped>
+  .paymoney{
+    height: 100%;
+    width: 100%;
+    overflow: scroll;
+  }
   .wai_label{
     margin-left: 5%;
   }
@@ -168,11 +173,11 @@
     margin: 0;
     text-align: left;
     margin-top: 13px;
-    margin-bottom: 22px;
+    margin-bottom: 10px;
   }
   .yun_money{
     margin: 0;
-    margin-bottom: 22px;
+    margin-bottom: 10px;
     text-align: left;
   }
   .money_all{
@@ -187,7 +192,7 @@
     height: 36px;
     line-height: 36px;
     text-indent: 10px;
-    margin-bottom: 16px;
+    margin-bottom: 10px;
     color: grey;
     outline: none;
   }
@@ -197,7 +202,7 @@
   }
   .ticket_style{
     margin: 0;
-    padding-bottom: 28px;
+    padding-bottom: 14px;
     text-align: left;
   }
   .ticket_style label:first-child{
@@ -250,7 +255,7 @@
     text-align: left;
     position: relative;
     padding-top: 15px;
-    padding-bottom: 22px;
+    padding-bottom: 10px;
     font-size: 13px;
   }
   .need_ticket label{
@@ -265,14 +270,14 @@
   opacity: 0.5;
   top: 0;
   bottom: 0;
-  z-index: 10;
+  z-index: 99999;
 }
   .pay_money{
     background-color: white;
     position: fixed;
     width: 100%;
     bottom: 0;
-    z-index: 20;
+    z-index: 999999;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
   }
@@ -308,7 +313,7 @@
   }
   .alipay,.wechat{
     height: 30px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
   }
   .pay_one{
     float: left;

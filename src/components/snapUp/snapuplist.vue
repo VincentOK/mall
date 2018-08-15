@@ -1,5 +1,7 @@
 <!--抢购列表页面-->
 <template>
+  <div>
+    <shoptitle :childTitleword="childTitleword"></shoptitle>
     <div  v-touch:swiperight="_protypeJs.touchRight">
       <div class="snap_title">
         <p>
@@ -31,6 +33,7 @@
         </scroller>
       </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -39,6 +42,7 @@ export default {
   name: "snapuplist",
   data() {
     return {
+      childTitleword:'限时抢购',
       snaplist: [],
       clearTime: false,
       endTime: "2018-08-20 05:40:20",

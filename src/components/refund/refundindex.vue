@@ -1,6 +1,9 @@
 <!--退款首页-->
 <template>
-  <div  v-touch:swiperight="_protypeJs.touchRight">
+  <div>
+    <shoptitle :childTitleword="childTitleword"></shoptitle>
+
+  <div class="conent_all_h5" v-touch:swiperight="_protypeJs.touchRight">
     <title-view :getId="getId"></title-view>
     <div class="refund_all">
       <div class="refund_title">
@@ -86,6 +89,7 @@
     <dialog-view  :dialogblock="dialogblock"></dialog-view>
     <whynotwant-view v-on:getWhynot="getWhynot" v-if="whynot"></whynotwant-view>
   </div>
+  </div>
 </template>
 
 <script>
@@ -106,6 +110,7 @@
         },
       data(){
           return{
+            childTitleword:'申请退款',
             getId:'',
             whynot:false,
             dialogblock:{
@@ -127,6 +132,7 @@
       },
       mounted(){
         let id = this.$route.params.id
+        alert(id)
         this.getId = id
       },
       methods:{

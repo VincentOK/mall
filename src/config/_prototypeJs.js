@@ -19,11 +19,33 @@ export default (Vue) => {
     /**
      * 弹框出现固定body高度
      */
-    addBodyHeight: () => { document.body.style.height = '100%'; document.body.style.overflowY = 'hidden'; },
+    addBodyHeight: () => {
+      console.log(document.documentElement.clientWidth)
+      console.log(document.documentElement.clientHeight)
+      let height = document.documentElement.clientHeight
+      let width = document.documentElement.clientWidth
+      document.body.style.height = height+'px';
+      document.body.style.width = '100%';
+      document.body.style.position = 'fixed';
+      document.body.style.zIndex = '99';
+      // document.body.style.top = '0';
+      document.body.style.overflow = 'hidden';
+
+      },
     /**
      * 弹框取消body高度自适应
      */
-    removeBodyHeight:() => {document.body.style.height = '';document.body.style.overflowY = '';},
+    removeBodyHeight:() => {
+      console.log(document.documentElement.clientWidth)
+      console.log(document.documentElement.clientHeight)
+      document.body.style.height = '';
+      document.body.style.width = '';
+      document.body.style.position = '';
+      document.body.style.zIndex = '0';
+      // document.body.style.top = '0';
+      document.body.style.overflow = '';
+      document.body.style.height = '';
+      document.body.style.overflow = '';},
     /**
      * 弹框消失事件
      */

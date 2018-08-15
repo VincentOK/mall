@@ -1,8 +1,13 @@
 <!--主页列表-->
 <template>
   <div class="hello">
+<<<<<<< HEAD
     <scroller :on-infinite="infinite" ref="indexScroller">
       <img src="/static/img/lucky_ground.png" id="canvasImg" style="display: none;">
+=======
+    <indexTitle-view></indexTitle-view>
+    <scroller class="conent_all_h5" :on-infinite="infinite" ref="indexScroller">
+>>>>>>> 30b1391c50067d0f2cf6a232d71991554c68f5be
     <div class="header">
         <span class="my_order">
           <router-link class="top_order" :to="'/myorder'">
@@ -69,19 +74,19 @@ import Vue from "vue";
 import { test  } from '../../config/request'
 import flashSale from "./flashSale";
 import recommend from "./recommend";
-import loading from '../publicComponent/loading/loading'
 import timeDown from "../publicComponent/timeDown";
+import indexTitle from '../publicComponent/indexTitle'
 Vue.component("flash-sale-view", flashSale);
 Vue.component("recommend-view", recommend);
 Vue.component("time-down-view", timeDown);
-Vue.component("loading-view", loading);
+Vue.component("indexTitle-view",indexTitle)
 export default {
   name: "index",
   components: {
     flashSale,
     recommend,
     timeDown,
-    loading
+    indexTitle
   },
   data() {
     return {
@@ -96,7 +101,23 @@ export default {
     };
   },
   mounted() {
-    let vm = this
+    console.log("页面初始化")
+    console.log(document.documentElement.clientWidth)
+    console.log(document.documentElement.clientHeight)
+    console.log(document.documentElement.clientWidth)
+    console.log(document.documentElement.clientHeight)
+    let height = document.documentElement.clientHeight
+    let width = document.documentElement.clientWidth
+    // document.getElementById("scroller").style.position = 'fixed';
+    // document.getElementById("scroller").style.height =height+'px';
+    // document.getElementById("scroller").style.width = width+'px';
+    // document.getElementById("scroller").style.overflowY = 'scroll';
+
+
+
+
+
+    // let vm = this
     // vm._protypeJs.addDialog();
     // test('a39b9eb22d4c4dbcb4ef2c843df205f4').then(res =>{
     //   console.log("a39b9eb22d4c4dbcb4ef2c843df205f4:"+JSON.stringify(res))

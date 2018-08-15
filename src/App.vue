@@ -1,9 +1,10 @@
 <template>
   <div id="app" class="container">
     <Loading id="loading" style="display: none"></Loading>
-    <transition :name="transitionName">
-      <router-view class="child-view"></router-view>
-    </transition>
+    <router-view class="child-view"></router-view>
+    <!--<transition :name="transitionName">-->
+      <!--<router-view class="child-view"></router-view>-->
+    <!--</transition>-->
   </div>
 </template>
 
@@ -35,6 +36,22 @@ export default {
 </script>
 
 <style>
+  * {
+    -webkit-touch-callout:none; /*系统默认菜单被禁用*/
+    -webkit-tap-highlight-color:transparent; /*取消点击链接或者JavaScript可点击元素赋给的高亮背景色*/
+  }
+  * {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+  }
+
+  *:not(input,textarea) {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+  }
   body,html {
     background-color: #ffffff;
   }
@@ -42,7 +59,12 @@ export default {
     width:100%;
     height:100%
   }
-
+  .heightAuto{
+    height: 90%;
+  }
+.conent_all_h5{
+  margin-top: 40px;
+}
   #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

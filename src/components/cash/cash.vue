@@ -1,11 +1,15 @@
 <!--仅限时间币兑换-->
 <template>
-    <div class="exchange"  v-touch:swiperight="_protypeJs.touchRight">
+  <div>
+    <shoptitle v-bind:childTitleword="childTitleword"></shoptitle>
+
+
+    <div class="exchange conent_all_h5"  v-touch:swiperight="_protypeJs.touchRight">
       <div>
         <p class="exchange_number">共10256个商品</p>
       </div>
       <div class="exchange_content">
-        <scroller style="margin-top: 50px" :on-infinite="infinite"  :on-refresh = "refresh" ref="myscroller">
+        <scroller style="margin-top: 90px" :on-infinite="infinite"  :on-refresh = "refresh" ref="myscroller">
           <div style="height: 1px;"></div>
         <router-link class="a_detail" v-for="(item,index) in ex_list" :key="index" :to="'/detail/' + item.id">
           <div class="exchange_content_i">
@@ -23,6 +27,7 @@
         </scroller>
       </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -31,6 +36,7 @@ export default {
   data () {
     return {
       msg: 'Welcome to Your Vue.js App',
+      childTitleword:'现金专区',
       ex_list:[],
     }
   },
@@ -142,7 +148,7 @@ export default {
     background-color: #f2f2f2;
     margin: 0;
     position: fixed;
-    top: 0;
+    top: 40px;
     z-index: 99999;
   }
   .a_detail{

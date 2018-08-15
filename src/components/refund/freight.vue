@@ -1,5 +1,8 @@
 <!--申请退还运费-->
 <template>
+  <div>
+
+    <shoptitle :childTitleword="childTitleword"></shoptitle>
     <div class="freight_all" v-touch:swiperight="_protypeJs.touchRight">
       <div class="freight_one">
         <label>运费（元）</label>
@@ -23,6 +26,8 @@
 
       <dialog-view  :dialogblock="freightDialog"></dialog-view>
     </div>
+
+  </div>
 </template>
 
 <script>
@@ -33,6 +38,7 @@
       name: "freight",
       data(){
           return{
+            childTitleword:'申请退还运费',
             getId:'',
             money:'',
             ali_number:'',
@@ -77,6 +83,7 @@
 .freight_all{
   width: 100%;
   margin: auto;
+  margin-top: 40px;
 }
   .freight_one{
     height: 55px;

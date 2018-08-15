@@ -1,7 +1,7 @@
 <!--弹框提示-->
 <template>
   <div>
-  <div class="wai"  v-if="displayNone">
+  <div class="wai" v-on:click="hiddenDialog"  v-if="displayNone">
     <div class="mydialog">
         <img src="/static/img/prompt.png" alt="">
         <div>{{tismsg}}</div>
@@ -27,6 +27,8 @@ export default {
       prizedialog: false,
       prizeMsg: ""
     };
+  },
+  computed(){
   },
   watch: {
     dialogblock: function(newVal, oldVal) {
@@ -70,8 +72,7 @@ export default {
   height: 100%;
   width: 100%;
   top: 0;
-  bottom: 0;
-  z-index: 99999;
+  z-index: 999999;
 }
 .mydialog {
   width: 168px;
@@ -83,8 +84,8 @@ export default {
   position: absolute;
   left: 0;
   right: 0;
-  top: 0;
-  bottom: 0;
+  top: 30%;
+  /*bottom: 0;*/
   margin: auto;
 }
 .mydialog img {

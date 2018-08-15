@@ -1,6 +1,9 @@
 <!--提交领奖信息-->
 <template>
-    <div  v-touch:swiperight="touchRight">
+  <div>
+    <shoptitle :childTitleword="childTitleword"></shoptitle>
+
+    <div class="conent_all_h5 heightAuto"  v-touch:swiperight="_protypeJs.touchRight">
       <div class="all_snap">
         <div class="snap_list">
           <div class="snap_one">
@@ -45,6 +48,7 @@
         <button @click="submitPrize">提交领奖信息</button>
       </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -55,6 +59,7 @@ export default {
   name: "luckycenter",
   data() {
     return {
+      childTitleword:'领奖中心',
       addressPhone: 1548745156,
       addressName: "Vincent",
       addressDetail: "广东省深圳市南山区田厦金牛广场1402",

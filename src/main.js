@@ -13,6 +13,8 @@ import   _protypeJs   from './config/_prototypeJs'
 Vue.use(_protypeJs)
 import Loading from './components/publicComponent/loading/loading'
 Vue.use(Loading)
+import shoptitle from './components/publicComponent/shoptitle/shoptitle'
+Vue.use(shoptitle)
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
 Vue.use(VueAwesomeSwiper)

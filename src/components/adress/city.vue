@@ -3754,6 +3754,7 @@ export default {
   .title{
     text-align: left;
     height: 32px;
+
   }
   .ul_city{
     list-style: none;
@@ -3829,7 +3830,7 @@ export default {
   }
   .area{
     display:inline-block;
-    font-size:0.24rem;
+    font-size:16px;
     line-height:0.88rem;
     margin-left:0.42rem;
     color:#333;
