@@ -14,7 +14,7 @@ export default {
     };
   },
   mounted() {
-    let time = setInterval(() => {
+    var time = setInterval(() => {
       if (this.flag == true) {
         clearInterval(time);
       }
@@ -34,13 +34,13 @@ export default {
   },
   methods: {
     timeDown() {
-      const endTime = new Date(this.endTime);
+      let timeArr=this.endTime.replace(/-/g,':').replace(' ',':').split(':');
+      const endTime = new Date(timeArr[0],(timeArr[1]-1),timeArr[2],timeArr[3],timeArr[4],timeArr[5]);
       const nowTime = new Date();
-      let leftTime = parseInt((endTime.getTime() - nowTime.getTime()) / 1000);
-      //   let d = parseInt(leftTime / (24 * 60 * 60));
-      let h = this.formate(parseInt((leftTime / (60 * 60)) % 24));
-      let m = this.formate(parseInt((leftTime / 60) % 60));
-      let s = this.formate(parseInt(leftTime % 60));
+      var leftTime = parseInt((endTime.getTime() - nowTime.getTime()) / 1000);
+      var h = this.formate(parseInt((leftTime / (60 * 60)) % 24));
+      var m = this.formate(parseInt((leftTime / 60) % 60));
+      var s = this.formate(parseInt(leftTime % 60));
       if (leftTime <= 0) {
         this.flag = true;
         this.$emit("time-end",true);
