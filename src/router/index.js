@@ -13,16 +13,10 @@ import freight from '@/components/refund/freight'
 import myorder from '@/components/refund/myorder'
 import exchange from '@/components/exchange/exchange'
 import cash from '@/components/cash/cash'
-import scroller from '@/components/testScroller/scroller'
 
 Vue.use(Router)
 export default new Router({
   routes: [
-    {
-      path: '/scroller',
-      name: 'scroller',
-      component: scroller
-    },
     {
       path: '/',
       name: 'index',
