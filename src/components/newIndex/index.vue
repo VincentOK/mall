@@ -117,7 +117,7 @@ export default {
         self.commodity_count++;
         getList(self.commodity_count)
           .then(res => {
-            if(res.data.listRMB){
+            if(res.listRMB){
               self.commodity_count_list.push(res);
             }else{
               self.noData = "没有更多数据";

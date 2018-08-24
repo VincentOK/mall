@@ -28,15 +28,18 @@ Vue.config.productionTip = false;
   let string = window.location.href;
   var old = string.split('?')[0];
   let user = string.split('?')[1];
-  localStorage.setItem('user',user);
+  if(user){
+    localStorage.setItem('user',user);
+  }
   let myuser = localStorage.getItem('user')
+  console.log(myuser+"=========="+typeof(myuser))
   window.location.href = old;
   //使用钩子函数对路由进行权限跳转
   router.beforeEach((to, from, next) => {
-    if(!myuser){
-      alert("非法访问")
-    }else {
+    if( myuser ||myuser != "undefined"){
       next();
+    }else {
+      alert("非法访问")
     }
   })
 })();

@@ -37,6 +37,7 @@ export default {
       msg: 'Welcome to Your Vue.js App',
       childTitleword:'时间币专区',
       ex_list:[],
+      count:1
     }
   },
   mounted(){
@@ -91,9 +92,8 @@ export default {
     infinite (done) {
       console.log("向上滑动")
 
-      this.offset++    //每当向上滑动的时候就让页数加1
-      console.log("向上滑动页码:"+ this.offset)
-      console.log("done:"+done)
+      this.count++    //每当向上滑动的时候就让页数加1
+      console.log("向上滑动页码:"+ this.count)
       if(this.noData) {
         setTimeout(()=>{
           this.$refs.myscroller.finishInfinite(2);
