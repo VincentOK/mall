@@ -46,18 +46,5 @@ export default (Vue) => {
       document.body.style.overflow = '';
       document.body.style.height = '';
       document.body.style.overflow = '';},
-    /**
-     * 弹框消失事件
-     */
-    removeDialog:() =>{
-      document.getElementById("loading").style.display = 'none'
-    },
-    /**
-     * 弹框显示事件
-     */
-    addDialog:() =>{
-      document.getElementById("loading").style.display = 'block'
-    }
-
   }
 }

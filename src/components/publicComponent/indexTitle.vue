@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="shop_title">
-      <img class="close_shop" src="/static/img/pay_close.png" alt="">
+      <img class="close_shop" v-on:click="closeWeb" src="/static/img/pay_close.png" alt="">
       时间商城
     </div>
   </div>
@@ -14,6 +14,33 @@
       return{
       }
     },
+    methods:{
+      closeWeb:function () {
+          window.location.href = window.location.href + '?close=true'
+      },
+      //paraName 等找参数的名称
+       GetUrlParam:function(paraName) {
+          var url = document.location.toString();
+          var arrObj = url.split("?");
+
+          if (arrObj.length > 1) {
+            var arrPara = arrObj[1].split("&");
+            var arr;
+
+            for (var i = 0; i < arrPara.length; i++) {
+              arr = arrPara[i].split("=");
+
+              if (arr != null && arr[0] == paraName) {
+                return arr[1];
+              }
+            }
+            return "";
+          }
+          else {
+            return "";
+          }
+        }
+    }
   }
 </script>
 

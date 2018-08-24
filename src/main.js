@@ -20,7 +20,24 @@ import 'swiper/dist/css/swiper.css'
 Vue.use(VueAwesomeSwiper)
 import VueScroller from 'vue-scroller'
 Vue.use(VueScroller)
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
+//获取用户ID
+(function(){
+  let string = window.location.href;
+  var old = string.split('?')[0];
+  let user = string.split('?')[1];
+  localStorage.setItem('user',user);
+  let myuser = localStorage.getItem('user')
+  window.location.href = old;
+  //使用钩子函数对路由进行权限跳转
+  router.beforeEach((to, from, next) => {
+    if(!myuser){
+      alert("非法访问")
+    }else {
+      next();
+    }
+  })
+})();
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
