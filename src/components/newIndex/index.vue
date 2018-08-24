@@ -3,7 +3,7 @@
   <div class="hello">
     <img src="/static/img/lucky_ground.png" id="canvasImg" style="display: none;">
     <indexTitle-view></indexTitle-view>
-    <scroller class="conent_all_h5" :on-infinite="infinite" :on-refresh="refresh" ref="indexScroller">
+    <scroller class="conent_all_h5" :on-infinite="infinite" ref="indexScroller">
     <div class="header">
         <span class="my_order">
           <router-link class="top_order" :to="'/myorder'">
@@ -95,147 +95,42 @@ export default {
       commodity_list: [],
       commodity_time_list: [],
       commodity_count_list: [],
-      commodity_count: 1
+      commodity_count: 0
     };
   },
-  mounted() {
-    this.getCommodityData();
-    //  this.commodity_list = [
-    //   {
-    //     id: "1",
-    //     img_url: "/static/img/a1.jpg",
-    //     name:
-    //       "海南贵妃特价海南贵妃特价海南贵南贵妃特价海南贵妃妃南贵妃海南贵妃特价海南贵妃特价海南贵南贵妃特价海南贵妃妃南贵妃海南贵妃特价海南贵妃特价海南贵南贵妃特价海南贵妃妃南贵妃 送货上门",
-    //     price: "120",
-    //     time_money: "356.58",
-    //     original_cost: "345",
-    //     goods_tag: "1",
-    //     count: "121"
-    //   },
-    //   {
-    //     id: "2",
-    //     img_url: "/static/img/a1.jpg",
-    //     name: "海南贵妃特价海南贵妃 送货上门",
-    //     price: "120.00",
-    //     time_money: "356.58",
-    //     original_cost: "345",
-    //     goods_tag: "2",
-    //     count: "122"
-    //   },
-    //   {
-    //     id: "3",
-    //     img_url: "/static/img/a1.jpg",
-    //     name: "海南贵妃特价海南贵妃 送货上门",
-    //     price: "120",
-    //     time_money: "356.58",
-    //     original_cost: "345",
-    //     goods_tag: "3",
-    //     count: "123"
-    //   },
-    //   {
-    //     id: "4",
-    //     img_url: "/static/img/a1.jpg",
-    //     name: "海南贵妃特价海南贵妃 送货上门",
-    //     price: "120",
-    //     time_money: "356.58",
-    //     original_cost: "345",
-    //     goods_tag: "0",
-    //     count: "124"
-    //   },
-    //   {
-    //     id: "5",
-    //     img_url: "/static/img/a1.jpg",
-    //     name: "海南贵妃特价海南贵妃 送货上门",
-    //     price: "120.00",
-    //     time_money: "356.58",
-    //     original_cost: "345",
-    //     goods_tag: "3",
-    //     count: "125"
-    //   },
-    //   {
-    //     id: "6",
-    //     img_url: "/static/img/a1.jpg",
-    //     name: "海南贵妃特价海南贵妃 送货上门",
-    //     price: "120",
-    //     time_money: "356.58",
-    //     original_cost: "345",
-    //     goods_tag: "3",
-    //     count: "125"
-    //   }
-    // ];
-    // this.commodity_time_list = [
-    //   {
-    //     id: "1",
-    //     img_url: "/static/img/a1.jpg",
-    //     name:
-    //       "海南贵妃特价海南贵妃特价海南贵南贵妃特价海南贵妃妃南贵妃海南贵妃特价海南贵妃特价海南贵南贵妃特价海南贵妃妃南贵妃海南贵妃特价海南贵妃特价海南贵南贵妃特价海南贵妃妃南贵妃 送货上门",
-    //     price: "120",
-    //     time_money: "356.58",
-    //     count: "121",
-    //     original_cost: "345"
-    //   },
-    //   {
-    //     id: "2",
-    //     img_url: "/static/img/a1.jpg",
-    //     name: "海南贵妃特价海南贵妃 送货上门",
-    //     price: "120",
-    //     time_money: "356.58",
-    //     count: "122",
-    //     original_cost: "345"
-    //   },
-    //   {
-    //     id: "3",
-    //     img_url: "/static/img/a1.jpg",
-    //     name: "海南贵妃特价海南贵妃 送货上门",
-    //     price: "120",
-    //     time_money: "356.58",
-    //     original_cost: "345",
-    //     count: "123"
-    //   }
-    // ];
-  },
+  mounted() {},
   methods: {
-    getCommodityData() {
-      let vm = this
-      getList(this.commodity_count).then(res => {
-        vm.commodity_count_list.push(res.data);
-      }).catch( err =>{
-        console.log(err);
-      });
-    },
     clearTime(newVal, oldVal) {
       if (newVal) {
         console.log("hello");
       }
     },
     infinite(done) {
-      if (this.noData) {
+      let self = this;
+      if (self.noData) {
         setTimeout(() => {
-          this.$refs.indexScroller.finishInfinite(2);
+          self.$refs.indexScroller.finishInfinite(2);
         });
         return;
       }
-      let self = this;
-      let start =
-        (self.commodity_list.length + self.commodity_time_list.length) *
-        self.commodity_count;
       setTimeout(() => {
         self.commodity_count++;
-        self.getCommodityData();
-        if (self.commodity_count > 3) {
-          self.noData = "没有更多数据";
-        };
-         
+        getList(self.commodity_count)
+          .then(res => {
+            if(res.data.listRMB){
+              self.commodity_count_list.push(res);
+            }else{
+              self.noData = "没有更多数据";
+            }
+            done(true);
+          })
+          .catch(err => {
+            console.log(err);
+          });
         self.$refs.indexScroller.resize();
-        done();
+        done(true);
       }, 1500);
     },
-    refresh(done) {
-      console.log(123);
-      setTimeout(() => {
-        done();
-      }, 1500);
-    }
   },
   computed: {},
   created() {}
