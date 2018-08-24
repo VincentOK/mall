@@ -7,36 +7,36 @@
               <i style="background-image: url('/static/img/recommend2.png')"></i>
             </p>
             <div v-for="(item,index) in commodityCount" :key="index">
-            <div class="exchange_content">
-              <router-link class="a_detail" v-for="(item,index) in commodityList" :key="index" :to="'/detail/' + item.id">
+            <div class="exchange_content" v-if="item.listRMB.length !== 0">
+              <router-link class="a_detail" v-for="(RMBitem,RMBindex) in item.listRMB" :key="RMBindex" :to="'/detail/' + RMBitem.commodityId">
                 <div class="exchange_content_i">
                   <div class="img_wrap">
-                    <img :src="item.img_url" alt="">
-                    <span class="swiper_goods_tag" v-if="item.goods_tag!='0'" :class="goodsTagStyle(item.goods_tag)">
-                      <span>{{item.goods_tag | formatGoodTags}}</span>
+                    <img :src="RMBitem.imgUrl?'/static/img/a1.jpg':RMBitem.imgUrl" alt="">
+                    <span class="swiper_goods_tag" v-if="RMBitem.goods_tag!='0'" :class="goodsTagStyle(RMBitem.goods_tag)">
+                      <span>{{RMBitem.goods_tag | formatGoodTags}}</span>
                     </span>
                   </div>
                   <div class="word_i">
-                    <p class="word_name">{{_protypeJs.maxSlice20(item.name)}}</p>
+                    <p class="word_name">{{_protypeJs.maxSlice20(RMBitem.commodityName)}}</p>
                     <p class="word_name_two">
-                      <label class="word_money"><label class="time">￥</label>{{item.price}}</label>
-                      <label class="be_money"><del>￥{{item.original_cost | formatMoney}}</del></label>
+                      <label class="word_money"><label class="time">￥</label>{{RMBitem.realityPrice}}</label>
+                      <label class="be_money"><del>￥{{RMBitem.suggestPrice | formatMoney}}</del></label>
                     </p>
-                    <p class="last"> <label class="word_count">剩余{{item.count}}件</label></p>
+                    <p class="last"> <label class="word_count">剩余{{RMBitem.inventory}}件</label></p>
                   </div>
                 </div>
               </router-link>
           </div>
-            <div class="flashSale_slide">
+            <div class="flashSale_slide" v-if="item.listTimeCoin.length !== 0">
              <div class="swiper_wrapper">
-                <div class="swiper_image" v-for="(item,index) in commodityTimeList" :key="index">
+                <div class="swiper_image" v-for="(Timeitem,Timeindex) in item.listTimeCoin" :key="Timeindex">
                     <div class="image_border">
-                        <router-link class="a_detail" :to="'/detail/' + item.id">
+                        <router-link class="a_detail" :to="'/detail/' + Timeitem.commodityId">
                         <img src="/static/img/a1.jpg">
-                        <p class="swiper_name">{{_protypeJs.maxSlice13(item.name)}}</p>
-                        <p class="swiper_price">{{item.price}}<span>时间币</span></p>
-                        <p class="swiper_del_price"><del>￥{{item.original_cost | formatMoney}}</del></p>
-                        <p class="swiper_surplus_count">剩余{{item.count}}件</p>
+                        <p class="swiper_name">{{_protypeJs.maxSlice13(Timeitem.commodityName)}}</p>
+                        <p class="swiper_price">{{Timeitem.timecoinPrice}}<span>时间币</span></p>
+                        <p class="swiper_del_price"><del>￥{{Timeitem.suggestPrice | formatMoney}}</del></p>
+                        <p class="swiper_surplus_count">剩余{{Timeitem.inventory}}件</p>
                         </router-link>
                     </div>
                 </div>
@@ -71,7 +71,7 @@ export default {
       type: Array
     },
     commodityCount: {
-      type: Number
+      type: Array
     }
   },
   filters: {

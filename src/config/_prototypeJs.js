@@ -4,13 +4,17 @@ export default (Vue) => {
      * 字符长度最长20
      */
     maxSlice20:(item) =>{
-      return item.length > 20 ? item.slice(0, 20) + "..." : item;
+      if(Boolean(item)){
+        return item.length > 20 ? item.slice(0, 20) + "..." : item;
+      }
     },
     /**
      * 字符长度最长10
      */
     maxSlice13:(item) =>{
-      return item.length > 13 ? item.slice(0, 13) + "..." : item;
+      if(Boolean(item)){
+        return item.length > 13 ? item.slice(0, 13) + "..." : item;
+      }
     },
     /**
      * 右滑返回

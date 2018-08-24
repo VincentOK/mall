@@ -1,14 +1,17 @@
 let formatMoney = (value, statusId) => {
-  let hasdot = value.indexOf('.') > 0
-  switch (statusId) {
-    case "1":
-      return hasdot ? "￥" + value.substr(0,value.indexOf(".")+3) : "￥" + value;
-      break;
-    case "2":
-      return hasdot ? value.substr(0,value.indexOf(".")+3) + "时间币" : value + "时间币";
-      break;
-    default:
-      return hasdot ? value.substr(0,value.indexOf(".")+3) : value;
+  if(Boolean(value)){
+    let values = value.toString();
+    let hasdot = values.indexOf('.') > 0
+    switch (statusId) {
+      case "1":
+        return hasdot ? "￥" + values.substr(0,values.indexOf(".")+3) : "￥" + values;
+        break;
+      case "2":
+        return hasdot ? values.substr(0,values.indexOf(".")+3) + "时间币" : values + "时间币";
+        break;
+      default:
+        return hasdot ? values.substr(0,values.indexOf(".")+3) : values;
+    }
   }
 }
 let formatGoodTags = (goodId) => {

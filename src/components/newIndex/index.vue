@@ -3,7 +3,7 @@
   <div class="hello">
     <img src="/static/img/lucky_ground.png" id="canvasImg" style="display: none;">
     <indexTitle-view></indexTitle-view>
-    <scroller class="conent_all_h5" :on-infinite="infinite" ref="indexScroller">
+    <scroller class="conent_all_h5" :on-infinite="infinite" :on-refresh="refresh" ref="indexScroller">
     <div class="header">
         <span class="my_order">
           <router-link class="top_order" :to="'/myorder'">
@@ -59,7 +59,7 @@
       <time-down-view @time-end="clearTime" :endTime='endTime' :endTimeChar='endTimeChar' :timeStyle='indexStyle'></time-down-view>
     </div>
     <flash-sale-view></flash-sale-view>
-    <recommend-view :commodityList='commodity_list' :commodityTimeList='commodity_time_list' :commodityCount='commodity_count'></recommend-view>
+    <recommend-view :commodityList='commodity_list' :commodityTimeList='commodity_time_list' :commodityCount='commodity_count_list'></recommend-view>
       <!--<loading-view></loading-view>-->
     </scroller>
   </div>
@@ -67,15 +67,15 @@
 
 <script>
 import Vue from "vue";
-import { test  } from '../../config/request'
+import { getList } from "../../config/request";
 import flashSale from "./flashSale";
 import recommend from "./recommend";
 import timeDown from "../publicComponent/timeDown";
-import indexTitle from '../publicComponent/indexTitle'
+import indexTitle from "../publicComponent/indexTitle";
 Vue.component("flash-sale-view", flashSale);
 Vue.component("recommend-view", recommend);
 Vue.component("time-down-view", timeDown);
-Vue.component("indexTitle-view",indexTitle)
+Vue.component("indexTitle-view", indexTitle);
 export default {
   name: "index",
   components: {
@@ -86,195 +86,156 @@ export default {
   },
   data() {
     return {
+      noData: "",
       endTime: "2018-08-30 17:57:45",
       endTimeChar: "距结束",
       indexStyle: "indexStyle",
       flag: false,
       list: [],
-      commodity_list:[],
-      commodity_time_list:[],
-      commodity_count:1
+      commodity_list: [],
+      commodity_time_list: [],
+      commodity_count_list: [],
+      commodity_count: 1
     };
   },
   mounted() {
-    console.log("页面初始化")
-    console.log(document.documentElement.clientWidth)
-    console.log(document.documentElement.clientHeight)
-    console.log(document.documentElement.clientWidth)
-    console.log(document.documentElement.clientHeight)
-    let height = document.documentElement.clientHeight
-    let width = document.documentElement.clientWidth
-    // document.getElementById("scroller").style.position = 'fixed';
-    // document.getElementById("scroller").style.height =height+'px';
-    // document.getElementById("scroller").style.width = width+'px';
-    // document.getElementById("scroller").style.overflowY = 'scroll';
-
-
-
-
-
-    // let vm = this
-    // vm._protypeJs.addDialog();
-    // test('a39b9eb22d4c4dbcb4ef2c843df205f4').then(res =>{
-    //   console.log("a39b9eb22d4c4dbcb4ef2c843df205f4:"+JSON.stringify(res))
-    //   vm._protypeJs.removeDialog();
-    // })
-
-
-     this.commodity_list = [
-      {
-        id: "1",
-        img_url: "/static/img/a1.jpg",
-        name:
-          "海南贵妃特价海南贵妃特价海南贵南贵妃特价海南贵妃妃南贵妃海南贵妃特价海南贵妃特价海南贵南贵妃特价海南贵妃妃南贵妃海南贵妃特价海南贵妃特价海南贵南贵妃特价海南贵妃妃南贵妃 送货上门",
-        price: "120",
-        time_money: "356.58",
-        original_cost: "345",
-        goods_tag: "1",
-        count: "121"
-      },
-      {
-        id: "2",
-        img_url: "/static/img/a1.jpg",
-        name: "海南贵妃特价海南贵妃 送货上门",
-        price: "120.00",
-        time_money: "356.58",
-        original_cost: "345",
-        goods_tag: "2",
-        count: "122"
-      },
-      {
-        id: "3",
-        img_url: "/static/img/a1.jpg",
-        name: "海南贵妃特价海南贵妃 送货上门",
-        price: "120",
-        time_money: "356.58",
-        original_cost: "345",
-        goods_tag: "3",
-        count: "123"
-      },
-      {
-        id: "4",
-        img_url: "/static/img/a1.jpg",
-        name: "海南贵妃特价海南贵妃 送货上门",
-        price: "120",
-        time_money: "356.58",
-        original_cost: "345",
-        goods_tag: "0",
-        count: "124"
-      },
-      {
-        id: "5",
-        img_url: "/static/img/a1.jpg",
-        name: "海南贵妃特价海南贵妃 送货上门",
-        price: "120.00",
-        time_money: "356.58",
-        original_cost: "345",
-        goods_tag: "3",
-        count: "125"
-      },
-      {
-        id: "6",
-        img_url: "/static/img/a1.jpg",
-        name: "海南贵妃特价海南贵妃 送货上门",
-        price: "120",
-        time_money: "356.58",
-        original_cost: "345",
-        goods_tag: "3",
-        count: "125"
-      }
-    ];
-    this.commodity_time_list = [
-      {
-        id: "1",
-        img_url: "/static/img/a1.jpg",
-        name:
-          "海南贵妃特价海南贵妃特价海南贵南贵妃特价海南贵妃妃南贵妃海南贵妃特价海南贵妃特价海南贵南贵妃特价海南贵妃妃南贵妃海南贵妃特价海南贵妃特价海南贵南贵妃特价海南贵妃妃南贵妃 送货上门",
-        price: "120",
-        time_money: "356.58",
-        count: "121",
-        original_cost: "345"
-      },
-      {
-        id: "2",
-        img_url: "/static/img/a1.jpg",
-        name: "海南贵妃特价海南贵妃 送货上门",
-        price: "120",
-        time_money: "356.58",
-        count: "122",
-        original_cost: "345"
-      },
-      {
-        id: "3",
-        img_url: "/static/img/a1.jpg",
-        name: "海南贵妃特价海南贵妃 送货上门",
-        price: "120",
-        time_money: "356.58",
-        original_cost: "345",
-        count: "123"
-      }
-    ];
-    this.commodity_time_list = [
-      {
-        id: "1",
-        img_url: "/static/img/a1.jpg",
-        name:
-          "海南贵妃特价海南贵妃特价海南贵南贵妃特价海南贵妃妃南贵妃海南贵妃特价海南贵妃特价海南贵南贵妃特价海南贵妃妃南贵妃海南贵妃特价海南贵妃特价海南贵南贵妃特价海南贵妃妃南贵妃 送货上门",
-        price: "120.00",
-        time_money: "356.58",
-        count: "121",
-        original_cost: "345"
-      },
-      {
-        id: "2",
-        img_url: "/static/img/a1.jpg",
-        name: "海南贵妃特价海南贵妃 送货上门",
-        price: "120",
-        time_money: "356.58",
-        count: "122",
-        original_cost: "345"
-      },
-      {
-        id: "3",
-        img_url: "/static/img/a1.jpg",
-        name: "海南贵妃特价海南贵妃 送货上门",
-        price: "120.00",
-        time_money: "356.58",
-        original_cost: "345",
-        count: "123"
-      }
-    ];
+    this.getCommodityData();
+    //  this.commodity_list = [
+    //   {
+    //     id: "1",
+    //     img_url: "/static/img/a1.jpg",
+    //     name:
+    //       "海南贵妃特价海南贵妃特价海南贵南贵妃特价海南贵妃妃南贵妃海南贵妃特价海南贵妃特价海南贵南贵妃特价海南贵妃妃南贵妃海南贵妃特价海南贵妃特价海南贵南贵妃特价海南贵妃妃南贵妃 送货上门",
+    //     price: "120",
+    //     time_money: "356.58",
+    //     original_cost: "345",
+    //     goods_tag: "1",
+    //     count: "121"
+    //   },
+    //   {
+    //     id: "2",
+    //     img_url: "/static/img/a1.jpg",
+    //     name: "海南贵妃特价海南贵妃 送货上门",
+    //     price: "120.00",
+    //     time_money: "356.58",
+    //     original_cost: "345",
+    //     goods_tag: "2",
+    //     count: "122"
+    //   },
+    //   {
+    //     id: "3",
+    //     img_url: "/static/img/a1.jpg",
+    //     name: "海南贵妃特价海南贵妃 送货上门",
+    //     price: "120",
+    //     time_money: "356.58",
+    //     original_cost: "345",
+    //     goods_tag: "3",
+    //     count: "123"
+    //   },
+    //   {
+    //     id: "4",
+    //     img_url: "/static/img/a1.jpg",
+    //     name: "海南贵妃特价海南贵妃 送货上门",
+    //     price: "120",
+    //     time_money: "356.58",
+    //     original_cost: "345",
+    //     goods_tag: "0",
+    //     count: "124"
+    //   },
+    //   {
+    //     id: "5",
+    //     img_url: "/static/img/a1.jpg",
+    //     name: "海南贵妃特价海南贵妃 送货上门",
+    //     price: "120.00",
+    //     time_money: "356.58",
+    //     original_cost: "345",
+    //     goods_tag: "3",
+    //     count: "125"
+    //   },
+    //   {
+    //     id: "6",
+    //     img_url: "/static/img/a1.jpg",
+    //     name: "海南贵妃特价海南贵妃 送货上门",
+    //     price: "120",
+    //     time_money: "356.58",
+    //     original_cost: "345",
+    //     goods_tag: "3",
+    //     count: "125"
+    //   }
+    // ];
+    // this.commodity_time_list = [
+    //   {
+    //     id: "1",
+    //     img_url: "/static/img/a1.jpg",
+    //     name:
+    //       "海南贵妃特价海南贵妃特价海南贵南贵妃特价海南贵妃妃南贵妃海南贵妃特价海南贵妃特价海南贵南贵妃特价海南贵妃妃南贵妃海南贵妃特价海南贵妃特价海南贵南贵妃特价海南贵妃妃南贵妃 送货上门",
+    //     price: "120",
+    //     time_money: "356.58",
+    //     count: "121",
+    //     original_cost: "345"
+    //   },
+    //   {
+    //     id: "2",
+    //     img_url: "/static/img/a1.jpg",
+    //     name: "海南贵妃特价海南贵妃 送货上门",
+    //     price: "120",
+    //     time_money: "356.58",
+    //     count: "122",
+    //     original_cost: "345"
+    //   },
+    //   {
+    //     id: "3",
+    //     img_url: "/static/img/a1.jpg",
+    //     name: "海南贵妃特价海南贵妃 送货上门",
+    //     price: "120",
+    //     time_money: "356.58",
+    //     original_cost: "345",
+    //     count: "123"
+    //   }
+    // ];
   },
   methods: {
-     clearTime(newVal, oldVal) {
+    getCommodityData() {
+      let vm = this;
+      vm._protypeJs.addDialog();
+      getList(this.commodity_count).then(res => {
+        vm.commodity_count_list.push(res.data);
+        vm._protypeJs.removeDialog();
+      });
+    },
+    clearTime(newVal, oldVal) {
       if (newVal) {
-        console.log('hello')
+        console.log("hello");
       }
     },
-    infinite (done) {
-      console.log("向上滑动")
-
-      this.offset++    //每当向上滑动的时候就让页数加1
-      console.log("向上滑动页码:"+ this.offset)
-      console.log("done:"+done)
-      if(this.noData) {
-        setTimeout(()=>{
+    infinite(done) {
+      if (this.noData) {
+        setTimeout(() => {
           this.$refs.indexScroller.finishInfinite(2);
-        })
+        });
         return;
       }
-      let self = this;//this指向问题
-      let start = (this.commodity_list.length + this.commodity_time_list.length) * this.commodity_count
+      let self = this;
+      let start =
+        (self.commodity_list.length + self.commodity_time_list.length) *
+        self.commodity_count;
       setTimeout(() => {
-        if(start > 20) {
-          self.noData = "没有更多数据"
-        }else{
-          this.commodity_count++
-        }
+        self.commodity_count++;
+        self.getCommodityData();
+        if (self.commodity_count > 3) {
+          self.noData = "没有更多数据";
+        };
+         
         self.$refs.indexScroller.resize();
-        done()
-      }, 1500)
+        done();
+      }, 1500);
     },
+    refresh(done) {
+      console.log(123);
+      setTimeout(() => {
+        done();
+      }, 1500);
+    }
   },
   computed: {},
   created() {}
@@ -370,8 +331,8 @@ export default {
   margin: 12px auto;
 }
 .img_header {
- width: 100%;
- height: 100%;
+  width: 100%;
+  height: 100%;
 }
 .flashSale {
   height: 49px;
