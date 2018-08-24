@@ -4,10 +4,12 @@ import {
 import axios from 'axios'
 import qs from 'qs'
 
-export default async(url, data = {}, type = 'GET') => {
+export default async(url, data = {}, type = 'GET',loading = true) => {
   return new Promise((resolve, reject) => {
-    //显示loading加载层
-    document.getElementById("loading").style.display = 'block'
+    if(loading){
+      //显示loading加载层
+      document.getElementById("loading").style.display = 'block'
+    }
     url = baseUrl + url
     if(type == 'GET'){
       let dataStr = ''
@@ -52,7 +54,7 @@ export default async(url, data = {}, type = 'GET') => {
               }else{
                 //隐藏错误层
                 document.getElementById('requestError').style.display = 'none'
-                resolve(response.data)
+                resolve(response.data.data)
               }
             }
           }
@@ -105,7 +107,7 @@ export default async(url, data = {}, type = 'GET') => {
               }else{
                 //隐藏错误层
                 document.getElementById('requestError').style.display = 'none'
-                resolve(response.data)
+                resolve(response.data.data)
               }
             }
           }
