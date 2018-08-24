@@ -18,7 +18,7 @@ export default async(url, data = {}, type = 'GET') => {
         dataStr = dataStr.substr(0, dataStr.lastIndexOf('&'))
         url = url + '?' + dataStr
       }
-      axios.get(url,{headers: {'Content-Type': 'application/json;charset=UTF-8',timeout:3000}})
+      axios.get(url,{header: {'Content-Type': 'application/json;charset=UTF-8',timeout:3000}})
         .then(function (response) {
           //隐藏loading加载层
           document.getElementById("loading").style.display = 'none';
@@ -70,7 +70,7 @@ export default async(url, data = {}, type = 'GET') => {
         })
     }else {
       console.log("POST:"+url)
-      axios.post(url, qs.stringify(data),{headers: {'Content-Type': 'application/json;charset=UTF-8',timeout:3000}})
+      axios.post(url, qs.stringify(data),{header: {'Content-Type': 'application/json;charset=UTF-8',timeout:3000}})
         .then(function (response) {
           // console.log(JSON.stringify(response.data))
           //隐藏loading加载层
