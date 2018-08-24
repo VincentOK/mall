@@ -196,11 +196,11 @@ export default {
   },
   methods: {
     getCommodityData() {
-      let vm = this;
-      vm._protypeJs.addDialog();
+      let vm = this
       getList(this.commodity_count).then(res => {
         vm.commodity_count_list.push(res.data);
-        vm._protypeJs.removeDialog();
+      }).catch( err =>{
+        console.log(err);
       });
     },
     clearTime(newVal, oldVal) {

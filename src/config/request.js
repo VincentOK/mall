@@ -1,11 +1,7 @@
 import fetch from '../config/fetch'
 
 
-export const test = (teacherId) => fetch('share/shareTeacherInfo',{
-  teacherId:teacherId
-},'POST');
-
-export const getList = (pageNumber) => fetch('/timestore/storeTimecoin/listTop',{
+export const getList = (pageNumber) => fetch('storeTimecoin/listTop',{
   pageNumber:pageNumber
 },'POST');
 

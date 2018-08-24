@@ -2,7 +2,7 @@
   <div>
     <div class="shop_title">
       <img v-on:click="returnBack" class="title_return" src="/static/img/right.png" alt="">
-      <img class="close_shop" src="/static/img/pay_close.png" alt="">
+      <img class="close_shop" v-on:click="closeWeb" src="/static/img/pay_close.png" alt="">
       {{childTitleword}}
     </div>
   </div>
@@ -20,6 +20,9 @@
       methods:{
         returnBack:function () {
           this.$router.go(-1);
+        },
+        closeWeb:function () {
+           window.location.href = window.location.href + '?close=true'
         }
       }
     }
