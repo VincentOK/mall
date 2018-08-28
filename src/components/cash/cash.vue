@@ -89,8 +89,6 @@ export default {
       setTimeout(() => {
         done()
       }, 1500)
-      // this.offset = 0
-      // this.getDate(1, done)
     },
   }
 }

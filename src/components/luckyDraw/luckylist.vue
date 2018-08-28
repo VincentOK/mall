@@ -9,8 +9,8 @@
     <div class="stamp" v-if="!clickLottery">
       <div class="apic">
         <button @click="clickToTheLottery">开始刮奖</button><br><br>
-        <label v-show="whetherFree">今日免费<span class="free-times">3</span>次</label>
-        <label v-show="!whetherFree"><span class="lucky_money">0.5</span>时间币/次</label>
+        <label v-show="!whetherFree">今日免费<span class="free-times">{{whetherFreeCount}}</span>次</label>
+        <label v-show="whetherFree"><span class="lucky_money">0.5</span>时间币/次</label>
       </div>
     </div>
     <div id="canvas" v-if="clickLottery">
@@ -49,15 +49,17 @@
       <div class="description-section">
         <p>活动说明</p>
         <div class="activity-introduction">
-          <p>欢乐暑假档，奖品送不停</p>
-          <p>活动说明：此活动为概率中奖，奖品数量有限，祝好运!</p>
-          <P>活动时间：即日起至2018-7-15</P>
+          <p>{{luckyName}}</p>
+          <div class="active-explain">
+            <div>活动说明:</div>
+            <div>{{luckyExplain}}</div>
+          </div>
+          <P>活动时间：{{luckyStartTime}}至{{luckyEndTime}}</P>
         </div>
         <ul>
-          <li>惊喜一：盆栽植物一套 （6瓶）</li>
-          <li>惊喜二：创意3D雨伞无痕挂钩 （4个）</li>
-          <li>惊喜三：创意水果叉 （一盒）</li>
-          <li>惊喜四：光控小夜灯 （一个）</li>
+          <li  v-for="(item,index) in prizeList" :key="index">
+            <div class="active_title">惊喜{{formatTags(index)}}:</div>
+            <div>{{item.prizeName}}&nbsp;({{item.prizeUnit}})</div></li>
         </ul>
         <div class="accept-prize">
           <p>1、实物类奖品将在活动结束后5-10个工作日安排发货，请耐心等待</p>
@@ -67,8 +69,8 @@
         </div>
       </div>
     </div>
-    <winning-view v-show="winThePrice === 'win'" v-on:toDraw="toDrawwing" :isShowPopup="!!winThePrice"></winning-view>
-    <notwinning-view v-show="winThePrice === 'notWin'" v-on:toDraw="toDrawwing" :isShowPopup="!!winThePrice"></notwinning-view>
+    <winning-view v-show="winThePrice === 'yes'" v-on:toDraw="toDrawwing" :isShowPopup="!!winThePrice" :winPrizeList="winPrizeList"></winning-view>
+    <notwinning-view v-show="winThePrice === 'no'" v-on:toDraw="toDrawwing" :isShowPopup="!!winThePrice"></notwinning-view>
   </div>
   </div>
 </template>
@@ -77,17 +79,30 @@
 import Vue from "vue";
 import notwinning from "./notwinning";
 import winning from "./winning";
+import { getLuckyList, getlucky,getcountUserLuckyNumber } from "../../config/request";
 Vue.component("notwinning-view", notwinning);
 Vue.component("winning-view", winning);
 export default {
   name: "luckylist",
   data() {
     return {
+      uId: "123",
+      luckyId:'chou01',
+      luckyBannerImgUrl: "",
+      luckyEndTime: "",
+      luckyExplain: "",
+      luckyName: "",
+      luckyStartTime: "",
+      prizeList: [],
       childTitleword: "抽奖",
       whetherFree: false,
+      whetherFreeCount: null,
+      expend:50,
       clickLottery: false,
       winThePrice: "",
+      stateLottery: "",
       whetherPrice: false,
+      winPrizeList: {},
       lucky_list: [],
       win_list: [],
       win_name: "杨天宝",
@@ -112,6 +127,28 @@ export default {
     winning
   },
   mounted() {
+    // this.getLuckyInfo();
+    getLuckyList(this.luckyId)
+      .then(res => {
+        this.luckyBannerImgUrl = res.luckyBannerImgUrl;
+        this.luckyStartTime = res.luckyStartTime;
+        this.luckyEndTime = res.luckyEndTime;
+        this.luckyExplain = res.luckyExplain;
+        this.luckyName = res.luckyName;
+        this.prizeList = res.prizeList;
+      })
+      .catch(err => {
+        console.log(err);
+      });
+      getcountUserLuckyNumber(this.uId).then(res=>{
+        this.whetherFreeCount = res;
+        if(!Boolean(res)){
+          this.whetherFree = true;
+        }
+        console.log(this.whetherFreeCount)
+      }).catch(err=>{
+        console.log(err);
+      })
     this.win_list = [
       {
         win_name: "水果",
@@ -193,8 +230,56 @@ export default {
     }
   },
   methods: {
+    formatTags(index) {
+      switch (String(index)) {
+        case "0":
+          return "一";
+        case "1":
+          return "二";
+        case "2":
+          return "三";
+        case "3":
+          return "四";
+        case "4":
+          return "五";
+        default:
+          return "*";
+      }
+    },
+    getLuckyInfo() {
+      let self = this;
+      let param = {
+        uid:this.uId,
+        luckyId:this.luckyId,
+      }
+      if(this.whetherFreeCount <= 0){
+        param['expend'] = this.expend;
+      }
+      getlucky(param)
+        .then(res => {
+          self.stateLottery = res.value;
+          if (self.stateLottery != "cant" && (self.whetherFreeCount > 0 || self.expend)) {
+            self.clickLottery = true;
+            if(self.whetherFreeCount > 0){
+              self.whetherFreeCount--;
+            }
+            self.whetherPrice = false;
+            if (self.stateLottery == "yes") {
+              self.winPrizeList = res;
+              self.whetherPrice = true;
+              console.log(self.winPrizeList);
+            }
+          }else{
+            self.whetherFree = true;
+          }
+          console.log(self.stateLottery);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     clickToTheLottery() {
-      this.clickLottery = true;
+      this.getLuckyInfo();
     },
     toDrawwing(rawData) {
       this.winThePrice = "";
@@ -260,7 +345,7 @@ export default {
         }
       }
       function showResult(msg) {
-        self.winThePrice = "notWin";
+        self.winThePrice = self.stateLottery;
       }
     }
   }
@@ -417,24 +502,42 @@ export default {
 .description-section p {
   font-size: 16px;
   color: aliceblue;
-  margin: 40px 0 0 0;
+  margin: 40px 0 20px 0;
 }
 .description-section ul {
   list-style: none;
   text-align: left;
-  margin-top: 30px;
+  margin-top: 20px;
   padding-left: 20px;
 }
 .description-section ul li {
+  width: 95%;
   color: aliceblue;
   letter-spacing: 1px;
   font-size: 13px;
   padding: 1px 0;
 }
+.description-section ul li .active_title {
+  float: left;
+  width: 55px;
+}
+.description-section ul li div:last-child {
+  margin-left: 55px;
+}
 .activity-introduction {
   text-align: left;
-  margin-left: 20px;
-  margin-top: 20px;
+  width: 90%;
+  margin: auto;
+}
+.active-explain div:first-child {
+  color: aliceblue;
+  float: left;
+  width: 60px;
+}
+.active-explain div:last-child {
+  color: aliceblue;
+  letter-spacing: 1px;
+  margin-left: 60px;
 }
 .activity-introduction p:first-child {
   font-size: 13px;

@@ -8,12 +8,12 @@
         <div class="snap_list">
           <div class="snap_one">
             <div class="snap_one_left">
-              <img src="/static/img/a1.jpg" alt="">
+              <img :src="prizeInfo.prizeImgUrl" alt="">
             </div>
             <div class="snap_one_right">
-              <p class="snap_right_title">越南美女限时抢购越南美女限时抢购越南美女限时抢购</p>
+              <p class="snap_right_title">{{prizeInfo.prizeName}}</p>
               <p class="snap_title_pay">
-                规格：1瓶
+                规格：{{prizeInfo.prizeUnit}}
               </p>
               <p class="snap_title_on">
                  x1
@@ -29,8 +29,8 @@
               <p class="word_moren">送至</p>
             </div>
             <div class="adress_right" @click="addAdress">
-              <p><label>{{addressName}}</label><label class="adress_tel">{{addressPhone}}</label><img class="right_img" src="/static/img/right.png" alt=""></p>
-              <p><img class="left_img" src="/static/img/position_icon.png" alt=""><label>{{addressDetail}}</label></p>
+              <p><label>{{addressInfo.shippingName}}</label><label class="adress_tel">{{addressInfo.shippingPhone}}</label><img class="right_img" src="/static/img/right.png" alt=""></p>
+              <p><img class="left_img" src="/static/img/position_icon.png" alt=""><label>{{addressInfo.shippingAddress}}</label></p>
             </div>
           </div>
           <div class="adress_detail">
@@ -54,20 +54,41 @@
 <script>
 import Vue from "vue";
 import mydialog from "../dialog/mydialog";
+import { getPrizeInfo } from "../../config/request";
 Vue.component("dialog-view", mydialog);
 export default {
   name: "luckycenter",
   data() {
     return {
-      childTitleword:'领奖中心',
-      addressPhone: 1548745156,
-      addressName: "Vincent",
-      addressDetail: "广东省深圳市南山区田厦金牛广场1402",
+      prizeId: "jian01",
+      uid: "123",
+      addressInfo: {
+        shippingAddress: "",
+        shippingName: "",
+        shippingPhone: ""
+      },
+      prizeInfo: {
+        prizeImgUrl:'',
+        prizeName:'',
+        prizeUnit:''
+      },
+      childTitleword: "领奖中心",
       prizeDialog: {
         flag: false,
         msg: ""
       }
     };
+  },
+  mounted() {
+    getPrizeInfo(this.prizeId, this.uid)
+      .then(res => {
+        this.addressInfo = res.addressInfo;
+        this.prizeInfo = res.prizeInfo;
+        console.log(this.prizeInfo)
+      })
+      .catch(ree => {
+        console.log(err);
+      });
   },
   components: {
     mydialog
@@ -77,7 +98,7 @@ export default {
       this.$router.push("/add/myaddress");
     },
     submitPrize: function() {
-      if (this.addressPhone && this.addressName && this.addressDetail) {
+      if (this.addressInfo.shippingPhone && this.addressInfo.shippingAddress && this.addressInfo.shippingName) {
         this.prizeDialog = {
           flag: true,
           msg: "领奖信息已提交 快递员将在近期为您送上奖品！"
@@ -193,7 +214,7 @@ export default {
   float: right;
   width: 15px;
 }
-.left_img{
+.left_img {
   width: 11px;
   margin-right: 5px;
 }
