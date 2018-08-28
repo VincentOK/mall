@@ -67,7 +67,7 @@
 
 <script>
 import Vue from "vue";
-import { getList } from "../../config/request";
+import { getIndexList } from "../../config/request";
 import flashSale from "./flashSale";
 import recommend from "./recommend";
 import timeDown from "../publicComponent/timeDown";
@@ -115,9 +115,9 @@ export default {
       }
       setTimeout(() => {
         self.commodity_count++;
-        getList(self.commodity_count)
+        getIndexList(self.commodity_count)
           .then(res => {
-            if(res.listRMB){
+            if(res && res.listRMB){
               self.commodity_count_list.push(res);
             }else{
               self.noData = "没有更多数据";

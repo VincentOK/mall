@@ -83,43 +83,11 @@ export default {
 
       }, 1500)
     },
-
-
-
-
-    // infinite (done) {
-    //   console.log("向上滑动")
-    //   this.count++    //每当向上滑动的时候就让页数加1
-    //   console.log("向上滑动页码:"+ this.count)
-    //   if(this.noData) {
-    //     setTimeout(()=>{
-    //       this.$refs.myscroller.finishInfinite(2);
-    //     },1500)
-    //     return;
-    //   }
-    //   let self = this;//this指向问题
-    //   setTimeout(() => {
-    //     getCashList(self.count).then(res =>{
-    //       console.log("==========="+JSON.stringify(res))
-    //       if(res.dataList.length !=0){
-    //         self.ex_list = self.ex_list.concat(res.dataList)
-    //       }else {
-    //         self.noData = "没有更多数据"
-    //       }
-    //       self.$refs.myscroller.resize();
-    //     }).catch(err =>{
-    //       console.log(err)
-    //     })
-    //     done()
-    //   }, 1500)
-    // },
     refresh (done) { //这是向下滑动的时候请求最新的数据
       console.log("向下滑动")
       setTimeout(() => {
         done()
       }, 1500)
-      // this.offset = 0
-      // this.getDate(1, done)
     },
   }
 }

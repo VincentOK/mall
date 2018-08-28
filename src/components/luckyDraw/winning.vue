@@ -9,8 +9,8 @@
       </div>
       <div class="notwinning_bg">
         <p class="notwining_title">恭喜您中奖啦！</p>
-        <img class="notwinning_img" src="/static/img/win.png" alt="">
-        <p class="winning_word">越南小紫薯新鲜先挖x1</p>
+        <img class="notwinning_img" :src="winPrizeList.prizeImgUrl" alt="">
+        <p class="winning_word">{{winPrizeList.prizeName}}x1</p>
         <router-link :to="'/luckycenter'">
           <button class="notwinning_again" @click="closePage">去领奖</button>
         </router-link>
@@ -28,7 +28,11 @@ export default {
     };
   },
   props: {
-    isShowPopup:Boolean
+    isShowPopup:Boolean,
+    winPrizeList:{
+      prizeImgUrl:'',
+      prizeName:'',
+    }
   },
   methods: {
     closePage() {
@@ -113,6 +117,7 @@ export default {
 }
 .notwinning_img {
   width: 115px;
+  height: 100px;
   display: block;
   margin: auto;
   margin-top: 31px;

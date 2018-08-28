@@ -75,24 +75,8 @@ export default {
     }
   },
   filters: {
-    // formatMoney: function(price) {
-    //   return "￥" + Number(price).toFixed(2);
-    // },
-    // formatGoodTags(goodId) {
-    //   switch (goodId) {
-    //     case "1":
-    //       return "热销";
-    //       break;
-    //     case "2":
-    //       return "新品";
-    //       break;
-    //     case "3":
-    //       return "特价";
-    //       break;
-    //     default:
-    //       return "";
-    //   }
-    // }
+  
+   
   },
   methods: {
     goodsTagStyle(id) {
@@ -110,16 +94,6 @@ export default {
           return "";
       }
     },
-    // maxSlice(parm) {
-    //   return parm.length > this.maxLength
-    //     ? parm.slice(0, this.maxLength) + "..."
-    //     : parm;
-    // },
-    // maxHorizontalSlice(parm) {
-    //   return parm.length > this.maxHorizontalLength
-    //     ? parm.slice(0, this.maxHorizontalLength) + "..."
-    //     : parm;
-    // }
   },
   mounted() {}
 };
