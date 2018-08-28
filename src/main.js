@@ -26,7 +26,7 @@ Vue.config.productionTip = false;
 //获取用户ID
 (function(){
   let string = window.location.href;
-  var old = string.split('?')[0];
+  let old = string.split('?')[0];
   let user = string.split('?')[1];
   if(user){
     localStorage.setItem('user',user);

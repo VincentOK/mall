@@ -11,7 +11,7 @@
       <div class="exchange_content">
         <scroller style="margin-top: 90px" :on-infinite="infinite"  :on-refresh = "refresh" ref="myscroller">
           <div style="height: 1px;"></div>
-        <router-link class="a_detail" v-for="(item,index) in ex_list" :key="index" :to="'/detail/' + item.id">
+        <router-link class="a_detail" v-for="(item,index) in ex_list" :key="index" :to="'/detail/' + item.commodityId+'/'+goodsType">
           <div class="exchange_content_i">
             <img src="/static/img/a1.jpg" alt="">
             <!--<img :src="item.imgUrl" alt="">-->
@@ -37,6 +37,7 @@ export default {
   name: 'cash',
   data () {
     return {
+      goodsType:1,
       msg: 'Welcome to Your Vue.js App',
       childTitleword:'现金专区',
       ex_list:[],
@@ -68,9 +69,9 @@ export default {
       self.count++;
      setTimeout(() => {
        console.log("页码"+self.count)
-        getCashList(self.count).then(res =>{
+        getCashList(self.goodsType,self.count).then(res =>{
           console.log(res)
-          if(res.dataList){
+          if(res.dataList.length != 0){
             self.ex_list = self.ex_list.concat(res.dataList)
           }else {
             self.noData = "没有更多数据"
@@ -83,36 +84,6 @@ export default {
 
       }, 1500)
     },
-
-
-
-
-    // infinite (done) {
-    //   console.log("向上滑动")
-    //   this.count++    //每当向上滑动的时候就让页数加1
-    //   console.log("向上滑动页码:"+ this.count)
-    //   if(this.noData) {
-    //     setTimeout(()=>{
-    //       this.$refs.myscroller.finishInfinite(2);
-    //     },1500)
-    //     return;
-    //   }
-    //   let self = this;//this指向问题
-    //   setTimeout(() => {
-    //     getCashList(self.count).then(res =>{
-    //       console.log("==========="+JSON.stringify(res))
-    //       if(res.dataList.length !=0){
-    //         self.ex_list = self.ex_list.concat(res.dataList)
-    //       }else {
-    //         self.noData = "没有更多数据"
-    //       }
-    //       self.$refs.myscroller.resize();
-    //     }).catch(err =>{
-    //       console.log(err)
-    //     })
-    //     done()
-    //   }, 1500)
-    // },
     refresh (done) { //这是向下滑动的时候请求最新的数据
       console.log("向下滑动")
       setTimeout(() => {

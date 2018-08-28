@@ -5,25 +5,31 @@
   <div class="conent_all_h5">
     <div class="title_i">
       <swiper :options="swiperOption">
-        <swiper-slide><img class="detail_img" src="/static/img/a1.jpg"></swiper-slide>
-        <swiper-slide><img  class="detail_img" src="/static/img/a1.jpg"></swiper-slide>
-        <swiper-slide><img  class="detail_img" src="/static/img/a1.jpg"></swiper-slide>
-        <swiper-slide><img class="detail_img"  src="/static/img/a1.jpg"></swiper-slide>
+        <swiper-slide v-for="(item,index) in goodsDetail.imgList" :key="index"><img class="detail_img" :src="item.imgUrl"></swiper-slide>
+        <!--<swiper-slide><img  class="detail_img" src="/static/img/a1.jpg"></swiper-slide>-->
+        <!--<swiper-slide><img  class="detail_img" src="/static/img/a1.jpg"></swiper-slide>-->
+        <!--<swiper-slide><img class="detail_img"  src="/static/img/a1.jpg"></swiper-slide>-->
       </swiper>
 
       <div class="swiper-pagination" style="width: 40px;height: 22.5px;text-align: center;line-height: 22.5px;background-color: black;opacity:0.5;font-size: 11px;border-radius: 12px;color: white;left: 85%" slot="pagination"></div>
-
     </div>
     <div   v-touch:swiperight="_protypeJs.touchRight">
         <div class="title_j">
           <p class="detail_tatle">
             <label class="detail_hot">热门</label>
-            <label class="word_hot">越南美女包邮越南美女包邮越南美女包邮越南美女包邮越南美女包邮越南美女包邮越南美女包邮</label>
+            <label class="word_hot">{{goodsDetail.map.commodity_name}}</label>
           </p>
           <p class="detail_money">
-            <label class="money_real"><label class="fontM">￥</label>60.00</label>
-            <label class="money_over"><label class="fontM_i">￥</label>33.00</label>
-            <label class="money_over_count">剩余99件</label>
+            <label class="money_real"  v-if="goodsDetail.map.reality_price">
+              <label class="fontM">￥</label>
+              {{goodsDetail.map.reality_price}}
+            </label>
+            <label class="money_real"  v-if="goodsDetail.map.timecoinPrice">
+              <label class="fontM">时间币</label>
+              {{goodsDetail.map.timecoinPrice}}
+            </label>
+            <label class="money_over"><label class="fontM_i">￥</label>{{goodsDetail.map.suggest_price}}</label>
+            <label class="money_over_count">剩余{{goodsDetail.map.inventory}}件</label>
           </p>
         </div>
         <div class="null_div"></div>
@@ -33,8 +39,8 @@
               <p class="word_moren">送至</p>
             </div>
             <div class="adress_right" v-on:click="addAdress">
-              <p><label>Vincent</label><label class="adress_tel">18376614866</label><img class="right_img" src="/static/img/right.png" alt=""></p>
-              <p class="adress_relative"><img src="/static/img/address.png" alt=""><label>广东省深圳市南山区田厦金牛广场1402</label></p>
+              <p><label>{{goodsDetail.addressMap.shippingName}}</label><label class="adress_tel">{{goodsDetail.addressMap.shippingPhone}}</label><img class="right_img" src="/static/img/right.png" alt=""></p>
+              <p class="adress_relative"><img  v-if="goodsDetail.addressMap.shippingAddress" src="/static/img/address.png" alt=""><label>{{goodsDetail.addressMap.shippingAddress}}</label></p>
             </div>
           </div>
           <div class="adress_detail">
@@ -42,7 +48,7 @@
               <p class="word_moren">规格</p>
             </div>
             <div class="adress_right">
-              <p>每份300克</p>
+              <p>{{goodsDetail.map.unit}}</p>
             </div>
           </div>
           <div class="adress_detail">
@@ -50,7 +56,8 @@
               <p class="word_moren">运费</p>
             </div>
             <div class="adress_right">
-              <p>包邮</p>
+              <p v-if="goodsDetail.map.carriage === 0">包邮</p>
+              <p v-else>{{goodsDetail.map.carriage}}</p>
             </div>
           </div>
         </div>
@@ -76,11 +83,8 @@
         <div class="null_div"></div>
         <div class="detail_detail">
           <p>商品详情</p>
-          <p>
-            商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品
-            详情商品详情商品详情商品详情商品详情商品详情商品详情
-            商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品
-            详情商品详情商品详情商品详情商品详情商品详情商品详情
+          <p v-html="goodsDetail.map.detail">
+
           </p>
         </div>
         <paymoney-view v-on:childByValue="childByValue" v-if="paymoney"></paymoney-view>
@@ -95,6 +99,7 @@
 
 <script>
 import Vue from 'vue'
+import {getDetail} from '../../config/request'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import paymoney from '../dialog/paymoney'
 import paytime from '../dialog/paytime'
@@ -112,6 +117,25 @@ export default {
   data () {
     return {
       childTitleword:'商品详情',
+      goodsDetail:{
+        "imgList": [
+          {
+            "imgUrl": "",
+            "imgRank": 0
+          }
+        ],
+        "map": {
+          "unit": "",
+          "detail": "",
+          "carriage": 0,
+          "inventory": 0,
+          "suggest_price": 0,
+          "commodity_name": "",
+          "commodity_id": ""
+        },
+        "addressMap": {
+        }
+      },
       hidden_btn:'block',
       counter:1,
       goodsStatus:0,
@@ -154,17 +178,21 @@ export default {
   },
   mounted(){
     console.log("页面初始化")
-    console.log(document.documentElement.clientWidth)
-    console.log(document.documentElement.clientHeight)
-    console.log(document.documentElement.clientWidth)
-    console.log(document.documentElement.clientHeight)
-    let height = document.documentElement.clientHeight
-    let width = document.documentElement.clientWidth
-    // document.body.style.position = 'fixed';
-    // document.body.style.height =height+'px';
-    // document.body.style.width = width+'px';
-    // document.body.style.overflowY = 'scroll';
-
+    // console.log(document.documentElement.clientWidth)
+    // console.log(document.documentElement.clientHeight)
+    // console.log(document.documentElement.clientWidth)
+    // console.log(document.documentElement.clientHeight)
+    console.log(this.$route.params.id)
+    console.log(this.$route.params.type)
+    let type = this.$route.params.type
+    let commodityId = this.$route.params.id
+    let uid = this._protypeJs.getUserId()
+    let vm = this
+    getDetail(type,commodityId,uid).then(res =>{
+      console.log(JSON.stringify(res))
+      vm.goodsDetail = res
+      // this.goodsDetail = res
+    })
   },
   methods:{
     remove_i:function () {

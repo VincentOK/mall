@@ -5,29 +5,40 @@
   <div class="refundlist" v-for="(item,index) in refund_list" :key="index">
     <div class="null_div"></div>
       <p class="refund_time">
-        <button class="_status">待收货</button>
-        <label class="_time">{{item.goods_time}}</label>
+        <button class="_status" v-if="item.orderStatus == '0'">已删除</button>
+        <button class="_status" v-if="item.orderStatus == '1'">待付款</button>
+        <button class="_status" v-if="item.orderStatus == '2'">待发货</button>
+        <button class="_status" v-if="item.orderStatus == '3'">已发货</button>
+        <button class="_status" v-if="item.orderStatus == '4'">待退款</button>
+        <button class="_status" v-if="item.orderStatus == '5'">已退款</button>
+        <button class="_status" v-if="item.orderStatus == '6'">已完成</button>
+        <label class="_time">{{item.orderTime}}</label>
       </p>
     <div class="refundlist_content">
-      <img class="refund_img" :src="item.goods_img" alt="">
-      <p class="refund_de">{{item.goods_title}}</p>
+      <!--<img class="refund_img" :src="item.imgUrl" alt="">-->
+      <img class="refund_img" src="/static/img/a1.jpg" alt="">
+      <p class="refund_de">{{item.commodityName}}</p>
       <p class="refund_gui">
-        规格：盆
-        <label class="num">x{{item.goods_count}}</label>
+        规格：{{item.unit}}
+        <label class="num">x{{item.count}}</label>
       </p>
     </div>
     <p class="refund_number">
       <label class="refund_font">订单号：</label>
-      <label class="color_refund">{{item.goods_number}}</label>
+      <label class="color_refund">{{item.orderNumber}}</label>
     </p>
     <p class="refund_adress">
       <label class="refund_font">快递运单号：</label>
-      <label class="color_refund">{{item.goods_realnum}}</label>
-      <label class="refund_money"><label class="refund_font">实付：</label><label class="real_money">￥{{item.goods_money}}</label></label>
+      <label class="color_refund" v-if="item.logisticsNumber">{{item.logisticsNumber}} <label>({{item.logisticsName}})</label></label>
+      <label class="color_refund" v-else>暂未获取运单号</label>
+      <label class="refund_money"><label class="refund_font">实付：</label><label class="real_money">￥{{item.orderPriceRmb}}</label></label>
     </p>
     <p class="refund_now">
-      <button class="refund_btn_one" v-on:click="gotocheck(item.goods_id)">确认收货</button>
-      <button class="refund_btn" v-on:click="gotodetail(item.goods_id)">申请退款</button>
+      <!--<button class="refund_btn_one" v-if="item.orderStatus == '2' || item.orderStatus == '3'" v-on:click="gotocheck(item.commodityId)">确认收货</button>-->
+      <!--<button class="refund_btn" v-if="item.orderStatus == '2' || item.orderStatus == '3' || item.orderStatus == '4'" v-on:click="gotodetail(item.commodityId)">申请退款</button>-->
+
+      <button class="refund_btn_one" v-on:click="gotocheck(item.commodityId)">确认收货</button>
+      <button class="refund_btn" v-on:click="gotodetail(item.commodityId)">申请退款</button>
     </p>
   </div>
   </scroller>
@@ -37,6 +48,7 @@
 
 <script>
   import Vue from 'vue'
+  import {getOrder} from '../../config/request'
   import refund_dialog from '../dialog/refund_dialog'
   Vue.component('refund_dialog-view',refund_dialog)
     export default {
@@ -49,58 +61,56 @@
           return{
             checkStatus_i:false,
             refund_list:[],
-            offset:1,
+            status:1,
+            count:0,
             checkStatus:'',
             noData:'',
           }
         },
       watch:{
         refund_status:function(newold,oldword){
-            console.log("新状态："+newold)
-            console.log("旧状态："+oldword)
+          console.log("新状态："+newold)
+          console.log("旧状态："+oldword)
+          this.status = newold +1
+          this.count = 0
           }
       },
       mounted(){
-          this.refund_list = [
-            {
-              goods_id:1,
-              goods_time:'2018-07-04 18:31',
-              goods_img:'/static/img/a1.jpg',
-              goods_title:'越南美女免费包邮越南美女免费包邮越南美女免费包邮越南美女免费包邮',
-              goods_count:77,
-              goods_number:'XS5566ADS656',
-              goods_realnum:'未获取运单号',
-              goods_money:19.90,
-            },
-            {
-              goods_id:2,
-              goods_time:'2018-07-04 18:31',
-              goods_img:'/static/img/a1.jpg',
-              goods_title:'越南美女免费包邮越南美女免费包邮越南美女免费包邮越南美女免费包邮',
-              goods_count:88,
-              goods_number:'XS5566ADS656',
-              goods_realnum:'未获取运单号',
-              goods_money:29.90,
-            },
-            {
-              goods_id:3,
-              goods_time:'2018-07-04 18:31',
-              goods_img:'/static/img/a1.jpg',
-              goods_title:'越南美女免费包邮越南美女免费包邮越南美女免费包邮越南美女免费包邮',
-              goods_count:99,
-              goods_number:'XS5566ADS656',
-              goods_realnum:'未获取运单号',
-              goods_money:39.90,
-            },
-          ]
+          // this.refund_list = [
+          //   {
+          //     goods_id:1,
+          //     goods_time:'2018-07-04 18:31',
+          //     goods_img:'/static/img/a1.jpg',
+          //     goods_title:'越南美女免费包邮越南美女免费包邮越南美女免费包邮越南美女免费包邮',
+          //     goods_count:77,
+          //     goods_number:'XS5566ADS656',
+          //     goods_realnum:'未获取运单号',
+          //     goods_money:19.90,
+          //   },
+          //   {
+          //     goods_id:2,
+          //     goods_time:'2018-07-04 18:31',
+          //     goods_img:'/static/img/a1.jpg',
+          //     goods_title:'越南美女免费包邮越南美女免费包邮越南美女免费包邮越南美女免费包邮',
+          //     goods_count:88,
+          //     goods_number:'XS5566ADS656',
+          //     goods_realnum:'未获取运单号',
+          //     goods_money:29.90,
+          //   },
+          //   {
+          //     goods_id:3,
+          //     goods_time:'2018-07-04 18:31',
+          //     goods_img:'/static/img/a1.jpg',
+          //     goods_title:'越南美女免费包邮越南美女免费包邮越南美女免费包邮越南美女免费包邮',
+          //     goods_count:99,
+          //     goods_number:'XS5566ADS656',
+          //     goods_realnum:'未获取运单号',
+          //     goods_money:39.90,
+          //   },
+          // ]
       },
       methods:{
-        infinite (done) {
-          console.log("向上滑动")
-
-          this.offset++    //每当向上滑动的时候就让页数加1
-          console.log("向上滑动页码:"+ this.offset)
-          console.log("done:"+done)
+        infinite(done) {
           if(this.noData) {
             setTimeout(()=>{
               this.$refs.myscroller.finishInfinite(2);
@@ -108,29 +118,30 @@
             return;
           }
           let self = this;//this指向问题
-          let start = this.refund_list.length;
-          let obj = {
-            goods_id:1,
-            goods_time:'2018-07-04 18:31',
-            goods_img:'/static/img/a1.jpg',
-            goods_title:'越南美女免费包邮越南美女免费包邮越南美女免费包邮越南美女免费包邮',
-            goods_count:77,
-            goods_number:'XS5566ADS656',
-            goods_realnum:'未获取运单号',
-            goods_money:19.90,
-          }
+          self.count++;
+
+          let status = self.status;
+          let uid = self._protypeJs.getUserId();
+          let pageNumber = self.count;
+          let pageSize = '';
           setTimeout(() => {
-            self.refund_list.push(obj)
-            if(start > 10) {
-              self.noData = "没有更多数据"
-            }
-            self.$refs.myscroller.resize();
-            done()
+            console.log("页码:"+self.count)
+            console.log("status:"+status)
+            console.log("uid:"+uid)
+            console.log("pageNumber:"+pageNumber)
+            getOrder(status,uid,pageNumber).then(res =>{
+              console.log(res)
+              if(res.dataList.length != 0){
+                self.refund_list = self.refund_list.concat(res.dataList)
+              }else {
+                self.noData = "没有更多数据"
+              }
+              self.$refs.myscroller.resize();
+              done()
+            }).catch(err =>{
+              console.log(err)
+            })
           }, 1500)
-          // done(function (e) {
-          //   console.log(e)
-          // })
-          // this.getDate(this.offset, done)
         },
         refresh (done) { //这是向下滑动的时候请求最新的数据
           console.log("向下滑动")

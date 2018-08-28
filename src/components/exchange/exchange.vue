@@ -8,18 +8,19 @@
         <p class="exchange_number">共10256个商品</p>
       </div>
       <div class="exchange_content">
-        <scroller style="margin-top: 90px" :on-infinite="infinite"  :on-refresh = "refresh" ref="myscroller">
+        <scroller style="margin-top: 150px" :on-infinite="infinite"  :on-refresh = "refresh" ref="myscroller">
           <div style="height: 1px;"></div>
-        <router-link class="a_detail" v-for="(item,index) in ex_list" :key="index" :to="'/detail/' + item.id">
+          <router-link class="a_detail" v-for="(item,index) in ex_list" :key="index" :to="'/detail/' + item.commodityId+'/'+goodsType">
           <div class="exchange_content_i">
-            <img :src="item.img_url" alt="">
+            <img src="/static/img/a1.jpg" alt="">
+            <!--<img :src="item.img_url" alt="">-->
             <div class="word_i">
-              <p class="word_name">{{item.name}}</p>
+              <p class="word_name">{{item.commodityName}}</p>
               <p class="word_name_two">
-                <label class="word_money">{{item.price}}<label class="time">时间币</label></label>
-                <label class="be_money">￥150</label>
+                <label class="word_money">{{item.timecoinPrice}}<label class="time">时间币</label></label>
+                <label class="be_money">￥{{item.suggestPrice}}</label>
               </p>
-              <p class="last"> <label class="word_count">剩余{{item.count}}件</label></p>
+              <p class="last"> <label class="word_count">剩余{{item.inventory}}件</label></p>
             </div>
           </div>
         </router-link>
@@ -30,70 +31,68 @@
 </template>
 
 <script>
+  import { getCashList } from '../../config/request'
 export default {
   name: 'exchange',
   data () {
     return {
+      goodsType:2,
       msg: 'Welcome to Your Vue.js App',
       childTitleword:'时间币专区',
       ex_list:[],
-      count:1
+      count:0
     }
   },
   mounted(){
-    this.ex_list = [
-      {
-        id:'1',
-        img_url:'/static/img/a1.jpg',
-        name:'海南贵妃特价海南贵妃 送货上门',
-        price:'120',
-        count:'121'
-      },
-      {
-        id:'2',
-        img_url:'/static/img/a1.jpg',
-        name:'海南贵妃特价海南贵妃 送货上门',
-        price:'120',
-        count:'122'
-      },
-      {
-        id:'3',
-        img_url:'/static/img/a1.jpg',
-        name:'海南贵妃特价海南贵妃 送货上门',
-        price:'120',
-        count:'123'
-      },
-      {
-        id:'4',
-        img_url:'/static/img/a1.jpg',
-        name:'海南贵妃特价海南贵妃 送货上门',
-        price:'120',
-        count:'124'
-      },
-      {
-        id:'5',
-        img_url:'/static/img/a1.jpg',
-        name:'海南贵妃特价海南贵妃 送货上门',
-        price:'120',
-        count:'125'
-      },
-      {
-        id:'6',
-        img_url:'/static/img/a1.jpg',
-        name:'海南贵妃特价海南贵妃 送货上门',
-        price:'120',
-        count:'126'
-      },
-    ]
+    // this.ex_list = [
+    //   {
+    //     id:'1',
+    //     img_url:'/static/img/a1.jpg',
+    //     name:'海南贵妃特价海南贵妃 送货上门',
+    //     price:'120',
+    //     count:'121'
+    //   },
+    //   {
+    //     id:'2',
+    //     img_url:'/static/img/a1.jpg',
+    //     name:'海南贵妃特价海南贵妃 送货上门',
+    //     price:'120',
+    //     count:'122'
+    //   },
+    //   {
+    //     id:'3',
+    //     img_url:'/static/img/a1.jpg',
+    //     name:'海南贵妃特价海南贵妃 送货上门',
+    //     price:'120',
+    //     count:'123'
+    //   },
+    //   {
+    //     id:'4',
+    //     img_url:'/static/img/a1.jpg',
+    //     name:'海南贵妃特价海南贵妃 送货上门',
+    //     price:'120',
+    //     count:'124'
+    //   },
+    //   {
+    //     id:'5',
+    //     img_url:'/static/img/a1.jpg',
+    //     name:'海南贵妃特价海南贵妃 送货上门',
+    //     price:'120',
+    //     count:'125'
+    //   },
+    //   {
+    //     id:'6',
+    //     img_url:'/static/img/a1.jpg',
+    //     name:'海南贵妃特价海南贵妃 送货上门',
+    //     price:'120',
+    //     count:'126'
+    //   },
+    // ]
   },
   computed:{
   },
   methods:{
-    infinite (done) {
-      console.log("向上滑动")
-
-      this.count++    //每当向上滑动的时候就让页数加1
-      console.log("向上滑动页码:"+ this.count)
+    infinite(done) {
       if(this.noData) {
         setTimeout(()=>{
           this.$refs.myscroller.finishInfinite(2);
@@ -101,28 +100,25 @@ export default {
         return;
       }
       let self = this;//this指向问题
-      let start = this.ex_list.length;
-      let obj = {
-        id:'1',
-        img_url:'/static/img/a1.jpg',
-        name:'海南贵妃特价海南贵妃 送货上门',
-        price:'120',
-        count:'121'
-      }
+      self.count++;
       setTimeout(() => {
-        self.ex_list.push(obj)
-        self.ex_list.push(obj)
-        if(start > 10) {
-          self.noData = "没有更多数据"
-        }
-        self.$refs.myscroller.resize();
-        done()
+        console.log("页码"+self.count)
+        getCashList(self.goodsType,self.count).then(res =>{
+          console.log(res.dataList.length)
+          if(res.dataList.length != 0){
+            self.ex_list = self.ex_list.concat(res.dataList)
+          }else {
+            self.noData = "没有更多数据"
+          }
+          self.$refs.myscroller.resize();
+          done()
+        }).catch(err =>{
+          console.log(err)
+        })
+
       }, 1500)
-      // done(function (e) {
-      //   console.log(e)
-      // })
-      // this.getDate(this.offset, done)
     },
+
     refresh (done) { //这是向下滑动的时候请求最新的数据
       console.log("向下滑动")
       setTimeout(() => {

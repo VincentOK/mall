@@ -50,5 +50,11 @@ export default (Vue) => {
       document.body.style.overflow = '';
       document.body.style.height = '';
       document.body.style.overflow = '';},
+    /**
+     * 获取本地缓存用户uid
+     */
+    getUserId:() =>{
+      return localStorage.getItem('user');
+    },
   }
 }

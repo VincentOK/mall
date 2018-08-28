@@ -6,11 +6,12 @@ import qs from 'qs'
 
 export default async(url, data = {}, type = 'GET',loading = true) => {
   return new Promise((resolve, reject) => {
-    if(loading){
+    if(typeof loading == "boolean" && loading){
       //显示loading加载层
       document.getElementById("loading").style.display = 'block'
     }
-    url = baseUrl + url
+    url = baseUrl + url;
+    console.log("请求url:"+url)
     if(type == 'GET'){
       let dataStr = ''
       Object.keys(data).forEach(key => {
@@ -64,14 +65,16 @@ export default async(url, data = {}, type = 'GET',loading = true) => {
           document.getElementById("loading").style.display = 'none';
           console.log(error)
           var str = error + '';
-          if(str.search('timeout') !== -1){
-            document.getElementById('requestError').style.display = 'block';
-            document.getElementById('loadingerror').innerText = '请求超时';
-            reject(error)
-          }
+          document.getElementById('requestError').style.display = 'block';
+          document.getElementById('loadingerror').innerText = '请求超时';
+          reject(error)
+          // if(str.search('timeout') !== -1){
+          //   document.getElementById('requestError').style.display = 'block';
+          //   document.getElementById('loadingerror').innerText = '请求超时';
+          //   reject(error)
+          // }
         })
     }else {
-      console.log("POST:"+url)
       axios.post(url, qs.stringify(data),{header: {'Content-Type': 'application/json;charset=UTF-8',timeout:3000}})
         .then(function (response) {
           // console.log(JSON.stringify(response.data))
@@ -117,11 +120,17 @@ export default async(url, data = {}, type = 'GET',loading = true) => {
           document.getElementById("loading").style.display = 'none';
           console.log(error)
           var str = error + '';
-          if(str.search('timeout') !== -1){
-            document.getElementById('requestError').style.display = 'block';
-            document.getElementById('loadingerror').innerText = '请求超时';
-            reject(error)
-          }
+          document.getElementById('requestError').style.display = 'block';
+          document.getElementById('loadingerror').innerText = '请求超时';
+          setTimeout(function () {
+            document.getElementById('requestError').style.display = 'none';
+          },3000)
+          reject(error)
+          // if(str.search('timeout') !== -1){
+          //   document.getElementById('requestError').style.display = 'block';
+          //   document.getElementById('loadingerror').innerText = '请求超时';
+          //   reject(error)
+          // }
         })
     }
   })

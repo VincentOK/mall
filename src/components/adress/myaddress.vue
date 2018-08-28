@@ -50,6 +50,7 @@
 <script>
   import Vue from 'vue'
   import { _check } from '../../commonJS/commonCheck'
+  import {addAddress} from '../../config/request'
   import city from './city'
   import mydialog from '../dialog/mydialog'
   Vue.component('city-view',city)
@@ -96,11 +97,12 @@
       },
       saveAdress:function () {
         console.log("保存地址")
-        var adressNameFlag = this.adressName;//收货人姓名
-        var phoneFlag = this.phone;//收货人手机号码
-        var adressFlag = this.address;//收货人地址
-        var detailAdressFlag = this.detailAdress;//收货人详细地址
-        if(adressNameFlag && phoneFlag && adressFlag && detailAdressFlag){
+        let uid = this._protypeJs.getUserId();
+        let shippingName = this.adressName;//收货人姓名
+        let shippingPhone = this.phone;//收货人手机号码
+        let shippingAddress = this.address;//收货人地址
+        let detailAddress = this.detailAdress;//收货人详细地址
+        if(shippingName && shippingPhone && shippingAddress && detailAddress){
           console.log("全部填写")
           console.log(_check.checkName(this.adressName))
           console.log(_check.checkPhone(this.phone))
@@ -116,8 +118,14 @@
             };
           }else {
             //请求服务端
-            alert("请求服务端")
-            this.$router.go(-1);//返回上一层
+            let myaddress = shippingAddress.Province+shippingAddress.City+shippingAddress.District
+            console.log("请求参数："+uid+'==='+JSON.stringify(shippingAddress)+'=='+shippingName+'=='+shippingPhone+'=='+detailAddress)
+            addAddress(uid,myaddress,shippingName,shippingPhone,detailAddress).then(res =>{
+              console.log(JSON.stringify(res))
+              this.$router.go(-1);//返回上一层
+            }).catch(err =>{
+              console.log(err)
+            })
           }
         }else {
           console.log("信息未填完")

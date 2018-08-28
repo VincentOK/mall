@@ -11,13 +11,14 @@
       <refundlist-view :refund_status="nowIndex"></refundlist-view>
     </div>
     <div class="divTab" v-show="nowIndex===1">
-      我是待收货
+      <refundlist-view :refund_status="nowIndex"></refundlist-view>
+
     </div>
     <div class="divTab" v-show="nowIndex===2">
-      我是已完成
+      <refundlist-view :refund_status="nowIndex"></refundlist-view>
     </div>
     <div class="divTab" v-show="nowIndex===3">
-      我是已取消
+      <refundlist-view :refund_status="nowIndex"></refundlist-view>
     </div>
   </div>
   </div>

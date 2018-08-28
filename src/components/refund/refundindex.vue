@@ -126,7 +126,6 @@
             choose_right:'choose_right_i',
             Surplus:500,
             introduct:'',
-
             imgList:[]
           }
       },
@@ -139,14 +138,14 @@
         change:function (){
           let vm = this
           if(vm.imgList.length <5){
-            var imginput = document.getElementById("file_input");
+            let imginput = document.getElementById("file_input");
             imginput.onchange = function () {
-              var files = this.files;
-              var url = URL.createObjectURL(files[0]);
+              let files = this.files;
+              let url = URL.createObjectURL(files[0]);
               console.log(url)
               let length = vm.imgList.length
               console.log(vm.imgList.length)
-              var obj = {
+              let obj = {
                 index:length,
                 img_url:url
               }
