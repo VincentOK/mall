@@ -83,9 +83,9 @@
         <div class="null_div"></div>
         <div class="detail_detail">
           <p>商品详情</p>
-          <p v-html="goodsDetail.map.detail">
+          <div class="detailDetail" v-html="goodsDetail.map.detail">
 
-          </p>
+          </div>
         </div>
         <paymoney-view v-on:childByValue="childByValue" v-if="paymoney"></paymoney-view>
         <paytime-view v-on:childByValue="childByValue" v-if="paytime"></paytime-view>
@@ -225,6 +225,10 @@ export default {
 </script>
 
 <style scoped>
+  .detailDetail>p>img{
+    display: block;
+    margin: auto;
+  }
   .block{
     display: block;
   }

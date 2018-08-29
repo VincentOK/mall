@@ -15,9 +15,9 @@
             id:'',
           }
       },
-      props:['getId'],
+      props:['commodityId'],
       watch:{
-        getId:function (newVal,oldVal) {
+        commodityId:function (newVal,oldVal) {
           this.id = newVal
         }
       },

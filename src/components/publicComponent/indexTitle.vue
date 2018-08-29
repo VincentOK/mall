@@ -16,13 +16,10 @@
     },
     methods:{
       closeWeb:function () {
-        test.hello(function (data) {
-          alert(data);
-          return 'aaaaaaaaaaaaaa';
-        });
-        // document.location.href = "js://webview?arg1=111&arg2=222";
-
-          // window.location.href = window.location.href + '?close=true'
+        console.log("环境："+process.env.NODE_ENV)
+        if(process.env.NODE_ENV == 'production'){
+          JS.closeWebView();
+        }
       },
     }
   }

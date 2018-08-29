@@ -33,12 +33,12 @@
       <label class="color_refund" v-else>暂未获取运单号</label>
       <label class="refund_money"><label class="refund_font">实付：</label><label class="real_money">￥{{item.orderPriceRmb}}</label></label>
     </p>
-    <p class="refund_now">
-      <!--<button class="refund_btn_one" v-if="item.orderStatus == '2' || item.orderStatus == '3'" v-on:click="gotocheck(item.commodityId)">确认收货</button>-->
-      <!--<button class="refund_btn" v-if="item.orderStatus == '2' || item.orderStatus == '3' || item.orderStatus == '4'" v-on:click="gotodetail(item.commodityId)">申请退款</button>-->
+    <p class="refund_now" v-show="item.orderStatus == '2' || item.orderStatus == '3' || item.orderStatus == '4'">
+      <button class="refund_btn_one" v-if="item.orderStatus == '2' || item.orderStatus == '3'" @click="gotocheck(item.commodityId,item.orderNumber)">确认收货</button>
+      <button class="refund_btn" v-if="item.orderStatus == '2' || item.orderStatus == '3' || item.orderStatus == '4'" @click="gotodetail(item.commodityId,item.orderNumber)">申请退款</button>
 
-      <button class="refund_btn_one" v-on:click="gotocheck(item.commodityId)">确认收货</button>
-      <button class="refund_btn" v-on:click="gotodetail(item.commodityId)">申请退款</button>
+      <!--<button class="refund_btn_one" @click="gotocheck(item.commodityId,item.orderNumber)">确认收货</button>-->
+      <!--<button class="refund_btn" @click="gotodetail(item.commodityId,item.orderNumber)">申请退款</button>-->
     </p>
   </div>
   </scroller>
@@ -155,14 +155,14 @@
           console.log(childByValue)
           this.checkStatus_i = childByValue
         },
-        gotodetail:function (id) {
-          console.log(id)
-          this.$router.push('/refundindex/'+id)
+        gotodetail:function (commodityId,orderNumber) {
+          console.log(commodityId,orderNumber)
+          this.$router.push('/refundindex/'+commodityId+'/'+orderNumber)
         },
-        gotocheck:function (id) {
-          console.log("id:"+id)
+        gotocheck:function (commodityId) {
+          console.log("id:"+commodityId)
           this.checkStatus_i = true
-          this.checkStatus = id
+          this.checkStatus = commodityId
         }
       }
     }

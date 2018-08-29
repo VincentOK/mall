@@ -65,7 +65,7 @@
         </div>
         <div class="pay_style_btn">
           <label class="wai_label">实付款：<label class="all_money_i"><label class="money_ii">￥</label>49.00</label></label>
-          <button>确认付款</button>
+          <button @click="surepaymoney">确认付款</button>
         </div>
       </div>
     </div>
@@ -87,6 +87,21 @@
           }
         },
       methods:{
+        /**
+         * 确认支付
+         */
+        surepaymoney:function(){
+          let obj = {
+            msg:'支付参数'
+          }
+          console.log("环境："+process.env.NODE_ENV)
+          if(process.env.NODE_ENV == 'production'){
+            JS.surePayMoney(obj,function (data) {
+              alert('支付返回状态：'+data);
+            });
+          }
+
+        },
         chooseStyle:function(){
           if(this.choose_style){
             this.choose_style = false

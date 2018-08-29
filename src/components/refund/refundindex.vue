@@ -4,7 +4,7 @@
     <shoptitle :childTitleword="childTitleword"></shoptitle>
 
   <div class="conent_all_h5" v-touch:swiperight="_protypeJs.touchRight">
-    <title-view :getId="getId"></title-view>
+    <title-view :commodityId="commodityId"></title-view>
     <div class="refund_all">
       <div class="refund_title">
         <p>退款方式</p>
@@ -95,6 +95,7 @@
 <script>
   import Vue from 'vue'
   import { _check } from '../../commonJS/commonCheck'
+  import { uploadBlobImg, addRedund} from '../../config/request'
   import title from './refund_title'
   import mydialog from '../dialog/mydialog'
   import whynotwant from './whynotwant'
@@ -111,7 +112,8 @@
       data(){
           return{
             childTitleword:'申请退款',
-            getId:'',
+            commodityId:'',//商品id
+            orderNumber:'',//订单id
             whynot:false,
             dialogblock:{
               flag:false,
@@ -126,13 +128,13 @@
             choose_right:'choose_right_i',
             Surplus:500,
             introduct:'',
-            imgList:[]
+            imgList:[],
+            filesImg:[]
           }
       },
       mounted(){
-        let id = this.$route.params.id
-        alert(id)
-        this.getId = id
+        this.commodityId = this.$route.params.commodityId;
+        this.orderNumber = this.$route.params.orderNumber
       },
       methods:{
         change:function (){
@@ -141,19 +143,23 @@
             let imginput = document.getElementById("file_input");
             imginput.onchange = function () {
               let files = this.files;
+              console.log("========="+JSON.stringify(files[0]))
               let url = URL.createObjectURL(files[0]);
-              console.log(url)
+
               let length = vm.imgList.length
               console.log(vm.imgList.length)
               let obj = {
                 index:length,
                 img_url:url
-              }
+              };
+              let filesName = files[0];
+              console.log(filesName);
               if(length < 5 ){
+                vm.$set(vm.filesImg,length,filesName)
                 vm.$set(vm.imgList, length, obj);
               }
               console.log("选取图片:"+JSON.stringify(vm.imgList))
-              console.log(files)
+              console.log("图片对象数组："+JSON.stringify(vm.filesImg))
               // var reader=new FileReader();
               // reader.onload=function(e){
               //   console.log( reader.result);
@@ -178,6 +184,7 @@
         },
         closePhoto:function(index){
           this.imgList.splice(index,1);
+          this.filesImg.splice(index,1);
         },
         whyNot:function () {
           this.whynot = true
@@ -196,12 +203,17 @@
           this.Surplus = 500 - textVal;
         },
         saveAddress:function () {
-          let desc = this.introduct
-          let name = this.myname
-          let phone = this.myphone
-          console.log('=='+desc+'=='+name+'==='+phone)
-          if(desc && name && phone){
-            if(this.whynot_reason.msg == '未选择'){
+          let uid = this._protypeJs.getUserId();//用户id
+          let commodityId = this.commodityId;//商品id
+          let orderNumber = this.orderNumber;//订单号
+          let desc = this.introduct;//描述
+          let name = this.myname;//联系人
+          let phone = this.myphone;//联系电话
+          let filesImg = this.filesImg;//图片files对象数组
+          let reason = this.whynot_reason.msg;
+          console.log('=用户id='+uid+'=商品id='+commodityId+'=订单号='+orderNumber+'=图片files对象数组='+filesImg+'=描述='+desc+'=联系人='+name+'=联系电话='+phone)
+          if(desc && name && phone && reason != '未选择'){
+            if(reason == '未选择'){
               this.dialogblock = {
                 flag:true,
                 msg:'请选择退货原因'
@@ -221,8 +233,12 @@
               return false
             }else {
               //请求服务端
-              alert("请求服务端提交申请")
-              this.$router.go(-1);//返回上一层
+              // alert("请求服务端提交申请")
+              addRedund(uid,orderNumber,commodityId,reason,desc,filesImg).then(res =>{
+                console.log("确认提交申请："+JSON.stringify(res))
+              }).catch(err =>{
+                console.log("err："+JSON.stringify(err))
+              })
             }
           }else {
             console.log("信息未填完")

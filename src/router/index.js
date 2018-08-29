@@ -58,7 +58,7 @@ export default new Router({
       component: refundlist
     },
     {
-      path: '/refundindex/:id',
+      path: '/refundindex/:commodityId/:orderNumber',
       name: 'refundindex',
       component: refundindex
     },

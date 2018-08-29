@@ -22,7 +22,10 @@
           this.$router.go(-1);
         },
         closeWeb:function () {
-           window.location.href = window.location.href + '?close=true'
+          console.log("环境："+process.env.NODE_ENV)
+          if(process.env.NODE_ENV == 'production'){
+            JS.closeWebView();
+          }
         }
       }
     }
