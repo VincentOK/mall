@@ -9,11 +9,19 @@ export default (Vue) => {
       }
     },
     /**
-     * 字符长度最长10
+     * 字符长度最长13
      */
     maxSlice13:(item) =>{
       if(Boolean(item)){
         return item.length > 13 ? item.slice(0, 13) + "..." : item;
+      }
+    },
+    /**
+     * 字符长度最长10
+     */
+    maxSlice10:(item) =>{
+      if(Boolean(item)){
+        return item.length > 10 ? item.slice(0, 10) + "..." : item;
       }
     },
     /**

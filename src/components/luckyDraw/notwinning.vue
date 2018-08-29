@@ -15,35 +15,50 @@
 </template>
 
 <script>
+import { getcountUserLuckyNumber } from "../../config/request";
 export default {
   name: "notwinning",
   data() {
     return {
-      close: true
+      uId: "",
+      close: true,
+      whetherFreeCount: null
     };
   },
   props: {
-    isShowPopup:Boolean
+    isShowPopup: Boolean
   },
   watch: {
     isShowPopup(newVal, oldVal) {
       if (newVal) {
-       this._protypeJs.addBodyHeight();
+        this._protypeJs.addBodyHeight();
       }
     }
-   },
+  },
+  mounted() {
+    this.uId = this._protypeJs.getUserId();
+  },
   methods: {
     closePage() {
-      this.close = false;
-      this.$emit("toDraw", null);
-      this._protypeJs.removeBodyHeight();
+      let self = this;
+      self.close = false;
+      getcountUserLuckyNumber(self.uId)
+        .then(res => {
+          self.whetherFreeCount = res;
+          console.log(self.whetherFreeCount);
+          self.$emit("toDraw", self.whetherFreeCount);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+      self._protypeJs.removeBodyHeight();
     }
   }
 };
 </script>
 
 <style scoped>
-.fixed_mask{
+.fixed_mask {
   overflow: hidden;
 }
 .notwinning_out {

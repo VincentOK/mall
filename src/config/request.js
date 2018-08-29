@@ -104,7 +104,7 @@ export const getPrizeInfo = (prizeId,uid)=>fetch('storeLucky/getPrizeInfo',{
  * luckyId：抽奖活动id（*）
  * expend：消耗时间币
  */
-export const getlucky = (uid,luckyId,expend)=>fetch('storeLucky/lucky',{
+export const getlucky = ({uid,luckyId,expend})=>fetch('storeLucky/lucky',{
   uid:uid,
   luckyId:luckyId,
   expend:expend
@@ -143,5 +143,12 @@ export const addRedund = (uid,orderNumber,commodityId,reason,describes,photoFile
   describes:describes,
   photoFile:photoFile
 },'POST')
+/**
+ * 查询中奖公告
+ * luckyId：活动id（*）
+ */
+export const getSelectNotice = (luckyId)=>fetch('storeLucky/selectNotice',{
+  luckyId:luckyId,
+},'POST',false)
 // export const searchplace = (callback) => fetch('announce/findann', callback);
 

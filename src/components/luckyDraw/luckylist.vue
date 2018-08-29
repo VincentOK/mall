@@ -21,28 +21,27 @@
     <div class="win_name">
       <swiper :options="luckySwiperOption" class="swiper-no-swiping">
         <swiper-slide  v-for="(item,index) in win_list" :key="index">
-        <p class="win_name_p">恭喜<span class="win_name_span">{{item.win_name}}</span>抽中了<span class="win_name_lastspan">{{item.win_gift}}</span></p>
+        <p class="win_name_p">恭喜<span class="win_name_span">{{item.nickName}}</span>抽中了<span class="win_name_lastspan">{{_protypeJs.maxSlice10(item.prizeName) + item.prizeUnit}}</span></p>
       </swiper-slide>
       </swiper>
     </div>
     <div>
       <p class="lucky_title">奖品说明</p>
-      <div class="lucky_all_list" v-for="(item,index) in lucky_list" :key="index">
-        <router-link class="top_order" :to="'/detail/' + item.id">
+      <div class="lucky_all_list" v-for="(item,index) in prizeList" :key="index">
+        <!-- <router-link class="top_order" :to="'/detail/' + item.id"> -->
           <div class="lucky_one">
             <div class="lucky_one_left">
-              <img src="/static/img/a1.jpg" alt="">
+              <img :src="item.prizeImgUrl" alt="">
             </div>
             <div class="lucky_one_right">
-              <p>{{item.name}}</p>
+              <p>{{item.prizeName}}</p>
               <p>
                 <label>规格：</label>
-                <label>{{item.standard}}瓶</label>
+                <label>{{item.prizeUnit}}</label>
               </p>
-              <p><label class="lucky_num">x{{item.lucky_num}}</label></p>
             </div>
           </div>
-        </router-link>
+        <!-- </router-link> -->
       </div>
     </div>
     <div class="activity-description" v-show="!clickLottery">
@@ -79,15 +78,20 @@
 import Vue from "vue";
 import notwinning from "./notwinning";
 import winning from "./winning";
-import { getLuckyList, getlucky,getcountUserLuckyNumber } from "../../config/request";
+import {
+  getLuckyList,
+  getlucky,
+  getcountUserLuckyNumber,
+  getSelectNotice
+} from "../../config/request";
 Vue.component("notwinning-view", notwinning);
 Vue.component("winning-view", winning);
 export default {
   name: "luckylist",
   data() {
     return {
-      uId: "123",
-      luckyId:'chou01',
+      uId: "",
+      luckyId: "chou01",
       luckyBannerImgUrl: "",
       luckyEndTime: "",
       luckyExplain: "",
@@ -97,7 +101,7 @@ export default {
       childTitleword: "抽奖",
       whetherFree: false,
       whetherFreeCount: null,
-      expend:50,
+      expend: 50,
       clickLottery: false,
       winThePrice: "",
       stateLottery: "",
@@ -127,7 +131,8 @@ export default {
     winning
   },
   mounted() {
-    // this.getLuckyInfo();
+    this.uId = this._protypeJs.getUserId();
+    this.getLuckyNumberCount();
     getLuckyList(this.luckyId)
       .then(res => {
         this.luckyBannerImgUrl = res.luckyBannerImgUrl;
@@ -136,49 +141,49 @@ export default {
         this.luckyExplain = res.luckyExplain;
         this.luckyName = res.luckyName;
         this.prizeList = res.prizeList;
+        console.log(this.prizeList);
       })
       .catch(err => {
         console.log(err);
       });
-      getcountUserLuckyNumber(this.uId).then(res=>{
-        this.whetherFreeCount = res;
-        if(!Boolean(res)){
-          this.whetherFree = true;
-        }
-        console.log(this.whetherFreeCount)
-      }).catch(err=>{
-        console.log(err);
+    getSelectNotice(this.luckyId)
+      .then(res => {
+        this.win_list = res;
+        console.log(this.win_list);
       })
-    this.win_list = [
-      {
-        win_name: "水果",
-        win_gift: "水果"
-      },
-      {
-        win_name: "g杠杠的sgs",
-        win_gift: "干豆腐干豆腐干豆腐"
-      },
-      {
-        win_name: "十多个",
-        win_gift: "很多第三方个人X1"
-      },
-      {
-        win_name: "发送给",
-        win_gift: "是个很反感娃X1"
-      },
-      {
-        win_name: "个地方官的",
-        win_gift: "更多发挥发挥额1"
-      },
-      {
-        win_name: "杨广东省",
-        win_gift: "给对方回房间娃X1"
-      },
-      {
-        win_name: "司的",
-        win_gift: "更多发挥发挥烦得很1"
-      }
-    ];
+      .catch(err => {
+        console.log(err);
+      });
+    // this.win_list = [
+    //   {
+    //     win_name: "水果",
+    //     win_gift: "水果"
+    //   },
+    //   {
+    //     win_name: "g杠杠的sgs",
+    //     win_gift: "干豆腐干豆腐干豆腐"
+    //   },
+    //   {
+    //     win_name: "十多个",
+    //     win_gift: "很多第三方个人X1"
+    //   },
+    //   {
+    //     win_name: "发送给",
+    //     win_gift: "是个很反感娃X1"
+    //   },
+    //   {
+    //     win_name: "个地方官的",
+    //     win_gift: "更多发挥发挥额1"
+    //   },
+    //   {
+    //     win_name: "杨广东省",
+    //     win_gift: "给对方回房间娃X1"
+    //   },
+    //   {
+    //     win_name: "司的",
+    //     win_gift: "更多发挥发挥烦得很1"
+    //   }
+    // ];
     this.lucky_list = [
       {
         id: "1",
@@ -246,22 +251,39 @@ export default {
           return "*";
       }
     },
+    getLuckyNumberCount() {
+      let self = this;
+      getcountUserLuckyNumber(self.uId)
+        .then(res => {
+          this.whetherFreeCount = res;
+          if (!Boolean(res)) {
+            self.whetherFree = true;
+          }
+          console.log(self.whetherFreeCount);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     getLuckyInfo() {
       let self = this;
       let param = {
-        uid:this.uId,
-        luckyId:this.luckyId,
-      }
-      if(this.whetherFreeCount <= 0){
-        param['expend'] = this.expend;
+        uid: this.uId,
+        luckyId: this.luckyId
+      };
+      if (this.whetherFreeCount <= 0) {
+        param["expend"] = this.expend;
       }
       getlucky(param)
         .then(res => {
           self.stateLottery = res.value;
-          if (self.stateLottery != "cant" && (self.whetherFreeCount > 0 || self.expend)) {
+          if (
+            self.stateLottery != "cant" &&
+            (self.whetherFreeCount > 0 || self.expend)
+          ) {
             self.clickLottery = true;
-            if(self.whetherFreeCount > 0){
-              self.whetherFreeCount--;
+            if (self.whetherFreeCount == 0) {
+              self.whetherFree = true;
             }
             self.whetherPrice = false;
             if (self.stateLottery == "yes") {
@@ -269,7 +291,7 @@ export default {
               self.whetherPrice = true;
               console.log(self.winPrizeList);
             }
-          }else{
+          } else {
             self.whetherFree = true;
           }
           console.log(self.stateLottery);
@@ -283,7 +305,11 @@ export default {
     },
     toDrawwing(rawData) {
       this.winThePrice = "";
-      this.clickLottery = rawData;
+      this.whetherFreeCount = rawData;
+      if (this.whetherFreeCount == 0) {
+        this.whetherFree = true;
+      }
+      this.clickLottery = false;
     },
     loadCanvas() {
       let self = this;
@@ -380,29 +406,22 @@ export default {
   box-shadow: 0 0 10px lightgray;
   margin-top: 13px;
 }
-.lucky_one_left {
-  flex: 1;
-}
 .lucky_one_left img {
-  width: 110px;
+  width: 100px;
+  height: 100px;
 }
 .lucky_one_right {
-  flex: 3;
+  display: flex;
   text-align: left;
+  flex-direction: column;
+  justify-content: space-between;
 }
 .lucky_one_right p {
-  margin: 0;
-}
-.lucky_one_right p:first-child {
-  padding: 5px 0 10px 10px;
+  margin: 0 5px;
 }
 .lucky_one_right p:nth-child(2) {
-  padding: 10px 0 0 10px;
+  margin-bottom: 5px;
   color: #b9b9b9;
-}
-.lucky_one_right p:last-child {
-  color: #b9b9b9;
-  padding: 5px 0 0px 10px;
 }
 .lucky_banner {
   width: 100%;

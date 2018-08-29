@@ -20,36 +20,50 @@
 </template>
 
 <script>
+import { getcountUserLuckyNumber } from "../../config/request";
 export default {
   name: "winning",
   data() {
     return {
+      uId:'',
       close: true,
+      whetherFreeCount: null
     };
   },
   props: {
-    isShowPopup:Boolean,
-    winPrizeList:{
-      prizeImgUrl:'',
-      prizeName:'',
+    isShowPopup: Boolean,
+    winPrizeList: {
+      prizeImgUrl: "",
+      prizeName: ""
     }
+  },
+  mounted() {
+    this.uId = this._protypeJs.getUserId();
   },
   methods: {
     closePage() {
-      this.close = false;
-      this.$emit("toDraw", null);
-      this._protypeJs.removeBodyHeight();
+      let self = this;
+      self.close = false;
+      getcountUserLuckyNumber(self.uId)
+        .then(res => {
+          self.whetherFreeCount = res;
+          console.log(self.whetherFreeCount);
+          self.$emit("toDraw", self.whetherFreeCount);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+      self._protypeJs.removeBodyHeight();
     }
   },
-   watch: {
+  watch: {
     isShowPopup(newVal, oldVal) {
       if (newVal) {
-      this._protypeJs.addBodyHeight();
+        this._protypeJs.addBodyHeight();
       }
     }
-   },
-  mounted(){
-  }
+  },
+  mounted() {}
 };
 </script>
 
@@ -76,7 +90,7 @@ export default {
   margin: 0;
   padding: 20px 0;
 }
-.winning_postion{
+.winning_postion {
   position: relative;
   width: 24px;
   height: 35.5px;
