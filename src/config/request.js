@@ -25,7 +25,7 @@ export const getCashList = (type,pageNumber) => fetch('/storeTimecoin/listCommod
  * pageSize：页码(*)
  * pageNumber：每页数量
  */
-export const getFlash = (pageSize,pageNumber) => fetch('/commodity/getLimitLimeCommodity',{
+export const getFlash = (pageSize,pageNumber) => fetch('commodity/getLimitLimeCommodity',{
   pageSize:pageSize,
   pageNumber:pageNumber
 },'GET',false);
@@ -122,6 +122,30 @@ export const getcountUserLuckyNumber = (uid)=>fetch('storeLucky/countUserLuckyNu
  */
 export const getSelectNotice = (luckyId)=>fetch('storeLucky/selectNotice',{
   luckyId:luckyId,
+},'POST',false)
+
+
+/**
+ * 抽中奖品时提交订单
+ * uid:用户id(*)
+ * commodityId:商品id(*)
+ * commodityName:	奖品名称(*)
+ * unit:奖品规格(*)
+ * shippingName:收件人姓名(*)
+ * shippingPhone:	收件人联系方式(*)
+ * shippingAddress:收货地址(*)
+ * imgUrl:商品封面图(*)
+ */
+export const addLuchyAddress= ({uid,commodityId,commodityName,unit,shippingAddress,shippingName,shippingPhone,detailAddress,imgUrl}) => fetch('order/add',{
+  uid:uid,
+  commodityId:commodityId,
+  commodityName:commodityName,
+  unit:unit,
+  shippingAddress:shippingAddress,
+  shippingName:shippingName,
+  shippingPhone:shippingPhone,
+  detailAddress:detailAddress,
+  imgUrl:imgUrl
 },'POST',false)
 // export const searchplace = (callback) => fetch('announce/findann', callback);
 

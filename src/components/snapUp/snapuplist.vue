@@ -4,28 +4,28 @@
     <shoptitle :childTitleword="childTitleword"></shoptitle>
     <div  v-touch:swiperight="_protypeJs.touchRight">
       <div class="snap_title">
-        <p>
-          <label class="end_title">本轮抢购已结束，请等待下轮抢购开启</label>
-          <time-down-view @time-end="clearTime = true" :endTime='endTime' :endTimeChar='endTimeChar' :timeStyle='indexStyle'></time-down-view>
-        </p>
+        <label class="end_title">本轮抢购已结束，请等待下轮抢购开启</label>
+        <time-down-view v-on:timeEnd="clearTime" :endTime='endTime' :startTime='startTime' :endTimeChar='endTimeChar' :timeStyle='indexStyle'></time-down-view>
       </div>
       <div class="all_snap">
-        <scroller style="margin-top: 80px" :on-infinite="infinite"  :on-refresh = "refresh" ref="myscroller">
+        <scroller style="margin-top: 65px" :on-infinite="infinite"  :on-refresh = "refresh" ref="myscroller">
         <div style="height: 1px;"></div>
         <div class="snap_list" v-for="(item,index) in snaplist" :key="index">
           <div class="snap_one">
             <div class="snap_one_left">
-              <img :src="item.goods_img" alt="">
+              <img :src="item.cover">
             </div>
             <div class="snap_one_right">
-              <p class="snap_right_title">{{item.goods_title}}</p>
+              <p class="snap_right_title">{{item.commodityName}}</p>
               <p class="snap_title_pay">
-                <label class="snap_real_money">￥{{item.goods_realmoney}}</label>
-                <label class="snap_money_i">￥{{item.goods_anothmoney}}</label>
+                <label class="snap_real_money">￥{{item.realityPrice}}</label>
+                <label class="snap_money_i">￥{{item.suggestPrice}}</label>
               </p>
               <p class="snap_title_on">
-                <label class="snap_style">{{item.goods_courier}}</label>
-                <router-link :to="'/detail/' + item.goods_id"><label class="snap_button">即将开始</label></router-link>
+                <label class="snap_style" v-show="item.carriage==0">{{item.carriage==0?'免邮':''}}</label>
+                <router-link :to="'/detail/' + item.commodityId + '/' + item.distributionChannel" v-show="buttonStatus == 'starting'"><label class="snap_button">即将开始</label></router-link>
+                <router-link :to="'/detail/' + item.commodityId + '/' + item.distributionChannel" v-show="buttonStatus == 'pendding'"><label class="snap_button" style="background-color: #ea3339;">立即抢购</label></router-link>
+                <label  class="snap_button" v-show="buttonStatus == 'ending'" style="background-color: #333;">抢购结束</label>
               </p>
             </div>
           </div>
@@ -37,90 +37,95 @@
 </template>
 
 <script>
-  import { getFlash } from '../../config/request'
+import { getFlash } from "../../config/request";
 import timeDown from "../publicComponent/timeDown";
 export default {
   name: "snapuplist",
   data() {
     return {
-      childTitleword:'限时抢购',
+      childTitleword: "限时抢购",
       snaplist: [],
-      clearTime: false,
-      endTime: "2018-08-20 05:40:20",
+      startTime: "",
+      endTime: "",
       endTimeChar: "距下轮开启",
-      indexStyle: "snapupList"
+      indexStyle: "snapupList",
+      count: 0,
+      buttonStatus: null
     };
   },
   components: {
     timeDown
   },
-  mounted() {
-    this.snaplist = [
-      {
-        goods_id: 1,
-        goods_img: "/static/img/a1.jpg",
-        goods_title: "越南美女限时抢购越南美女限时抢购越南美女限时抢购",
-        goods_realmoney: 33.0,
-        goods_anothmoney: 28.0,
-        goods_courier: "免邮",
-        goods_status: 2
-      },
-      {
-        goods_id: 2,
-        goods_img: "/static/img/a1.jpg",
-        goods_title: "越南美女限时抢购越南美女限时抢购越南美女限时抢购",
-        goods_realmoney: 33.0,
-        goods_anothmoney: 28.0,
-        goods_courier: "免邮",
-        goods_status: 3
-      },
-      {
-        goods_id: 3,
-        goods_img: "/static/img/a1.jpg",
-        goods_title: "越南美女限时抢购越南美女限时抢购越南美女限时抢购",
-        goods_realmoney: 33.0,
-        goods_anothmoney: 28.0,
-        goods_courier: "免邮",
-        goods_status: 1
-      },
-      {
-        goods_id: 4,
-        goods_img: "/static/img/a1.jpg",
-        goods_title: "越南美女限时抢购越南美女限时抢购越南美女限时抢购",
-        goods_realmoney: 33.0,
-        goods_anothmoney: 28.0,
-        goods_courier: "免邮",
-        goods_status: 4
+  mounted() {},
+
+  watch: {
+    buttonStatus: function(value) {
+      let self = this;
+      if (value == "ending") {
+        getFlash(6, 1)
+          .then(res => {
+            if (res.list.dataList.length != 0) {
+              self.snaplist = self.snaplist.concat(res.list.dataList);
+              if (Boolean(res.startTime) && Boolean(res.endTime)) {
+                // self.startTime = res.startTime;
+                // self.endTime = res.endTime;
+                self.startTime = "2018-08-30 19:23:20";
+                self.endTime = "2018-08-30 18:23:25";
+              } else {
+                self.endTime = "0";
+                self.startTime = "0";
+              }
+            } else {
+              self.noData = "没有更多数据";
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          });
       }
-    ];
+    }
   },
   methods: {
+    clearTime: function(value) {
+      this.buttonStatus = value;
+      console.log(this.buttonStatus);
+    },
+    getFlashData() {},
     infinite(done) {
-      /**
-      if(this.noData) {
-        setTimeout(()=>{
+      if (this.noData) {
+        setTimeout(() => {
           this.$refs.myscroller.finishInfinite(2);
-        })
+        });
         return;
       }
-      let self = this;//this指向问题
+      let self = this; //this指向问题
       self.count++;
       setTimeout(() => {
-        console.log("页码"+self.count)
-        getFlash(self.count,8).then(res =>{
-          console.log(res)
-          if(res.dataList.length != 0){
-            self.snaplist = self.snaplist.concat(res.dataList)
-          }else {
-            self.noData = "没有更多数据"
-          }
-          self.$refs.myscroller.resize();
-          done()
-        }).catch(err =>{
-          console.log(err)
-        })
-      }, 1500)
-       **/
+        console.log("页码" + self.count);
+        getFlash(6, self.count)
+          .then(res => {
+            console.log(res);
+            if (res.list.dataList.length != 0) {
+              self.snaplist = self.snaplist.concat(res.list.dataList);
+              if (Boolean(res.startTime) && Boolean(res.endTime)) {
+                // self.startTime = res.startTime;
+                // self.endTime = res.endTime;
+                self.startTime = "2018-08-30 19:23:00";
+                self.endTime = "2018-08-30 19:23:05";
+              } else {
+                self.endTime = "0";
+                self.startTime = "0";
+              }
+            } else {
+              self.noData = "没有更多数据";
+            }
+            self.$refs.myscroller.resize();
+            done();
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }, 1500);
     },
     refresh(done) {
       //这是向下滑动的时候请求最新的数据
@@ -143,6 +148,10 @@ export default {
   top: 40px;
   z-index: 99999;
   background-color: white;
+  height: 29px;
+  line-height: 29px;
+  border-top: 1px solid #f9f9f9;
+  border-bottom: 1px solid #f9f9f9;
 }
 .end_title {
   font-size: 12px;
@@ -165,8 +174,8 @@ export default {
   flex: 2;
 }
 .snap_one_left img {
-  width: 100%;
-  height: 100%;
+  width: 110px;
+  height: 110px;
 }
 .snap_one_right {
   flex: 4;

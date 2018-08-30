@@ -3,14 +3,14 @@
         <swiper :options="swiperOption">
           <swiper-slide v-for="(item,index) in cash_list" :key="index">
             <div class="swiper_slide">
-              <router-link class="a_detail" :to="'/detail/' + item.id">
+              <router-link class="a_detail" :to="'/detail/' + item.commodityId +'/'+ item.distributionChannel">
                 <div class="image_border">
-                    <img :src="item.img_url" alt="">
-                  <p class="swiper_name">{{_protypeJs.maxSlice13(item.name)}}</p>
-                  <p class="swiper_price">{{item.price,item.goods_tag | formatMoney}}</p>
-                  <p class="swiper_del_price"><del>￥{{item.original_cost}}</del></p>
-                  <span :class="goodsTagStyle(item.goods_tag)" class="swiper_goods_tag"><span></span></span>
-                  <span v-show="goods_tag">抢购结束</span>
+                    <img :src="item.cover" alt="">
+                  <p class="swiper_name">{{_protypeJs.maxSlice13(item.commodityName)}}</p>
+                  <p class="swiper_price">{{item.suggestPrice | formatMoney}}</p>
+                  <p class="swiper_del_price"><del>￥{{item.realityPrice}}</del></p>
+                  <span :class="goodsTagStyle(targetStatus)" class="swiper_goods_tag"><span></span></span>
+                  <!-- <span v-show="'1'">抢购结束</span> -->
                 </div>
                 </router-link>
             </div>
@@ -32,10 +32,14 @@
 </template>
 
 <script>
+import { getFlash } from "../../config/request";
 export default {
   name: "flashSale",
   data() {
     return {
+      startTime: "",
+      endTime: "",
+      buttonStatus: null,
       goods_tag: "",
       swiper_goods_tag: "",
       isGreenGoodsTag: false,
@@ -54,13 +58,18 @@ export default {
       }
     };
   },
+  props: {
+    targetStatus: {
+      type: String
+    }
+  },
   methods: {
-    goodsTagStyle(id) {
-      switch (id) {
-        case "1":
+    goodsTagStyle(value) {
+      switch (value) {
+        case "starting":
           return { isGreenGoodsTag: true };
           break;
-        case "2":
+        case "ending":
           return { isBlackGoodsTag: true };
           break;
         default:
@@ -82,90 +91,56 @@ export default {
       }
     }
   },
-  mounted() {
-    this.cash_list = [
-      {
-        id: "1",
-        img_url: "/static/img/a1.jpg",
-        name:
-          "海南贵妃特价海南贵妃特价海南贵南贵妃特价海南贵妃妃南贵妃海南贵妃特价海南贵妃特价海南贵南贵妃特价海南贵妃妃南贵妃 送货上门",
-        price: "120.233",
-        time_money: "356.58",
-        original_cost: "345",
-        goods_tag: "1",
-        count: "121"
-      },
-      {
-        id: "2",
-        img_url: "/static/img/a1.jpg",
-        name: "货上门huo",
-        price: "120.00",
-        time_money: "356.58",
-        original_cost: "345",
-        goods_tag: "1",
-        count: "122"
-      },
-      {
-        id: "3",
-        img_url: "/static/img/a1.jpg",
-        name: "海南贵妃特价海南贵妃 送货上门",
-        price: "120",
-        time_money: "356.58",
-        original_cost: "345",
-        goods_tag: "2",
-        count: "123"
-      },
-      {
-        id: "4",
-        img_url: "/static/img/a1.jpg",
-        name: "海南贵妃特价海南贵妃 送货上门",
-        price: "120",
-        time_money: "356.58",
-        original_cost: "345",
-        goods_tag: "2",
-        count: "124"
-      },
-      {
-        id: "5",
-        img_url: "/static/img/a1.jpg",
-        name: "海南贵妃特价海南贵妃 送货上门",
-        price: "120",
-        time_money: "356.58",
-        original_cost: "345",
-        goods_tag: "1",
-        count: "125"
-      },
-      {
-        id: "6",
-        img_url: "/static/img/a1.jpg",
-        name: "海南贵妃特价海南贵妃 送货上门",
-        price: "120.00",
-        time_money: "356.58",
-        original_cost: "345",
-        goods_tag: "1",
-        count: "126"
-      },
-      {
-        id: "7",
-        img_url: "/static/img/a1.jpg",
-        name: "海南贵妃特价海南贵妃 送货上门",
-        price: "120",
-        time_money: "356.58",
-        original_cost: "345",
-        goods_tag: "2",
-        count: "126"
-      },
-      {
-        id: "8",
-        img_url: "/static/img/a1.jpg",
-        name: "海南贵妃特价海南贵妃 送货上门",
-        price: "120.00",
-        time_money: "356.58",
-        original_cost: "345",
-        goods_tag: "1",
-        count: "126"
+  watch: {
+    targetStatus: function(value) {
+      let self = this;
+      if (value == "ending") {
+        getFlash(8, 1)
+          .then(res => {
+            if (res.list.dataList.length != 0) {
+              self.snaplist = res.list.dataList;
+              if (Boolean(res.startTime) && Boolean(res.endTime)) {
+                self.startTime = "2018-08-30 19:47:15";
+                self.endTime = "2018-08-30 19:47:25";
+              } else {
+                self.endTime = "0";
+                self.startTime = "0";
+              }
+              self.$emit("timeStart", self.startTime);
+              self.$emit("timeEnd", self.endTime);
+            } else {
+              self.noData = "没有更多数据";
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          });
       }
-    ];
+    }
+  },
+  mounted() {
+    let self = this;
+    getFlash(8, 1)
+      .then(res => {
+        console.log(res);
+        if (res.list.dataList.length != 0) {
+          self.cash_list = res.list.dataList;
+          if (Boolean(res.startTime) && Boolean(res.endTime)) {
+            self.startTime = "2018-08-30 19:47:00";
+            self.endTime = "2018-08-30 19:47:05";
+          } else {
+            self.endTime = "0";
+            self.startTime = "0";
+          }
+          self.$emit("timeStart", self.startTime);
+          self.$emit("timeEnd", self.endTime);
+        } else {
+          self.noData = "没有更多数据";
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 };
 </script>

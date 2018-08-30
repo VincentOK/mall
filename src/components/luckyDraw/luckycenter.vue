@@ -12,12 +12,10 @@
             </div>
             <div class="snap_one_right">
               <p class="snap_right_title">{{prizeInfo.prizeName}}</p>
-              <p class="snap_title_pay">
+              <div class="snap_title_pay">
                 规格：{{prizeInfo.prizeUnit}}
-              </p>
-              <p class="snap_title_on">
-                 x1
-              </p>
+                <p class="snap_title_on">x1</p>
+              </div>
             </div>
           </div>
         </div>
@@ -30,7 +28,7 @@
             </div>
             <div class="adress_right" @click="addAdress">
               <p><label>{{addressInfo.shippingName}}</label><label class="adress_tel">{{addressInfo.shippingPhone}}</label><img class="right_img" src="/static/img/right.png" alt=""></p>
-              <p><img class="left_img" src="/static/img/position_icon.png" alt=""><label>{{addressInfo.shippingAddress}}</label></p>
+              <p><img class="left_img" src="/static/img/position_icon.png" alt=""><label>{{addressInfo.shippingAddress}}&nbsp;{{addressInfo.detailAddress}}</label></p>
             </div>
           </div>
           <div class="adress_detail">
@@ -54,7 +52,7 @@
 <script>
 import Vue from "vue";
 import mydialog from "../dialog/mydialog";
-import { getPrizeInfo } from "../../config/request";
+import { getPrizeInfo, addLuchyAddress } from "../../config/request";
 Vue.component("dialog-view", mydialog);
 export default {
   name: "luckycenter",
@@ -65,12 +63,13 @@ export default {
       addressInfo: {
         shippingAddress: "",
         shippingName: "",
-        shippingPhone: ""
+        shippingPhone: "",
+        detailAddress: ""
       },
       prizeInfo: {
-        prizeImgUrl:'',
-        prizeName:'',
-        prizeUnit:''
+        prizeImgUrl: "",
+        prizeName: "",
+        prizeUnit: ""
       },
       childTitleword: "领奖中心",
       prizeDialog: {
@@ -84,7 +83,6 @@ export default {
       .then(res => {
         this.addressInfo = res.addressInfo;
         this.prizeInfo = res.prizeInfo;
-        console.log(this.prizeInfo)
       })
       .catch(ree => {
         console.log(err);
@@ -98,11 +96,35 @@ export default {
       this.$router.push("/add/myaddress");
     },
     submitPrize: function() {
-      if (this.addressInfo.shippingPhone && this.addressInfo.shippingAddress && this.addressInfo.shippingName) {
+      let self = this;
+      if (
+        this.addressInfo.shippingPhone &&
+        this.addressInfo.shippingAddress &&
+        this.addressInfo.shippingName &&
+        this.addressInfo.detailAddress
+      ) {
         this.prizeDialog = {
           flag: true,
           msg: "领奖信息已提交 快递员将在近期为您送上奖品！"
         };
+        let param = {
+          uid: this.uid,
+          commodityId: this.prizeInfo.prizeId,
+          commodityName: this.prizeInfo.prizeName,
+          unit: this.prizeInfo.prizeUnit,
+          imgUrl: this.prizeInfo.prizeImgUrl,
+          shippingName: this.addressInfo.shippingName,
+          shippingPhone: this.addressInfo.shippingPhone,
+          shippingAddress: this.addressInfo.shippingAddress,
+          detailAddress: this.addressInfo.detailAddress
+        };
+        addLuchyAddress(param)
+          .then(res => {
+            console.log(JSON.stringify(res));
+          })
+          .catch(err => {
+            console.log(err);
+          });
       }
     }
   }
@@ -144,29 +166,28 @@ export default {
   margin: auto;
   margin-top: 8px;
 }
-.snap_one_left {
+/* .snap_one_left {
   flex: 2;
-}
+} */
 .snap_one_left img {
   width: 110px;
   height: 110px;
 }
 .snap_one_right {
-  flex: 4;
+  width: 100%;
+  margin:5px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   font-size: 14px;
 }
 .snap_one_right p {
   margin: 0;
-  margin-left: 13px;
   text-align: left;
 }
 .snap_one_right p:first-child {
   color: #333333;
   font-size: 14px;
-  padding-bottom: 10px;
-}
-.snap_one_right p:nth-child(2) {
-  padding-bottom: 10px;
 }
 .snap_title_on {
   padding-bottom: 0;
@@ -175,7 +196,7 @@ export default {
 }
 .snap_title_pay {
   color: darkgray;
-  padding-top: 20px;
+  text-align: left;
   font-size: 14px;
 }
 

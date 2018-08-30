@@ -56,9 +56,9 @@
     <div class="null_div"></div>
     <div class="flashSale">
         <span class="flash_sale_char">限时抢购</span>
-      <time-down-view @time-end="clearTime" :endTime='endTime' :endTimeChar='endTimeChar' :timeStyle='indexStyle'></time-down-view>
+      <time-down-view v-on:timeEnd="clearTime" :endTime='endTime' :startTime='startTime' :endTimeChar='endTimeChar' :timeStyle='indexStyle'></time-down-view>
     </div>
-    <flash-sale-view></flash-sale-view>
+    <flash-sale-view @timeStart="timeStart" @timeEnd="timeEnd" :targetStatus='targetStatus'></flash-sale-view>
     <recommend-view :commodityList='commodity_list' :commodityTimeList='commodity_time_list' :commodityCount='commodity_count_list'></recommend-view>
       <!--<loading-view></loading-view>-->
     </scroller>
@@ -87,7 +87,9 @@ export default {
   data() {
     return {
       noData: "",
-      endTime: "2018-08-30 17:57:45",
+      endTime: "",
+      startTime:'',
+      targetStatus:'',
       endTimeChar: "距结束",
       indexStyle: "indexStyle",
       flag: false,
@@ -100,10 +102,14 @@ export default {
   },
   mounted() {},
   methods: {
-    clearTime(newVal, oldVal) {
-      if (newVal) {
-        console.log("hello");
-      }
+    timeStart:function(value){
+      this.startTime = value;
+    },
+    timeEnd:function(value){
+      this.endTime = value;
+    },
+    clearTime:function(value){
+      this.targetStatus = value;
     },
     infinite(done) {
       let self = this;
@@ -119,6 +125,7 @@ export default {
           .then(res => {
             if(res && res.listRMB){
               self.commodity_count_list.push(res);
+              console.log(self.commodity_count_list)
             }else{
               self.noData = "没有更多数据";
             }

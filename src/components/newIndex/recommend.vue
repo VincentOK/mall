@@ -8,13 +8,13 @@
             </p>
             <div v-for="(item,index) in commodityCount" :key="index">
             <div class="exchange_content" v-if="item.listRMB.length !== 0">
-              <router-link class="a_detail" v-for="(RMBitem,RMBindex) in item.listRMB" :key="RMBindex" :to="'/detail/' + RMBitem.commodityId">
+              <router-link class="a_detail" v-for="(RMBitem,RMBindex) in item.listRMB" :key="RMBindex" :to="'/detail/' + RMBitem.commodityId +'/' + RMBitem.distributionChannel">
                 <div class="exchange_content_i">
                   <div class="img_wrap">
-                    <img :src="RMBitem.imgUrl?'/static/img/a1.jpg':RMBitem.imgUrl" alt="">
-                    <span class="swiper_goods_tag" v-if="RMBitem.goods_tag!='0'" :class="goodsTagStyle(RMBitem.goods_tag)">
+                    <img :src="RMBitem.imgUrl" alt="">
+                    <!-- <span class="swiper_goods_tag" v-if="RMBitem.goods_tag!='0'" :class="goodsTagStyle(RMBitem.goods_tag)">
                       <span>{{RMBitem.goods_tag | formatGoodTags}}</span>
-                    </span>
+                    </span> -->
                   </div>
                   <div class="word_i">
                     <p class="word_name">{{_protypeJs.maxSlice20(RMBitem.commodityName)}}</p>
@@ -31,8 +31,8 @@
              <div class="swiper_wrapper">
                 <div class="swiper_image" v-for="(Timeitem,Timeindex) in item.listTimeCoin" :key="Timeindex">
                     <div class="image_border">
-                        <router-link class="a_detail" :to="'/detail/' + Timeitem.commodityId">
-                        <img src="/static/img/a1.jpg">
+                        <router-link class="a_detail" :to="'/detail/' + Timeitem.commodityId +'/' + Timeitem.distributionChannel">
+                        <img :src="Timeitem.imgUrl">
                         <p class="swiper_name">{{_protypeJs.maxSlice13(Timeitem.commodityName)}}</p>
                         <p class="swiper_price">{{Timeitem.timecoinPrice}}<span>时间币</span></p>
                         <p class="swiper_del_price"><del>￥{{Timeitem.suggestPrice | formatMoney}}</del></p>
@@ -59,8 +59,6 @@ export default {
       goods_tag: "",
       commodity_list: [],
       commodity_time_list: [],
-      // maxLength: 20,
-      // maxHorizontalLength: 15
     };
   },
   props: {
