@@ -77,7 +77,6 @@
           }
         }
       },
-
     }
 </script>
 
@@ -109,6 +108,7 @@
     margin: auto;
     background-color: white;
     bottom: 0;
+    z-index: 99;
   }
   .whynot_content p:first-child{
     margin: 0;

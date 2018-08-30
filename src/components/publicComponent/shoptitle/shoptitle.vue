@@ -2,7 +2,7 @@
   <div>
     <div class="shop_title">
       <img v-on:click="returnBack" class="title_return" src="/static/img/right.png" alt="">
-      <img class="close_shop" v-on:click="closeWeb" src="/static/img/pay_close.png" alt="">
+      <img class="close_shop" v-on:click="_protypeJs.JScloseWebView()" src="/static/img/pay_close.png" alt="">
       {{childTitleword}}
     </div>
   </div>
@@ -21,9 +21,6 @@
         returnBack:function () {
           this.$router.go(-1);
         },
-        closeWeb:function () {
-           window.location.href = window.location.href + '?close=true'
-        }
       }
     }
 </script>
@@ -53,7 +50,7 @@
   text-align: center;
   width: 100%;
   margin: auto;
-  z-index: 9999999;
+  z-index: 99999999999;
   /*color: black;*/
   background-color: white;
   /*opacity: 0.5;*/

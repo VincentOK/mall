@@ -3,8 +3,11 @@ import {
 } from './url'
 import axios from 'axios'
 import qs from 'qs'
-
-export default async(url, data = {}, type = 'GET',loading = true) => {
+// const config = {
+//   header: {'Content-Type': 'application/json;',timeout:3000}s
+// };
+export default async(url, data = {}, type = 'GET',loading = true,config) => {
+  console.log("请求头："+JSON.stringify(config))
   return new Promise((resolve, reject) => {
     if(typeof loading == "boolean" && loading){
       //显示loading加载层
@@ -21,9 +24,10 @@ export default async(url, data = {}, type = 'GET',loading = true) => {
         dataStr = dataStr.substr(0, dataStr.lastIndexOf('&'))
         url = url + '?' + dataStr
       }
-      axios.get(url,{header: {'Content-Type': 'application/json;charset=UTF-8',timeout:3000}})
+      axios.get(url,config)
         .then(function (response) {
           //隐藏loading加载层
+          console.log("请求返回数据："+JSON.stringify(response))
           document.getElementById("loading").style.display = 'none';
           // resolve(response.data)
           if(response.status !==200){
@@ -75,10 +79,20 @@ export default async(url, data = {}, type = 'GET',loading = true) => {
           // }
         })
     }else {
-      axios.post(url, qs.stringify(data),{header: {'Content-Type': 'application/json;charset=UTF-8',timeout:3000}})
+      // if(myconfig.header["Content-Type"] != 'multipart/form-data;'){
+      //   console.log("上传图片")
+      //   data = qs.stringify(data)
+      // }
+      if(!config){
+        console.log("上传图片")
+        data = qs.stringify(data)
+      }
+      // axios.post(url, qs.stringify(data),config)
+      axios.post(url, data,config)
         .then(function (response) {
           // console.log(JSON.stringify(response.data))
           //隐藏loading加载层
+          console.log("请求返回数据："+JSON.stringify(response))
           document.getElementById("loading").style.display = 'none';
           // resolve(response.data)
           if(response.status !==200){

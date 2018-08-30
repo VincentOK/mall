@@ -68,7 +68,7 @@ export const getDetail = (type,commodityId,uid) => fetch('/storeTimecoin/getDeta
  * pageNumber:页码(*)
  * pageSize:每页行数
  */
-export const getOrder = (status,uid,pageNumber,pageSize) => fetch('/order/list',{
+export const getOrder = (status,uid,pageNumber,pageSize) => fetch('order/list',{
   status:status,
   uid:uid,
   pageNumber:pageNumber,
@@ -116,6 +116,31 @@ export const getlucky = ({uid,luckyId,expend})=>fetch('storeLucky/lucky',{
 export const getcountUserLuckyNumber = (uid)=>fetch('storeLucky/countUserLuckyNumber',{
   uid:uid,
 },'POST',false)
+
+/**
+ * 上传blob格式图片
+ * blob：图片blob路径
+ */
+export const uploadBlobImg = (photoFile)=>fetch('order/uploadImages',photoFile,'POST',true,{headers: {'Content-Type': 'multipart/form-data;'}})
+
+
+/**
+ * 提交退款申请
+ * uid：用户id(*)
+ * orderNumber：订单号(*)
+ * commodityId：商品id(*)
+ * reason：退款原因(*)
+ * describes：问题描述
+ * imgUrl：图片files对象数组
+ */
+export const addRedund = (uid,orderNumber,commodityId,reason,describes,photoFile)=>fetch('order/addRefund',{
+  uid:uid,
+  orderNumber:orderNumber,
+  commodityId:commodityId,
+  reason:reason,
+  describes:describes,
+  targetPath:photoFile
+},'POST')
 /**
  * 查询中奖公告
  * luckyId：活动id（*）
@@ -147,5 +172,13 @@ export const addLuchyAddress= ({uid,commodityId,commodityName,unit,shippingAddre
   detailAddress:detailAddress,
   imgUrl:imgUrl
 },'POST',false)
+/*
+ * 确认收货
+ * orderNumber：订单号（*）
+ */
+export const sureRefund = (orderNumber)=>fetch('order/confirmGoods',{
+  orderNumber:orderNumber,
+},'POST')
+
 // export const searchplace = (callback) => fetch('announce/findann', callback);
 

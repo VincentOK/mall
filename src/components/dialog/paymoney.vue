@@ -20,11 +20,11 @@
             <img class="pay_th" :src="wechatcheck" alt="">
           </p>
 
-          <p class="wechat"  v-on:click="chooseChina">
-            <img class="pay_one"  src="/static/img/card.png" alt="">
-            <label class="pay_two">银行卡支付</label>
-            <img class="pay_th" :src="chinacheck" alt="">
-          </p>
+          <!--<p class="wechat"  v-on:click="chooseChina">-->
+            <!--<img class="pay_one"  src="/static/img/card.png" alt="">-->
+            <!--<label class="pay_two">银行卡支付</label>-->
+            <!--<img class="pay_th" :src="chinacheck" alt="">-->
+          <!--</p>-->
         </div>
 
         <div class="get_ticket">
@@ -65,7 +65,7 @@
         </div>
         <div class="pay_style_btn">
           <label class="wai_label">实付款：<label class="all_money_i"><label class="money_ii">￥</label>49.00</label></label>
-          <button>确认付款</button>
+          <button @click="surepaymoney">确认付款</button>
         </div>
       </div>
     </div>
@@ -74,6 +74,7 @@
 <script>
     export default {
         name: "paymoney",
+        props:['paymoneyMsg'],
         data (){
           return {
             paymoney_status:false,
@@ -86,7 +87,25 @@
             chinacheck:'/static/img/uncheck.png'
           }
         },
+      watch: {
+        paymoneyMsg: function(newVal,oldVal){
+          console.log("aaaaaaaaaa"+newVal)
+          console.log("bbbbbbbbbbbb"+oldVal)
+        }
+      },
+      mounted(){
+        console.log("人民币支付信息："+this.paymoneyMsg)
+      },
       methods:{
+        /**
+         * 确认支付
+         */
+        surepaymoney:function(){
+          // let obj = this.paymoneyMsg;//支付信息
+          let obj = '支付信息';//支付信息
+          alert(888)
+          this._protypeJs.appSurePayMoney(obj);
+        },
         chooseStyle:function(){
           if(this.choose_style){
             this.choose_style = false

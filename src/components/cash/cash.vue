@@ -6,15 +6,15 @@
 
     <div class="exchange conent_all_h5"  v-touch:swiperight="_protypeJs.touchRight">
       <div>
-        <p class="exchange_number">共10256个商品</p>
+        <p class="exchange_number">共{{all_goods}}个商品</p>
       </div>
       <div class="exchange_content">
-        <scroller style="margin-top: 90px" :on-infinite="infinite"  :on-refresh = "refresh" ref="myscroller">
+        <scroller style="margin-top: 90px;"  :on-infinite="infinite"  :on-refresh = "refresh" ref="myscroller">
           <div style="height: 1px;"></div>
         <router-link class="a_detail" v-for="(item,index) in ex_list" :key="index" :to="'/detail/' + item.commodityId+'/'+goodsType">
           <div class="exchange_content_i">
-            <img src="/static/img/a1.jpg" alt="">
-            <!--<img :src="item.imgUrl" alt="">-->
+            <!--<img src="/static/img/a1.jpg" alt="">-->
+            <img :src="item.imgUrl" alt="">
             <div class="word_i">
               <p class="word_name">{{item.commodityName}}</p>
               <p class="word_name_two">
@@ -37,6 +37,7 @@ export default {
   name: 'cash',
   data () {
     return {
+      all_goods:'',
       goodsType:1,
       msg: 'Welcome to Your Vue.js App',
       childTitleword:'现金专区',
@@ -71,6 +72,7 @@ export default {
        console.log("页码"+self.count)
         getCashList(self.goodsType,self.count).then(res =>{
           console.log(res)
+          self.all_goods = res.total
           if(res.dataList.length != 0){
             self.ex_list = self.ex_list.concat(res.dataList)
           }else {
@@ -90,7 +92,20 @@ export default {
         done()
       }, 1500)
     },
-  }
+  },
+  activated(){
+    console.log('cashActivated')
+  },
+  deactivated(){
+    console.log('cashDeactivated')
+  },
+
+    beforeRouteLeave(to, from, next) {
+    // 设置下一个路由meta
+      console.log("离开cash页面")
+    to.meta.keepAlive = false; // 让A缓存，不请求数据
+    next(); // 跳转到A页面
+  },
 }
 </script>
 
@@ -107,7 +122,7 @@ export default {
     margin: 0;
     position: fixed;
     top: 40px;
-    z-index: 99999;
+    z-index: 999999999;
   }
   .a_detail{
     color: black;

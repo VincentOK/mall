@@ -3,10 +3,12 @@
     <Loading id="loading" style="display: none"></Loading>
     <errorLoading id="requestError" style="display: none"></errorLoading>
     <!--<div style="color: red;border: 1px saddlebrown;display: none;margin-top: 200px" id="requestppp">请求数据错误</div>-->
-    <router-view class="child-view"></router-view>
-    <!--<transition :name="transitionName">-->
-      <!--<router-view class="child-view"></router-view>-->
-    <!--</transition>-->
+    <transition :name="transitionName">
+      <!--<keep-alive>-->
+        <!--<router-view class="child-view"></router-view>-->
+      <!--</keep-alive>-->
+      <router-view class="child-view"></router-view>
+    </transition>
   </div>
 </template>
 

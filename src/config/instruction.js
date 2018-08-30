@@ -34,9 +34,9 @@ export default (Vue) => {
         // else if ((angle >= 135 && angle <= 180) || (angle >= -180 && angle < -135)) {
         //   result = 'swipeleft';
         // }
-        console.log("angle:::" + angle)
-        console.log("dx:::" + dx)
-        if (dx > 250) {
+        // console.log("angle:::" + angle)
+        // console.log("dx:::" + dx)
+        if (dx > 200) {
           result = 'swiperight';
         }
         return result;

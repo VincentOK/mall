@@ -70,7 +70,7 @@
     border-top: 1px solid #eeeeee;
     position: fixed;
     top: 40px;
-    z-index: 99999;
+    z-index: 9999999;
   }
   .li-tab{
     width: 25%;

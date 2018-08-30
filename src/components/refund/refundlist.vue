@@ -15,8 +15,8 @@
         <label class="_time">{{item.orderTime}}</label>
       </p>
     <div class="refundlist_content">
-      <!--<img class="refund_img" :src="item.imgUrl" alt="">-->
-      <img class="refund_img" src="/static/img/a1.jpg" alt="">
+      <img class="refund_img" :src="item.imgUrl" alt="">
+      <!--<img class="refund_img" src="/static/img/a1.jpg" alt="">-->
       <p class="refund_de">{{item.commodityName}}</p>
       <p class="refund_gui">
         规格：{{item.unit}}
@@ -33,12 +33,12 @@
       <label class="color_refund" v-else>暂未获取运单号</label>
       <label class="refund_money"><label class="refund_font">实付：</label><label class="real_money">￥{{item.orderPriceRmb}}</label></label>
     </p>
-    <p class="refund_now">
-      <!--<button class="refund_btn_one" v-if="item.orderStatus == '2' || item.orderStatus == '3'" v-on:click="gotocheck(item.commodityId)">确认收货</button>-->
-      <!--<button class="refund_btn" v-if="item.orderStatus == '2' || item.orderStatus == '3' || item.orderStatus == '4'" v-on:click="gotodetail(item.commodityId)">申请退款</button>-->
+    <p class="refund_now" v-show="item.orderStatus == '2' || item.orderStatus == '3' || item.orderStatus == '4'">
+      <button class="refund_btn_one" v-if="item.orderStatus == '2' || item.orderStatus == '3'" @click="gotocheck(item.commodityId,item.orderNumber)">确认收货</button>
+      <button class="refund_btn" v-if="item.orderStatus == '2' || item.orderStatus == '3' || item.orderStatus == '4'" @click="gotodetail(item.commodityId,item.orderNumber)">申请退款</button>
 
-      <button class="refund_btn_one" v-on:click="gotocheck(item.commodityId)">确认收货</button>
-      <button class="refund_btn" v-on:click="gotodetail(item.commodityId)">申请退款</button>
+      <!--<button class="refund_btn_one" @click="gotocheck(item.commodityId,item.orderNumber)">确认收货</button>-->
+      <!--<button class="refund_btn" @click="gotodetail(item.commodityId,item.orderNumber)">申请退款</button>-->
     </p>
   </div>
   </scroller>
@@ -76,38 +76,6 @@
           }
       },
       mounted(){
-          // this.refund_list = [
-          //   {
-          //     goods_id:1,
-          //     goods_time:'2018-07-04 18:31',
-          //     goods_img:'/static/img/a1.jpg',
-          //     goods_title:'越南美女免费包邮越南美女免费包邮越南美女免费包邮越南美女免费包邮',
-          //     goods_count:77,
-          //     goods_number:'XS5566ADS656',
-          //     goods_realnum:'未获取运单号',
-          //     goods_money:19.90,
-          //   },
-          //   {
-          //     goods_id:2,
-          //     goods_time:'2018-07-04 18:31',
-          //     goods_img:'/static/img/a1.jpg',
-          //     goods_title:'越南美女免费包邮越南美女免费包邮越南美女免费包邮越南美女免费包邮',
-          //     goods_count:88,
-          //     goods_number:'XS5566ADS656',
-          //     goods_realnum:'未获取运单号',
-          //     goods_money:29.90,
-          //   },
-          //   {
-          //     goods_id:3,
-          //     goods_time:'2018-07-04 18:31',
-          //     goods_img:'/static/img/a1.jpg',
-          //     goods_title:'越南美女免费包邮越南美女免费包邮越南美女免费包邮越南美女免费包邮',
-          //     goods_count:99,
-          //     goods_number:'XS5566ADS656',
-          //     goods_realnum:'未获取运单号',
-          //     goods_money:39.90,
-          //   },
-          // ]
       },
       methods:{
         infinite(done) {
@@ -153,16 +121,26 @@
         },
         childByValue:function(childByValue){
           console.log(childByValue)
-          this.checkStatus_i = childByValue
+          let arr = this.refund_list;
+          let orderNumber = childByValue.orderNumber
+          for (let i=0;i<arr.length;i++){
+            JSON.stringify()
+            if(arr[i].orderNumber === orderNumber){
+              arr[i].orderStatus == '6';
+              return;
+            }
+          }
+          this.checkStatus_i = childByValue.status
         },
-        gotodetail:function (id) {
-          console.log(id)
-          this.$router.push('/refundindex/'+id)
+        gotodetail:function (commodityId,orderNumber) {
+          console.log(commodityId,orderNumber)
+          this.$router.push('/refundindex/'+commodityId+'/'+orderNumber)
         },
-        gotocheck:function (id) {
-          console.log("id:"+id)
+        gotocheck:function (commodityId,orderNumber) {
+          console.log("商品id:"+commodityId)
+          console.log("订单号:"+orderNumber)
           this.checkStatus_i = true
-          this.checkStatus = id
+          this.checkStatus = orderNumber
         }
       }
     }
@@ -170,9 +148,9 @@
 
 <style scoped>
   .scrollerList{
-    margin-top: 85px;
-    height: 100%;
+    margin-top: 90px;
     width: 100%;
+    height: 100%;
   }
   .num{
     color: #999999;
