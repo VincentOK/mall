@@ -64,5 +64,29 @@ export default (Vue) => {
     getUserId:() =>{
       return localStorage.getItem('user');
     },
+    /**
+     * 关闭webview
+     */
+    JScloseWebView:() =>{
+      console.log("环境："+process.env.NODE_ENV);
+      if(process.env.NODE_ENV == 'development'){
+        JS.closeWebView();
+      }
+    },
+    /**
+     * 确认支付
+     */
+    appSurePayMoney:(obj) =>{
+      console.log("环境："+process.env.NODE_ENV)
+      if(process.env.NODE_ENV == 'development'){
+
+
+        JS.sendPayMsg(obj);
+
+        JS.surePayMoney(function (data) {
+          alert('支付返回状态：'+data);
+        });
+      }
+    }
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <transition :name="animateName">
-    <div class="loadings" v-show="isShow">
+    <div class="loadings_a">
       <div class="loadings__loader">
         <img src="/static/img/loading.gif" alt="">
       </div>
@@ -31,17 +31,20 @@
 </script>
 
 <style  scope>
-.loadings{
-  position: absolute;
-  top: 250px;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
-  text-align: center;
-  z-index: 999999999;
+.loadings_a{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  /*border: 1px solid red;*/
+  z-index: 999999;
 }
 .loadings__loader{
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 30%;
+  /*bottom: 0;*/
   width: 100px;
   height: 100px;
   margin: auto;

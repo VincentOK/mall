@@ -11,7 +11,7 @@
         <label class="time_i">33.00<label class="word_time">时间币</label></label>
       </div>
       <div class="pay_style_btn">
-        <button>确认支付</button>
+        <button @click="surePayTime">确认支付</button>
       </div>
     </div>
   </div>
@@ -20,11 +20,19 @@
 <script>
   export default {
     name: "paymoney",
+    props:['paymoneyMsg'],
     data (){
       return {
       }
     },
+    mounted(){
+      console.log("时间币支付信息："+this.paymoneyMsg)
+    },
     methods:{
+      surePayTime:function(){
+        let obj = this.paymoneyMsg
+        this._protypeJs.appSurePayMoney(obj);
+      },
       closeModel:function () {
         this.$emit('childByValue',false)
       }

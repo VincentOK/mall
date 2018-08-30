@@ -4,7 +4,7 @@
     <shoptitle :childTitleword="childTitleword"></shoptitle>
 
   <div class="conent_all_h5" v-touch:swiperight="_protypeJs.touchRight">
-    <title-view :commodityId="commodityId"></title-view>
+    <!--<title-view :commodityId="commodityId"></title-view>-->
     <div class="refund_all">
       <div class="refund_title">
         <p>退款方式</p>
@@ -39,9 +39,8 @@
       <div class="myphoto">
         <div class="myphoto_one" v-for="(item,index) in imgList" :key="index">
           <img class="close_photo" v-on:click="closePhoto(index)" src="/static/img/close_photo.png" alt="">
-          <img class="my_img" v-bind:src="item.img_url" alt="">
+          <img class="my_img" v-bind:src="item" alt="">
         </div>
-
       </div>
     </div>
     <div class="question_des">
@@ -94,6 +93,7 @@
 
 <script>
   import Vue from 'vue'
+  import axios from 'axios'
   import { _check } from '../../commonJS/commonCheck'
   import { uploadBlobImg, addRedund} from '../../config/request'
   import title from './refund_title'
@@ -129,7 +129,6 @@
             Surplus:500,
             introduct:'',
             imgList:[],
-            filesImg:[]
           }
       },
       mounted(){
@@ -143,48 +142,29 @@
             let imginput = document.getElementById("file_input");
             imginput.onchange = function () {
               let files = this.files;
-              console.log("========="+JSON.stringify(files[0]))
+              console.log("========="+files)
               let url = URL.createObjectURL(files[0]);
-
-              let length = vm.imgList.length
-              console.log(vm.imgList.length)
-              let obj = {
-                index:length,
-                img_url:url
-              };
+              console.log(url)
               let filesName = files[0];
+
               console.log(filesName);
-              if(length < 5 ){
-                vm.$set(vm.filesImg,length,filesName)
-                vm.$set(vm.imgList, length, obj);
-              }
-              console.log("选取图片:"+JSON.stringify(vm.imgList))
-              console.log("图片对象数组："+JSON.stringify(vm.filesImg))
-              // var reader=new FileReader();
-              // reader.onload=function(e){
-              //   console.log( reader.result);
-              //   var str = JSON.stringify(reader.result)
-              //   var reg = new RegExp( "\"" , "g" )
-              //   str = str.replace( reg , '' );
-              //   console.log(str)
-              //   let length = vm.imgList.length
-              //   console.log(vm.imgList.length)
-              //   var obj = {
-              //     index:length,
-              //     img_url:str
-              //   }
-              //   if(length <4 ){
-              //     vm.$set(vm.imgList, length, obj);
-              //   }
-              // }
-              // var aa =  reader.readAsDataURL(this.files[0])
-              // // showimg.src=url;
+              let param = new FormData(); // 创建form对象
+              param.append('files', filesName, filesName.name);  // 通过append向form对象添加数据
+              uploadBlobImg(param).then(res =>{
+                console.log("上传成功："+res);
+                let length = vm.imgList.length;
+                console.log(length);
+                if(length < 5){
+                  vm.imgList.push(res.target)
+                }
+              }).catch(err =>{
+                console.log(err)
+              })
             }
           }
         },
         closePhoto:function(index){
           this.imgList.splice(index,1);
-          this.filesImg.splice(index,1);
         },
         whyNot:function () {
           this.whynot = true
@@ -209,9 +189,20 @@
           let desc = this.introduct;//描述
           let name = this.myname;//联系人
           let phone = this.myphone;//联系电话
-          let filesImg = this.filesImg;//图片files对象数组
+          let filesImg = this.imgList;//图片files对象数组
+
+          let strImgList = '';
+          for (var i =0;i< filesImg.length;i++){
+            if(strImgList != ''){
+              strImgList = strImgList + ',' + filesImg[i]
+            }else {
+              strImgList = filesImg[i]
+            }
+          }
+          console.log('aaaaaaaaaaa:'+JSON.stringify(filesImg))
+          console.log('str:'+strImgList)
           let reason = this.whynot_reason.msg;
-          console.log('=用户id='+uid+'=商品id='+commodityId+'=订单号='+orderNumber+'=图片files对象数组='+filesImg+'=描述='+desc+'=联系人='+name+'=联系电话='+phone)
+          console.log("请求参数："+'=用户id='+uid+'=商品id='+commodityId+'=订单号='+orderNumber+'=图片数组='+filesImg+'=描述='+desc+'=联系人='+name+'=联系电话='+phone)
           if(desc && name && phone && reason != '未选择'){
             if(reason == '未选择'){
               this.dialogblock = {
@@ -234,8 +225,12 @@
             }else {
               //请求服务端
               // alert("请求服务端提交申请")
-              addRedund(uid,orderNumber,commodityId,reason,desc,filesImg).then(res =>{
+              console.log(filesImg)
+              addRedund(uid,orderNumber,commodityId,reason,desc,strImgList).then(res =>{
                 console.log("确认提交申请："+JSON.stringify(res))
+                if(res){
+                  this.$router.go(-1);//返回上一层
+                }
               }).catch(err =>{
                 console.log("err："+JSON.stringify(err))
               })

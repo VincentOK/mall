@@ -15,6 +15,7 @@
 </template>
 
 <script>
+  import {sureRefund} from '../../config/request'
     export default {
         name: "refund_dialog",
       props:['checkStatus'],
@@ -26,11 +27,18 @@
       methods:{
         refundCancel:function () {
           this.refund_display = false
-          this.$emit('childByValue',this.refund_display)
-
+          this.$emit('childByValue',{status:this.refund_display})
         },
         refundSure:function () {
-          console.log("退货ID："+this.checkStatus)
+          console.log("订单号："+this.checkStatus)
+          let orderNumber = this.checkStatus
+          sureRefund(orderNumber).then(res =>{
+            console.log("确认收货："+res)
+            this.refund_display = false
+            this.$emit('childByValue',{status:this.refund_display,orderNumber:orderNumber})
+          }).catch(err =>{
+            console.log(err)
+          })
         }
       }
     }

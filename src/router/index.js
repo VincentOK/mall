@@ -1,86 +1,111 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import index from '@/components/newIndex/index'
-import detail from '@/components/detail/detail'
-import myaddress from '@/components/adress/myaddress'
-import snapuplist from '@/components/snapUp/snapuplist'
-import luckycenter from '@/components/luckyDraw/luckycenter'
-import luckylist from  '@/components/luckyDraw/luckylist'
-import winning from '@/components/luckyDraw/winning'
-import refundlist from '@/components/refund/refundlist'
-import refundindex from '@/components/refund/refundindex'
-import freight from '@/components/refund/freight'
-import myorder from '@/components/refund/myorder'
-import exchange from '@/components/exchange/exchange'
-import cash from '@/components/cash/cash'
-
 Vue.use(Router)
 export default new Router({
   routes: [
     {
       path: '/',
       name: 'index',
-      component: index
+      component: resolve => require(['@/components/newIndex/index'], resolve), // 使用懒加载
+      meta: {
+        keepAlive: true // true 表示需要使用缓存
+      }
     },
     {
       path: '/detail/:id/:type',
       name: 'detail',
-      component: detail
+      component: resolve => require(['@/components/detail/detail'], resolve), // 使用懒加载
+      meta: {
+        keepAlive: true // true 表示需要使用缓存
+      }
     },
     {
       path: '/add/myaddress',
       name: 'myaddress',
-      component: myaddress
+      component: resolve => require(['@/components/adress/myaddress'], resolve), // 使用懒加载
+      meta: {
+        keepAlive: true // true 表示需要使用缓存
+      }
     },
     {
       path: '/snapuplist',
       name: 'snapuplist',
-      component: snapuplist
+      component: resolve => require(['@/components/snapUp/snapuplist'], resolve), // 使用懒加载
+      meta: {
+        keepAlive: true // true 表示需要使用缓存
+      }
     },
     {
       path: '/luckycenter',
       name: 'luckycenter',
-      component: luckycenter
+      component: resolve => require(['@/components/luckyDraw/luckycenter'], resolve), // 使用懒加载
+      meta: {
+        keepAlive: true // true 表示需要使用缓存
+      }
     },
     {
       path: '/luckylist',
       name: 'luckylist',
-      component: luckylist
+      component: resolve => require(['@/components/luckyDraw/luckylist'], resolve), // 使用懒加载
+      meta: {
+        keepAlive: true // true 表示需要使用缓存
+      }
     },
     {
       path: '/winning',
       name: 'winning',
-      component: winning
+      component: resolve => require(['@/components/luckyDraw/winning'], resolve), // 使用懒加载
+      meta: {
+        keepAlive: true // true 表示需要使用缓存
+      }
     },
     {
       path: '/refundlist',
       name: 'refundlist',
-      component: refundlist
+      component: resolve => require(['@/components/refund/refundlist'], resolve), // 使用懒加载
+      meta: {
+        keepAlive: true // true 表示需要使用缓存
+      }
     },
     {
       path: '/refundindex/:commodityId/:orderNumber',
       name: 'refundindex',
-      component: refundindex
+      component: resolve => require(['@/components/refund/refundindex'], resolve), // 使用懒加载
+      meta: {
+        keepAlive: true // true 表示需要使用缓存
+      }
     },
     {
       path: '/freight/:id',
       name: 'freight',
-      component: freight
+      component: resolve => require(['@/components/refund/freight'], resolve), // 使用懒加载
+      meta: {
+        keepAlive: true // true 表示需要使用缓存
+      }
     },
     {
       path: '/myorder',
       name: 'myorder',
-      component: myorder
+      component: resolve => require(['@/components/refund/myorder'], resolve), // 使用懒加载
+      meta: {
+        keepAlive: true // true 表示需要使用缓存
+      }
     },
     {
       path: '/exchange',
       name: 'exchange',
-      component: exchange
+      component: resolve => require(['@/components/exchange/exchange'], resolve), // 使用懒加载
+      meta: {
+        keepAlive: true // true 表示需要使用缓存
+      }
     },
     {
       path: '/cash',
       name: 'cash',
-      component: cash
+      component: resolve => require(['@/components/cash/cash'], resolve), // 使用懒加载
+      meta: {
+        keepAlive: true // true 表示需要使用缓存
+      }
     }
   ]
 })

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="shop_title">
-      <img class="close_shop" v-on:click="closeWeb" src="/static/img/pay_close.png" alt="">
+      <img class="close_shop" v-on:click="_protypeJs.JScloseWebView()" src="/static/img/pay_close.png" alt="">
       时间商城
     </div>
   </div>
@@ -15,12 +15,6 @@
       }
     },
     methods:{
-      closeWeb:function () {
-        console.log("环境："+process.env.NODE_ENV)
-        if(process.env.NODE_ENV == 'production'){
-          JS.closeWebView();
-        }
-      },
     }
   }
 </script>

@@ -28,7 +28,7 @@
               <label class="fontM">时间币</label>
               {{goodsDetail.map.timecoinPrice}}
             </label>
-            <label class="money_over"><label class="fontM_i">￥</label>{{goodsDetail.map.suggest_price}}</label>
+            <label class="money_over"   v-if="goodsDetail.map.suggest_price"><label class="fontM_i">￥</label>{{goodsDetail.map.suggest_price}}</label>
             <label class="money_over_count">剩余{{goodsDetail.map.inventory}}件</label>
           </p>
         </div>
@@ -40,7 +40,7 @@
             </div>
             <div class="adress_right" v-on:click="addAdress">
               <p><label>{{goodsDetail.addressMap.shippingName}}</label><label class="adress_tel">{{goodsDetail.addressMap.shippingPhone}}</label><img class="right_img" src="/static/img/right.png" alt=""></p>
-              <p class="adress_relative"><img  v-if="goodsDetail.addressMap.shippingAddress" src="/static/img/address.png" alt=""><label>{{goodsDetail.addressMap.shippingAddress}}</label></p>
+              <p class="adress_relative"><img  v-if="goodsDetail.addressMap.shippingAddress" src="/static/img/address.png" alt=""><label>{{goodsDetail.addressMap.shippingAddress}}&nbsp;&nbsp;{{goodsDetail.addressMap.detailAddress}}</label></p>
             </div>
           </div>
           <div class="adress_detail">
@@ -84,12 +84,11 @@
         <div class="detail_detail">
           <p>商品详情</p>
           <div class="detailDetail" v-html="goodsDetail.map.detail">
-
           </div>
         </div>
-        <paymoney-view v-on:childByValue="childByValue" v-if="paymoney"></paymoney-view>
-        <paytime-view v-on:childByValue="childByValue" v-if="paytime"></paytime-view>
-        <div class="buy_it"  v-bind:class="hidden_btn">
+        <paymoney-view v-on:childByValue="childByValue" :paymoneyMsg="paymoneyMsg" v-if="paymoney"></paymoney-view>
+        <paytime-view v-on:childByValue="childByValue"  :paymoneyMsg="paymoneyMsg" v-if="paytime"></paytime-view>
+        <div class="buy_it">
           <button v-on:click="pay_money" >立即购买</button>
         </div>
     </div>
@@ -136,9 +135,8 @@ export default {
         "addressMap": {
         }
       },
-      hidden_btn:'block',
       counter:1,
-      goodsStatus:0,
+      goodsStatus:null,
       paymoney:false,
       paytime:false,
       swiperOption: {
@@ -173,17 +171,16 @@ export default {
         mousewheelControl: true,
         observeParents: true,
         debugger: true
-      }
+      },
+      paymoneyMsg:'',
     }
   },
   mounted(){
     console.log("页面初始化")
-    // console.log(document.documentElement.clientWidth)
-    // console.log(document.documentElement.clientHeight)
-    // console.log(document.documentElement.clientWidth)
-    // console.log(document.documentElement.clientHeight)
     console.log(this.$route.params.id)
     console.log(this.$route.params.type)
+    this.goodsStatus = this.$route.params.type;
+    this.commodityId = this.$route.params.id;
     let type = this.$route.params.type
     let commodityId = this.$route.params.id
     let uid = this._protypeJs.getUserId()
@@ -191,12 +188,16 @@ export default {
     getDetail(type,commodityId,uid).then(res =>{
       console.log(JSON.stringify(res))
       vm.goodsDetail = res
-      // this.goodsDetail = res
     })
+  },
+  activated(){
+    console.log('detailActivated')
+  },
+  deactivated(){
+    console.log('detailDeactivated')
   },
   methods:{
     remove_i:function () {
-
       let count = this.counter
       console.log(count)
       if(count > 0){
@@ -205,7 +206,14 @@ export default {
     },
     pay_money:function () {
       this._protypeJs.addBodyHeight();
-      if(this.goodsStatus == 0){
+      let obj = {
+        goodsStatus:this.goodsStatus,//商品类型
+        commodityId:this.commodityId,//商品ID
+        uid:this._protypeJs.getUserId(),//用户ID
+        count:this.counter//购买数量
+      }
+      this.paymoneyMsg = obj;
+      if(this.goodsStatus == 1){
         this.paymoney = true;
       }else {
         this.paytime = true;
@@ -213,22 +221,31 @@ export default {
     },
     childByValue:function (childByValue) {
       this._protypeJs.removeBodyHeight();
+      console.log("childByValue:"+childByValue)
       this.paymoney = childByValue
       this.paytime = childByValue
     },
     addAdress:function () {
-      this.hidden_btn = 'none'
       this.$router.push('/add/myaddress');
     }
   },
 }
 </script>
-
-<style scoped>
-  .detailDetail>p>img{
+<style>
+  .detailDetail>p{
+    width: 100%;
+    height: 100%;
+    /*overflow: hidden;*/
+  }
+  .detailDetail img{
+    width: 100%;
+    height: 100%;
     display: block;
     margin: auto;
   }
+</style>
+<style scoped>
+
   .block{
     display: block;
   }

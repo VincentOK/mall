@@ -15,8 +15,8 @@
         <label class="_time">{{item.orderTime}}</label>
       </p>
     <div class="refundlist_content">
-      <!--<img class="refund_img" :src="item.imgUrl" alt="">-->
-      <img class="refund_img" src="/static/img/a1.jpg" alt="">
+      <img class="refund_img" :src="item.imgUrl" alt="">
+      <!--<img class="refund_img" src="/static/img/a1.jpg" alt="">-->
       <p class="refund_de">{{item.commodityName}}</p>
       <p class="refund_gui">
         规格：{{item.unit}}
@@ -76,38 +76,6 @@
           }
       },
       mounted(){
-          // this.refund_list = [
-          //   {
-          //     goods_id:1,
-          //     goods_time:'2018-07-04 18:31',
-          //     goods_img:'/static/img/a1.jpg',
-          //     goods_title:'越南美女免费包邮越南美女免费包邮越南美女免费包邮越南美女免费包邮',
-          //     goods_count:77,
-          //     goods_number:'XS5566ADS656',
-          //     goods_realnum:'未获取运单号',
-          //     goods_money:19.90,
-          //   },
-          //   {
-          //     goods_id:2,
-          //     goods_time:'2018-07-04 18:31',
-          //     goods_img:'/static/img/a1.jpg',
-          //     goods_title:'越南美女免费包邮越南美女免费包邮越南美女免费包邮越南美女免费包邮',
-          //     goods_count:88,
-          //     goods_number:'XS5566ADS656',
-          //     goods_realnum:'未获取运单号',
-          //     goods_money:29.90,
-          //   },
-          //   {
-          //     goods_id:3,
-          //     goods_time:'2018-07-04 18:31',
-          //     goods_img:'/static/img/a1.jpg',
-          //     goods_title:'越南美女免费包邮越南美女免费包邮越南美女免费包邮越南美女免费包邮',
-          //     goods_count:99,
-          //     goods_number:'XS5566ADS656',
-          //     goods_realnum:'未获取运单号',
-          //     goods_money:39.90,
-          //   },
-          // ]
       },
       methods:{
         infinite(done) {
@@ -153,16 +121,26 @@
         },
         childByValue:function(childByValue){
           console.log(childByValue)
-          this.checkStatus_i = childByValue
+          let arr = this.refund_list;
+          let orderNumber = childByValue.orderNumber
+          for (let i=0;i<arr.length;i++){
+            JSON.stringify()
+            if(arr[i].orderNumber === orderNumber){
+              arr[i].orderStatus == '6';
+              return;
+            }
+          }
+          this.checkStatus_i = childByValue.status
         },
         gotodetail:function (commodityId,orderNumber) {
           console.log(commodityId,orderNumber)
           this.$router.push('/refundindex/'+commodityId+'/'+orderNumber)
         },
-        gotocheck:function (commodityId) {
-          console.log("id:"+commodityId)
+        gotocheck:function (commodityId,orderNumber) {
+          console.log("商品id:"+commodityId)
+          console.log("订单号:"+orderNumber)
           this.checkStatus_i = true
-          this.checkStatus = commodityId
+          this.checkStatus = orderNumber
         }
       }
     }
@@ -170,9 +148,9 @@
 
 <style scoped>
   .scrollerList{
-    margin-top: 85px;
-    height: 100%;
+    margin-top: 90px;
     width: 100%;
+    height: 100%;
   }
   .num{
     color: #999999;

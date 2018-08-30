@@ -121,9 +121,7 @@ export const getcountUserLuckyNumber = (uid)=>fetch('storeLucky/countUserLuckyNu
  * 上传blob格式图片
  * blob：图片blob路径
  */
-export const uploadBlobImg = (blob)=>fetch('order/saveImage',{
-  blob:blob,
-},'POST',false)
+export const uploadBlobImg = (photoFile)=>fetch('order/uploadImages',photoFile,'POST',true,{headers: {'Content-Type': 'multipart/form-data;'}})
 
 
 /**
@@ -141,7 +139,7 @@ export const addRedund = (uid,orderNumber,commodityId,reason,describes,photoFile
   commodityId:commodityId,
   reason:reason,
   describes:describes,
-  photoFile:photoFile
+  targetPath:photoFile
 },'POST')
 /**
  * 查询中奖公告
@@ -150,5 +148,14 @@ export const addRedund = (uid,orderNumber,commodityId,reason,describes,photoFile
 export const getSelectNotice = (luckyId)=>fetch('storeLucky/selectNotice',{
   luckyId:luckyId,
 },'POST',false)
+
+
+/**
+ * 确认收货
+ * orderNumber：订单号（*）
+ */
+export const sureRefund = (orderNumber)=>fetch('order/confirmGoods',{
+  orderNumber:orderNumber,
+},'POST')
 // export const searchplace = (callback) => fetch('announce/findann', callback);
 

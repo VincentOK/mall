@@ -5,15 +5,15 @@
 
     <div class="exchange conent_all_h5"  v-touch:swiperight="_protypeJs.touchRight">
       <div>
-        <p class="exchange_number">共10256个商品</p>
+        <p class="exchange_number">共{{all_goods}}个商品</p>
       </div>
       <div class="exchange_content">
-        <scroller style="margin-top: 150px" :on-infinite="infinite"  :on-refresh = "refresh" ref="myscroller">
+        <scroller style="margin-top: 90px;" :on-infinite="infinite"  :on-refresh = "refresh" ref="myscroller">
           <div style="height: 1px;"></div>
           <router-link class="a_detail" v-for="(item,index) in ex_list" :key="index" :to="'/detail/' + item.commodityId+'/'+goodsType">
           <div class="exchange_content_i">
-            <img src="/static/img/a1.jpg" alt="">
-            <!--<img :src="item.img_url" alt="">-->
+            <!--<img src="/static/img/a1.jpg" alt="">-->
+            <img :src="item.imgUrl" alt="">
             <div class="word_i">
               <p class="word_name">{{item.commodityName}}</p>
               <p class="word_name_two">
@@ -36,6 +36,7 @@ export default {
   name: 'exchange',
   data () {
     return {
+      all_goods:'',
       goodsType:2,
       msg: 'Welcome to Your Vue.js App',
       childTitleword:'时间币专区',
@@ -105,6 +106,7 @@ export default {
         console.log("页码"+self.count)
         getCashList(self.goodsType,self.count).then(res =>{
           console.log(res.dataList.length)
+          self.all_goods = res.total
           if(res.dataList.length != 0){
             self.ex_list = self.ex_list.concat(res.dataList)
           }else {
@@ -144,7 +146,7 @@ export default {
     margin: 0;
     position: fixed;
     top: 40px;
-    z-index: 99999;
+    z-index: 999999999;
   }
   .a_detail{
     color: black;
