@@ -68,8 +68,7 @@
     font-size: 15px;
     border-bottom: 1px solid #eeeeee;
     border-top: 1px solid #eeeeee;
-    position: fixed;
-    top: 40px;
+    position: relative;
     z-index: 9999999;
   }
   .li-tab{

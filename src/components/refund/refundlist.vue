@@ -1,6 +1,6 @@
 <template>
 <div>
-  <scroller class="scrollerList" :on-infinite="infinite"  :on-refresh = "refresh" ref="myscroller">
+  <scroller  :on-infinite="infinite"  :on-refresh = "refresh" ref="myscroller" :height="_protypeJs.getScrollerHeight(80)" style="top: 80px">
     <div style="height: 1px;"></div>
   <div class="refundlist" v-for="(item,index) in refund_list" :key="index">
     <div class="null_div"></div>
@@ -147,11 +147,7 @@
 </script>
 
 <style scoped>
-  .scrollerList{
-    margin-top: 90px;
-    width: 100%;
-    height: 100%;
-  }
+
   .num{
     color: #999999;
     font-size: 11px;

@@ -20,15 +20,15 @@
             <label class="word_hot">{{goodsDetail.map.commodityName}}</label>
           </p>
           <p class="detail_money">
-            <label class="money_real"  v-if="goodsDetail.map.reality_price">
+            <label class="money_real"  v-if="goodsDetail.map.realityPrice">
               <label class="fontM">￥</label>
-              {{goodsDetail.map.reality_price}}
+              {{goodsDetail.map.realityPrice}}
             </label>
             <label class="money_real"  v-if="goodsDetail.map.timecoinPrice">
               <label class="fontM">时间币</label>
               {{goodsDetail.map.timecoinPrice}}
             </label>
-            <label class="money_over"   v-if="goodsDetail.map.suggest_price"><label class="fontM_i">￥</label>{{goodsDetail.map.suggest_price}}</label>
+            <label class="money_over"   v-if="goodsDetail.map.suggest_price"><label class="fontM_i">￥</label>{{goodsDetail.map.suggestPrice}}</label>
             <label class="money_over_count">剩余{{goodsDetail.map.inventory}}件</label>
           </p>
         </div>

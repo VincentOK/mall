@@ -29,6 +29,14 @@ export default (Vue) => {
      */
     touchRight: () => { window.history.back() },
     /**
+     * 计算vue-scroller高度
+     */
+    getScrollerHeight:(number) =>{
+      let height = document.documentElement.clientHeight;
+      let scroller_a = height - parseInt(number)
+      return scroller_a;
+    },
+    /**
      * 弹框出现固定body高度
      */
     addBodyHeight: () => {
