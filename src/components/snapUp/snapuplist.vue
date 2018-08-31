@@ -5,7 +5,7 @@
     <div  v-touch:swiperight="_protypeJs.touchRight">
       <div class="snap_title">
         <label class="end_title">本轮抢购已结束，请等待下轮抢购开启</label>
-        <time-down-view v-on:timeEnd="clearTime" :endTime='endTime' :startTime='startTime' :endTimeChar='endTimeChar' :timeStyle='indexStyle'></time-down-view>
+        <time-down v-on:timeEnd="clearTime" :endTime='endTime' :startTime='startTime' :endTimeChar='endTimeChar' :timeStyle='indexStyle' :noNextData="noNextData"></time-down>
       </div>
       <div class="all_snap">
         <scroller style="margin-top: 65px" :on-infinite="infinite"  :on-refresh = "refresh" ref="myscroller">
@@ -39,10 +39,12 @@
 <script>
 import { getFlash } from "../../config/request";
 import timeDown from "../publicComponent/timeDown";
+// Vue.component("time-down-view", timeDown);
 export default {
   name: "snapuplist",
   data() {
     return {
+      noData: "",
       childTitleword: "限时抢购",
       snaplist: [],
       startTime: "",
@@ -50,7 +52,8 @@ export default {
       endTimeChar: "距下轮开启",
       indexStyle: "snapupList",
       count: 0,
-      buttonStatus: null
+      buttonStatus: null,
+      noNextData: false
     };
   },
   components: {
@@ -62,21 +65,19 @@ export default {
     buttonStatus: function(value) {
       let self = this;
       if (value == "ending") {
-        getFlash(6, 1)
+        getFlash(8, 1)
           .then(res => {
-            if (res.list.dataList.length != 0) {
+            if (res.list.dataList.length != 0 && res.status != "0") {
               self.snaplist = self.snaplist.concat(res.list.dataList);
               if (Boolean(res.startTime) && Boolean(res.endTime)) {
-                // self.startTime = res.startTime;
-                // self.endTime = res.endTime;
-                self.startTime = "2018-08-30 19:23:20";
-                self.endTime = "2018-08-30 18:23:25";
+                self.startTime = res.startTime;
+                self.endTime = res.endTime;
               } else {
                 self.endTime = "0";
                 self.startTime = "0";
               }
             } else {
-              self.noData = "没有更多数据";
+              self.noNextData = true;
             }
           })
           .catch(err => {
@@ -92,26 +93,24 @@ export default {
     },
     getFlashData() {},
     infinite(done) {
-      if (this.noData) {
+      let self = this; //this指向问题
+      if (self.noData) {
         setTimeout(() => {
-          this.$refs.myscroller.finishInfinite(2);
+          self.$refs.myscroller.finishInfinite(2);
         });
         return;
       }
-      let self = this; //this指向问题
       self.count++;
       setTimeout(() => {
         console.log("页码" + self.count);
-        getFlash(6, self.count)
+        getFlash(8, self.count)
           .then(res => {
             console.log(res);
             if (res.list.dataList.length != 0) {
               self.snaplist = self.snaplist.concat(res.list.dataList);
               if (Boolean(res.startTime) && Boolean(res.endTime)) {
-                // self.startTime = res.startTime;
-                // self.endTime = res.endTime;
-                self.startTime = "2018-08-30 19:23:00";
-                self.endTime = "2018-08-30 19:23:05";
+                self.startTime = res.startTime;
+                self.endTime = res.endTime;
               } else {
                 self.endTime = "0";
                 self.startTime = "0";
@@ -119,8 +118,10 @@ export default {
             } else {
               self.noData = "没有更多数据";
             }
-            self.$refs.myscroller.resize();
-            done();
+            if (self.$refs.indexScroller) {
+              self.$refs.indexScroller.resize();
+            }
+            done(true);
           })
           .catch(err => {
             console.log(err);
@@ -133,8 +134,6 @@ export default {
       setTimeout(() => {
         done();
       }, 1500);
-      // this.offset = 0
-      // this.getDate(1, done)
     }
   }
 };

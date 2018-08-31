@@ -59,7 +59,7 @@ export default {
   data() {
     return {
       prizeId: "jian01",
-      uid: "123",
+      uid: "",
       addressInfo: {
         shippingAddress: "",
         shippingName: "",
@@ -79,6 +79,7 @@ export default {
     };
   },
   mounted() {
+    this.uid = this._protypeJs.getUserId();
     getPrizeInfo(this.prizeId, this.uid)
       .then(res => {
         this.addressInfo = res.addressInfo;

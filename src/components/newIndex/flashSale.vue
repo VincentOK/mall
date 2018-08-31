@@ -98,10 +98,10 @@ export default {
         getFlash(8, 1)
           .then(res => {
             if (res.list.dataList.length != 0) {
-              self.snaplist = res.list.dataList;
-              if (Boolean(res.startTime) && Boolean(res.endTime)) {
-                self.startTime = "2018-08-30 19:47:15";
-                self.endTime = "2018-08-30 19:47:25";
+              if (Boolean(res.startTime) && Boolean(res.endTime) && res.status != "0") {
+                self.snaplist = res.list.dataList;
+                self.startTime = res.startTime;
+                self.endTime = res.endTime;
               } else {
                 self.endTime = "0";
                 self.startTime = "0";
@@ -109,6 +109,7 @@ export default {
               self.$emit("timeStart", self.startTime);
               self.$emit("timeEnd", self.endTime);
             } else {
+              self.$emit("noDataNext", true);
               self.noData = "没有更多数据";
             }
           })
@@ -126,8 +127,8 @@ export default {
         if (res.list.dataList.length != 0) {
           self.cash_list = res.list.dataList;
           if (Boolean(res.startTime) && Boolean(res.endTime)) {
-            self.startTime = "2018-08-30 19:47:00";
-            self.endTime = "2018-08-30 19:47:05";
+            self.startTime = res.startTime;
+            self.endTime = res.endTime;
           } else {
             self.endTime = "0";
             self.startTime = "0";

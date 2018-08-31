@@ -25,22 +25,18 @@ Vue.use(VueScroller)
 Vue.config.productionTip = false;
 //获取用户ID
 (function(){
-  console.log("环境："+process.env.NODE_ENV)
-  if(process.env.NODE_ENV == 'development'){//development
-    let aa = JS.getAppUserId();
-    alert("获取用户id:"+aa)
-    if(aa){
-      localStorage.setItem('user',aa);
-    }else{
-      alert('获取用户id失败，请重新进入')
-      JS.closeWebView();
-    }
+  let string = window.location.href;
+  let old = string.split('?')[0];
+  let user = string.split('?')[1];
+  if(user){
+    localStorage.setItem('user',user);
   }
   let myuser = localStorage.getItem('user')
   console.log(myuser+"=========="+typeof(myuser))
+  window.location.href = old;
   //使用钩子函数对路由进行权限跳转
   router.beforeEach((to, from, next) => {
-    if( myuser || myuser != "undefined"){
+    if( myuser ||myuser != "undefined"){
       next();
     }else {
       alert("非法访问")

@@ -33,13 +33,14 @@ export default {
     },
     timeStyle: {
       type: String
+    },
+    noNextData: {
+      type: Boolean
     }
   },
   methods: {
     timeDown() {
       if (Boolean(this.endTime) || Boolean(this.startTime)) {
-        
-      
       let endTimeArr = this.endTime
         .replace(/-/g, ":")
         .replace(" ", ":")
@@ -84,7 +85,7 @@ export default {
           this.$emit("timeEnd", "ending");
         }
       }
-      if(this.endTime == null || this.startTime == null){
+      if(this.endTime == null || this.startTime == null || this.noNextData){
         var leftTime = -1;
       }
       var h = this.formate(parseInt((leftTime / (60 * 60)) % 24));

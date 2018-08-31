@@ -56,9 +56,9 @@
     <div class="null_div"></div>
     <div class="flashSale">
         <span class="flash_sale_char">限时抢购</span>
-      <time-down-view v-on:timeEnd="clearTime" :endTime='endTime' :startTime='startTime' :endTimeChar='endTimeChar' :timeStyle='indexStyle'></time-down-view>
+      <time-down-view v-on:timeEnd="clearTime" :endTime='endTime' :startTime='startTime' :endTimeChar='endTimeChar' :noNextData='noNextData' :timeStyle='indexStyle' ></time-down-view>
     </div>
-    <flash-sale-view @timeStart="timeStart" @timeEnd="timeEnd" :targetStatus='targetStatus'></flash-sale-view>
+    <flash-sale-view @timeStart="timeStart" @timeEnd="timeEnd" @noDataNext="noDataNext" :targetStatus='targetStatus'></flash-sale-view>
     <recommend-view :commodityList='commodity_list' :commodityTimeList='commodity_time_list' :commodityCount='commodity_count_list'></recommend-view>
       <!--<loading-view></loading-view>-->
     </scroller>
@@ -92,6 +92,7 @@ export default {
       noData: "",
       endTime: "",
       startTime: "",
+      noNextData:"",
       targetStatus: "",
       endTimeChar: "距结束",
       indexStyle: "indexStyle",
@@ -105,14 +106,13 @@ export default {
   },
   mounted() {
     let self = this;
-    getUserInfo(123)
+    let uId = self._protypeJs.getUserId();
+    getUserInfo(uId)
       .then(res => {
-        if (Boolean(res.availableCoin)) {
-          self.headImgPath = res.headImgPath;
-          self.nickName = res.nickName;
-          self.availableCoin = res.availableCoin;
-        }
-        console.log(res)
+        self.headImgPath = res.headImgPath;
+        self.nickName = res.nickName;
+        self.availableCoin = res.availableCoin;
+        console.log(res);
       })
       .catch(err => {
         console.log(err);
@@ -127,6 +127,9 @@ export default {
     },
     clearTime: function(value) {
       this.targetStatus = value;
+    },
+    noDataNext:function(value){
+      this.noNextData = value;
     },
     infinite(done) {
       let self = this;
@@ -151,9 +154,9 @@ export default {
           .catch(err => {
             console.log(err);
           });
-          if(self.$refs.indexScroller.resize){
-            self.$refs.indexScroller.resize();
-          }
+        if (self.$refs.indexScroller) {
+          self.$refs.indexScroller.resize();
+        }
         done(true);
       }, 1000);
     }
