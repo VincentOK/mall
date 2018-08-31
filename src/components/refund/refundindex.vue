@@ -45,7 +45,7 @@
     </div>
     <div class="question_des">
       <p class="photo">
-        <input type="file" v-if="imgList.length <5"  id="file_input" v-on:click="change" accept="image/*" >
+        <input type="file" v-if="imgList.length <5"  id="file_input" v-on:click="change" accept="image/*">
         <img :src="imgList.length <5 ? '/static/img/choosePhoto.png' : '/static/img/choosePhotoLast.png'"  alt="">
       </p>
     </div>
@@ -133,7 +133,7 @@
       },
       mounted(){
         this.commodityId = this.$route.params.commodityId;
-        this.orderNumber = this.$route.params.orderNumber
+        this.orderNumber = this.$route.params.orderNumber;
       },
       methods:{
         change:function (){
