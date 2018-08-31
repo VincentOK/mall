@@ -103,7 +103,6 @@
         surepaymoney:function(){
           // let obj = this.paymoneyMsg;//支付信息
           let obj = '支付信息';//支付信息
-          alert(888)
           this._protypeJs.appSurePayMoney(obj);
         },
         chooseStyle:function(){
