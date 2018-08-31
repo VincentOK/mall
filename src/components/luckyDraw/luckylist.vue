@@ -101,7 +101,7 @@ export default {
       childTitleword: "抽奖",
       whetherFree: false,
       whetherFreeCount: null,
-      expend: 50,
+      expend: 0.5,
       clickLottery: false,
       winThePrice: "",
       stateLottery: "",
@@ -154,68 +154,6 @@ export default {
       .catch(err => {
         console.log(err);
       });
-    // this.win_list = [
-    //   {
-    //     win_name: "水果",
-    //     win_gift: "水果"
-    //   },
-    //   {
-    //     win_name: "g杠杠的sgs",
-    //     win_gift: "干豆腐干豆腐干豆腐"
-    //   },
-    //   {
-    //     win_name: "十多个",
-    //     win_gift: "很多第三方个人X1"
-    //   },
-    //   {
-    //     win_name: "发送给",
-    //     win_gift: "是个很反感娃X1"
-    //   },
-    //   {
-    //     win_name: "个地方官的",
-    //     win_gift: "更多发挥发挥额1"
-    //   },
-    //   {
-    //     win_name: "杨广东省",
-    //     win_gift: "给对方回房间娃X1"
-    //   },
-    //   {
-    //     win_name: "司的",
-    //     win_gift: "更多发挥发挥烦得很1"
-    //   }
-    // ];
-    this.lucky_list = [
-      {
-        id: "1",
-        name: "夏季水培植物留香薄荷柠檬盆栽驱蚊草玻璃盆景",
-        standard: "1",
-        lucky_num: "1"
-      },
-      {
-        id: "2",
-        name: "夏季水培植物留香薄荷柠檬盆栽驱蚊草玻璃盆景",
-        standard: "1",
-        lucky_num: "1"
-      },
-      {
-        id: "3",
-        name: "夏季水培植物留香薄荷柠檬盆栽驱蚊草玻璃盆景",
-        standard: "1",
-        lucky_num: "1"
-      },
-      {
-        id: "4",
-        name: "夏季水培植物留香薄荷柠檬盆栽驱蚊草玻璃盆景",
-        standard: "1",
-        lucky_num: "1"
-      },
-      {
-        id: "5",
-        name: "夏季水培植物留香薄荷柠檬盆栽驱蚊草玻璃盆景",
-        standard: "1",
-        lucky_num: "1"
-      }
-    ];
   },
   updated() {
     this.$nextTick(function() {
