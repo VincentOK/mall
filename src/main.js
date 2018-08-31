@@ -38,7 +38,6 @@ Vue.config.productionTip = false;
   }
   let myuser = localStorage.getItem('user')
   console.log(myuser+"=========="+typeof(myuser))
-  window.location.href = old;
   //使用钩子函数对路由进行权限跳转
   router.beforeEach((to, from, next) => {
     if( myuser && myuser != "undefined"){
