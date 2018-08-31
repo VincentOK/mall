@@ -19,7 +19,7 @@
                   <div class="word_i">
                     <p class="word_name">{{_protypeJs.maxSlice20(RMBitem.commodityName)}}</p>
                     <p class="word_name_two">
-                      <label class="word_money"><label class="time">￥</label>{{RMBitem.realityPrice}}</label>
+                      <label class="word_money"><label class="time">￥</label>{{RMBitem.realityPrice | formatMoney}}</label>
                       <label class="be_money"><del>￥{{RMBitem.suggestPrice | formatMoney}}</del></label>
                     </p>
                     <p class="last"> <label class="word_count">剩余{{RMBitem.inventory}}件</label></p>
@@ -34,7 +34,7 @@
                         <router-link class="a_detail" :to="'/detail/' + Timeitem.commodityId +'/' + Timeitem.distributionChannel">
                         <img :src="Timeitem.imgUrl">
                         <p class="swiper_name">{{_protypeJs.maxSlice13(Timeitem.commodityName)}}</p>
-                        <p class="swiper_price">{{Timeitem.timecoinPrice}}<span>时间币</span></p>
+                        <p class="swiper_price">{{Timeitem.timecoinPrice | formatMoney}}<span>时间币</span></p>
                         <p class="swiper_del_price"><del>￥{{Timeitem.suggestPrice | formatMoney}}</del></p>
                         <p class="swiper_surplus_count">剩余{{Timeitem.inventory}}件</p>
                         </router-link>

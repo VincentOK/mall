@@ -11,10 +11,10 @@
             <img class="index_img" src="/static/img/chooseSelect2.png">
           </router-link>
         </span>
-        <img class="logo" src="/static/img/a1.jpg" alt="">
+        <img class="logo" :src="headImgPath">
         <div>
-          <p>我是商家用户</p>
-          <p class="header_money">我的时间币:500</p>
+          <p>{{nickName}}</p>
+          <p class="header_money">我的时间币:{{availableCoin}}</p>
         </div>
     </div>
     <div class="header_title">
@@ -67,7 +67,7 @@
 
 <script>
 import Vue from "vue";
-import { getIndexList } from "../../config/request";
+import { getIndexList, getUserInfo } from "../../config/request";
 import flashSale from "./flashSale";
 import recommend from "./recommend";
 import timeDown from "../publicComponent/timeDown";
@@ -86,10 +86,13 @@ export default {
   },
   data() {
     return {
+      headImgPath: "",
+      nickName: "",
+      availableCoin: null,
       noData: "",
       endTime: "",
-      startTime:'',
-      targetStatus:'',
+      startTime: "",
+      targetStatus: "",
       endTimeChar: "距结束",
       indexStyle: "indexStyle",
       flag: false,
@@ -100,15 +103,29 @@ export default {
       commodity_count: 0
     };
   },
-  mounted() {},
+  mounted() {
+    let self = this;
+    getUserInfo(123)
+      .then(res => {
+        if (Boolean(res.availableCoin)) {
+          self.headImgPath = res.headImgPath;
+          self.nickName = res.nickName;
+          self.availableCoin = res.availableCoin;
+        }
+        console.log(res)
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  },
   methods: {
-    timeStart:function(value){
+    timeStart: function(value) {
       this.startTime = value;
     },
-    timeEnd:function(value){
+    timeEnd: function(value) {
       this.endTime = value;
     },
-    clearTime:function(value){
+    clearTime: function(value) {
       this.targetStatus = value;
     },
     infinite(done) {
@@ -123,10 +140,10 @@ export default {
         self.commodity_count++;
         getIndexList(self.commodity_count)
           .then(res => {
-            if(res && res.listRMB){
+            if (res && res.listRMB) {
               self.commodity_count_list.push(res);
-              console.log(self.commodity_count_list)
-            }else{
+              console.log(self.commodity_count_list);
+            } else {
               self.noData = "没有更多数据";
             }
             done(true);
@@ -134,10 +151,12 @@ export default {
           .catch(err => {
             console.log(err);
           });
-        self.$refs.indexScroller.resize();
+          if(self.$refs.indexScroller.resize){
+            self.$refs.indexScroller.resize();
+          }
         done(true);
-      }, 1500);
-    },
+      }, 1000);
+    }
   },
   computed: {},
   created() {}

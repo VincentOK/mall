@@ -7,8 +7,8 @@
                 <div class="image_border">
                     <img :src="item.cover" alt="">
                   <p class="swiper_name">{{_protypeJs.maxSlice13(item.commodityName)}}</p>
-                  <p class="swiper_price">{{item.suggestPrice | formatMoney}}</p>
-                  <p class="swiper_del_price"><del>￥{{item.realityPrice}}</del></p>
+                  <p class="swiper_price">{{item.suggestPrice,item.distributionChannel | formatMoney}}</p>
+                  <p class="swiper_del_price"><del>{{item.realityPrice,item.distributionChannel | formatMoney}}</del></p>
                   <span :class="goodsTagStyle(targetStatus)" class="swiper_goods_tag"><span></span></span>
                   <!-- <span v-show="'1'">抢购结束</span> -->
                 </div>

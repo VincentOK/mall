@@ -4,13 +4,13 @@ let formatMoney = (value, statusId) => {
     let hasdot = values.indexOf('.') > 0
     switch (statusId) {
       case "1":
-        return hasdot ? "￥" + values.substr(0,values.indexOf(".")+3) : "￥" + values;
+        return hasdot ? "￥" + values.substr(0,values.indexOf(".")+3) : "￥" + Number(values).toFixed(1);
         break;
       case "2":
-        return hasdot ? values.substr(0,values.indexOf(".")+3) + "时间币" : values + "时间币";
+        return hasdot ? values.substr(0,values.indexOf(".")+3) + "时间币" : Number(values).toFixed(1) + "时间币";
         break;
       default:
-        return hasdot ? values.substr(0,values.indexOf(".")+3) : values;
+        return hasdot ? values.substr(0,values.indexOf(".")+3) : Number(values).toFixed(1);
     }
   }
 }

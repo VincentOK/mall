@@ -1,6 +1,13 @@
 import fetch from '../config/fetch'
 
 /**
+ * 首页用户信息
+ * uid:用户id(*)
+ */
+export const getUserInfo = (uid) => fetch('storeTimecoin/getUserAvailableCoin',{
+  uid:uid,
+},'POST',false);
+/**
  * 首页为您推荐列表
  * pageNumber:页码（*）
  * goodsPageSize：现金商品每页个数
@@ -9,7 +16,6 @@ import fetch from '../config/fetch'
 export const getIndexList = (pageNumber) => fetch('storeTimecoin/listTop',{
   pageNumber:pageNumber
 },'POST',false);
-
 /**
  * 现金专区/时间币专区
  * type：1：代表现金专区2：代表时间币专区(*)
