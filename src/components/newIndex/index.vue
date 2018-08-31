@@ -3,7 +3,7 @@
   <div class="hello">
     <img src="/static/img/lucky_ground.png" id="canvasImg" style="display: none;">
     <indexTitle-view></indexTitle-view>
-    <scroller class="conent_all_h5" :on-infinite="infinite" ref="indexScroller">
+    <scroller :on-infinite="infinite" ref="indexScroller"  :height="_protypeJs.getScrollerHeight(40)" style="top: 40px">
     <div class="header">
         <span class="my_order">
           <router-link class="top_order" :to="'/myorder'">
@@ -56,7 +56,10 @@
     <div class="null_div"></div>
     <div class="flashSale">
         <span class="flash_sale_char">限时抢购</span>
-      <time-down-view v-on:timeEnd="clearTime" :endTime='endTime' :startTime='startTime' :endTimeChar='endTimeChar' :noNextData='noNextData' :timeStyle='indexStyle' ></time-down-view>
+        <span class="flash_char" v-show="targetStatus == 'ending'">{{endTimeChar}}</span>
+      <div v-show="targetStatus != 'ending'">
+        <time-down-view v-on:timeEnd="clearTime" :endTime='endTime' :startTime='startTime' :endTimeChar='endTimeChar' :noNextData='noNextData' :timeStyle='indexStyle' ></time-down-view>
+      </div>
     </div>
     <flash-sale-view @timeStart="timeStart" @timeEnd="timeEnd" @noDataNext="noDataNext" :targetStatus='targetStatus'></flash-sale-view>
     <recommend-view :commodityList='commodity_list' :commodityTimeList='commodity_time_list' :commodityCount='commodity_count_list'></recommend-view>
@@ -92,22 +95,23 @@ export default {
       noData: "",
       endTime: "",
       startTime: "",
-      noNextData:"",
+      noNextData: false,
       targetStatus: "",
-      endTimeChar: "距结束",
-      indexStyle: "indexStyle",
+      endTimeChar: "",
+      indexStyle: "",
       flag: false,
       list: [],
       commodity_list: [],
       commodity_time_list: [],
       commodity_count_list: [],
-      commodity_count: 0
+      commodity_count: 0,
+      uid: ""
     };
   },
   mounted() {
     let self = this;
-    let uId = self._protypeJs.getUserId();
-    getUserInfo(uId)
+    self.uid = self._protypeJs.getUserId();
+    getUserInfo(self.uid)
       .then(res => {
         self.headImgPath = res.headImgPath;
         self.nickName = res.nickName;
@@ -127,8 +131,18 @@ export default {
     },
     clearTime: function(value) {
       this.targetStatus = value;
+      console.log(this.targetStatus);
+      if (this.targetStatus == "pendding") {
+        this.endTimeChar = "距结束";
+        this.indexStyle = "indexStyle"
+      } else if (this.targetStatus == "ending") {
+        this.endTimeChar = "本轮抢购已结束，请等待下轮抢购开启";
+      } else {
+        this.endTimeChar = "距下轮开始";
+        this.indexStyle = "indexStyleBlack"
+      }
     },
-    noDataNext:function(value){
+    noDataNext: function(value) {
       this.noNextData = value;
     },
     infinite(done) {
@@ -157,7 +171,6 @@ export default {
         if (self.$refs.indexScroller) {
           self.$refs.indexScroller.resize();
         }
-        done(true);
       }, 1000);
     }
   },
@@ -268,6 +281,13 @@ export default {
   float: left;
   margin-left: 12px;
   font-size: 16px;
+  color: #333;
+}
+.flashSale .flash_char {
+  line-height: 49px;
+  float: right;
+  font-size: 12px;
+  margin-right: 12px;
   color: #333;
 }
 </style>

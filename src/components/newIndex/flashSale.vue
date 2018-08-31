@@ -98,18 +98,20 @@ export default {
         getFlash(8, 1)
           .then(res => {
             if (res.list.dataList.length != 0) {
-              if (Boolean(res.startTime) && Boolean(res.endTime) && res.status != "0") {
+              if (Boolean(res.startTime) && Boolean(res.endTime)) {
                 self.snaplist = res.list.dataList;
-                self.startTime = res.startTime;
-                self.endTime = res.endTime;
+                // self.startTime = res.startTime;
+                // self.endTime = res.endTime;
+                self.startTime = "2018-08-31 18:37:10"
+                self.endTime = "2018-08-31 18:37:20"
               } else {
-                self.endTime = "0";
-                self.startTime = "0";
+                self.endTime = null;
+                self.startTime = null;
               }
               self.$emit("timeStart", self.startTime);
               self.$emit("timeEnd", self.endTime);
-            } else {
               self.$emit("noDataNext", true);
+            } else {
               self.noData = "没有更多数据";
             }
           })
@@ -127,8 +129,10 @@ export default {
         if (res.list.dataList.length != 0) {
           self.cash_list = res.list.dataList;
           if (Boolean(res.startTime) && Boolean(res.endTime)) {
-            self.startTime = res.startTime;
-            self.endTime = res.endTime;
+            // self.startTime = res.startTime;
+            // self.endTime = res.endTime;
+            self.startTime = "2018-08-31 18:37:00"
+                self.endTime = "2018-08-31 18:37:05"
           } else {
             self.endTime = "0";
             self.startTime = "0";

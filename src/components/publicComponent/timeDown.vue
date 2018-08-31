@@ -41,35 +41,35 @@ export default {
   methods: {
     timeDown() {
       if (Boolean(this.endTime) || Boolean(this.startTime)) {
-      let endTimeArr = this.endTime
-        .replace(/-/g, ":")
-        .replace(" ", ":")
-        .split(":");
-      const endTime = new Date(
-        endTimeArr[0],
-        endTimeArr[1] - 1,
-        endTimeArr[2],
-        endTimeArr[3],
-        endTimeArr[4],
-        endTimeArr[5]
-      );
-      let startTimeArr = this.startTime
-        .replace(/-/g, ":")
-        .replace(" ", ":")
-        .split(":");
-      const startTime = new Date(
-        startTimeArr[0],
-        startTimeArr[1] - 1,
-        startTimeArr[2],
-        startTimeArr[3],
-        startTimeArr[4],
-        startTimeArr[5]
-      );
-      const nowTime = new Date();
-      // return (curTime>=startTime && curTime<=endTime);
-      // console.log(nowTime>=startTime);
-      // console.log(nowTime<=endTime)
-      
+        let endTimeArr = this.endTime
+          .replace(/-/g, ":")
+          .replace(" ", ":")
+          .split(":");
+        const endTime = new Date(
+          endTimeArr[0],
+          endTimeArr[1] - 1,
+          endTimeArr[2],
+          endTimeArr[3],
+          endTimeArr[4],
+          endTimeArr[5]
+        );
+        let startTimeArr = this.startTime
+          .replace(/-/g, ":")
+          .replace(" ", ":")
+          .split(":");
+        const startTime = new Date(
+          startTimeArr[0],
+          startTimeArr[1] - 1,
+          startTimeArr[2],
+          startTimeArr[3],
+          startTimeArr[4],
+          startTimeArr[5]
+        );
+        const nowTime = new Date();
+        // return (curTime>=startTime && curTime<=endTime);
+        // console.log(nowTime>=startTime);
+        // console.log(nowTime<=endTime)
+
         if (nowTime < startTime) {
           var leftTime = parseInt(
             (startTime.getTime() - nowTime.getTime()) / 1000
@@ -85,7 +85,7 @@ export default {
           this.$emit("timeEnd", "ending");
         }
       }
-      if(this.endTime == null || this.startTime == null || this.noNextData){
+      if (this.endTime == null || this.startTime == null) {
         var leftTime = -1;
       }
       var h = this.formate(parseInt((leftTime / (60 * 60)) % 24));
@@ -124,6 +124,20 @@ export default {
 .indexStyle span {
   color: white;
   background-color: #f10215;
+  padding: 0 2px;
+  margin: 0 2px;
+  border-radius: 2px;
+}
+.indexStyleBlack {
+  line-height: 49px;
+  float: right;
+  margin-right: 15px;
+  font-size: 12px;
+  color: #333;
+}
+.indexStyleBlack span {
+  color: white;
+  background-color: #333;
   padding: 0 2px;
   margin: 0 2px;
   border-radius: 2px;

@@ -34,7 +34,7 @@ export default (Vue) => {
     getScrollerHeight:(number) =>{
       let height = document.documentElement.clientHeight;
       let scroller_a = height - parseInt(number)
-      return scroller_a;
+      return scroller_a.toString();
     },
     /**
      * 弹框出现固定body高度

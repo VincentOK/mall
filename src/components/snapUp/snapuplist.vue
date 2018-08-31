@@ -4,11 +4,14 @@
     <shoptitle :childTitleword="childTitleword"></shoptitle>
     <div  v-touch:swiperight="_protypeJs.touchRight">
       <div class="snap_title">
-        <label class="end_title">本轮抢购已结束，请等待下轮抢购开启</label>
-        <time-down v-on:timeEnd="clearTime" :endTime='endTime' :startTime='startTime' :endTimeChar='endTimeChar' :timeStyle='indexStyle' :noNextData="noNextData"></time-down>
+        <label class="end_title" v-show="buttonStatus != 'pendding'">本轮抢购已结束，请等待下轮抢购开启</label>
+        <label class="end_title" v-show="buttonStatus == 'pendding'">抢购中，先下单先得</label>
+        <div v-show="buttonStatus != 'ending'">
+          <time-down v-on:timeEnd="clearTime" :endTime='endTime' :startTime='startTime' :endTimeChar='endTimeChar' :timeStyle='indexStyle' :noNextData="noNextData"></time-down>
+        </div>
       </div>
       <div class="all_snap">
-        <scroller style="margin-top: 65px" :on-infinite="infinite"  :on-refresh = "refresh" ref="myscroller">
+        <scroller :on-infinite="infinite"  :on-refresh = "refresh" ref="myscroller" :height="_protypeJs.getScrollerHeight(65)" style="top: 65px">
         <div style="height: 1px;"></div>
         <div class="snap_list" v-for="(item,index) in snaplist" :key="index">
           <div class="snap_one">
@@ -64,6 +67,9 @@ export default {
   watch: {
     buttonStatus: function(value) {
       let self = this;
+      if(value == "pendding"){
+        self.endTimeChar = "距结束"
+      }
       if (value == "ending") {
         getFlash(8, 1)
           .then(res => {
@@ -109,8 +115,10 @@ export default {
             if (res.list.dataList.length != 0) {
               self.snaplist = self.snaplist.concat(res.list.dataList);
               if (Boolean(res.startTime) && Boolean(res.endTime)) {
-                self.startTime = res.startTime;
-                self.endTime = res.endTime;
+                // self.startTime = res.startTime;
+                // self.endTime = res.endTime;
+                self.startTime = "2018-08-31 17:46:05"
+                self.endTime = "2018-08-31 17:46:10"
               } else {
                 self.endTime = "0";
                 self.startTime = "0";
