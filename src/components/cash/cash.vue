@@ -9,7 +9,7 @@
         <p class="exchange_number">共{{all_goods}}个商品</p>
       </div>
       <div class="exchange_content">
-        <scroller style="margin-top: 90px;"  :on-infinite="infinite"  :on-refresh = "refresh" ref="myscroller">
+        <scroller class="myScroller"   :on-infinite="infinite"  :on-refresh = "refresh" ref="myscroller" :height="_protypeJs.getScrollerHeight(80)" style="top: 80px">
           <div style="height: 1px;"></div>
         <router-link class="a_detail" v-for="(item,index) in ex_list" :key="index" :to="'/detail/' + item.commodityId+'/'+goodsType">
           <div class="exchange_content_i">
@@ -37,6 +37,7 @@ export default {
   name: 'cash',
   data () {
     return {
+      heightScroller:500,
       all_goods:'',
       goodsType:1,
       msg: 'Welcome to Your Vue.js App',
@@ -46,6 +47,12 @@ export default {
     }
   },
   mounted(){
+    console.log(document.documentElement.clientHeight)
+    // console.log(document.documentElement.clientHeight)
+    // let height = document.documentElement.clientHeight;
+    // let scroller = height - 80;
+    // this.heightScroller = scroller
+    // console.log(scroller)
     // let vm = this
     // getCashList(1).then(res =>{
     //   console.log(res)
@@ -110,6 +117,7 @@ export default {
 </script>
 
 <style scoped>
+
   .exchange_number{
     color: #9b9b9b;
     font-size: 12px;

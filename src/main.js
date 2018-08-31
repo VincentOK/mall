@@ -26,7 +26,7 @@ Vue.config.productionTip = false;
 //获取用户ID
 (function(){
   console.log("环境："+process.env.NODE_ENV)
-  if(process.env.NODE_ENV == 'development'){//development
+  if(process.env.NODE_ENV == 'production'){//development   //production
     let aa = JS.getAppUserId();
     alert("获取用户id:"+aa)
     if(aa){
@@ -40,7 +40,7 @@ Vue.config.productionTip = false;
   console.log(myuser+"=========="+typeof(myuser))
   //使用钩子函数对路由进行权限跳转
   router.beforeEach((to, from, next) => {
-    if( myuser || myuser != "undefined"){
+    if( myuser && myuser != "undefined"){
       next();
     }else {
       alert("非法访问")
