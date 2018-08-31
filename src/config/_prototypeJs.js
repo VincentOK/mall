@@ -79,13 +79,8 @@ export default (Vue) => {
     appSurePayMoney:(obj) =>{
       console.log("环境："+process.env.NODE_ENV)
       if(process.env.NODE_ENV == 'development'){
-
-
-        JS.sendPayMsg(obj);
-
-        JS.surePayMoney(function (data) {
-          alert('支付返回状态：'+data);
-        });
+       let aa = JS.sendPayMsg(obj);
+       alert("返回支付状态："+aa)
       }
     }
   }

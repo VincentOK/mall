@@ -26,18 +26,16 @@ Vue.config.productionTip = false;
 //获取用户ID
 (function(){
   console.log("环境："+process.env.NODE_ENV)
-  if(process.env.NODE_ENV == 'production'){//development
-    JS.getAppUserId(function (user) {
-      if(user){
-        alert(JSON.stringify(user))
-        localStorage.setItem('user',user);
-      }else{
-        alert('获取用户id失败，请重新进入')
-        JS.closeWebView();
-      }
-    })
+  if(process.env.NODE_ENV == 'development'){//development
+    let aa = JS.getAppUserId();
+    alert("获取用户id:"+aa)
+    if(aa){
+      localStorage.setItem('user',aa);
+    }else{
+      alert('获取用户id失败，请重新进入')
+      JS.closeWebView();
+    }
   }
-
   let myuser = localStorage.getItem('user')
   console.log(myuser+"=========="+typeof(myuser))
   //使用钩子函数对路由进行权限跳转

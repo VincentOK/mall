@@ -17,7 +17,7 @@
         <div class="title_j">
           <p class="detail_tatle">
             <label class="detail_hot">热门</label>
-            <label class="word_hot">{{goodsDetail.map.commodity_name}}</label>
+            <label class="word_hot">{{goodsDetail.map.commodityName}}</label>
           </p>
           <p class="detail_money">
             <label class="money_real"  v-if="goodsDetail.map.reality_price">
