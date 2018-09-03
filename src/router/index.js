@@ -8,7 +8,7 @@ export default new Router({
       name: 'index',
       component: resolve => require(['@/components/newIndex/index'], resolve), // 使用懒加载
       meta: {
-        keepAlive: true // true 表示需要使用缓存
+        keepAlive: false // true 表示需要使用缓存
       }
     },
     {
@@ -16,7 +16,8 @@ export default new Router({
       name: 'detail',
       component: resolve => require(['@/components/detail/detail'], resolve), // 使用懒加载
       meta: {
-        keepAlive: true // true 表示需要使用缓存
+        keepAlive: true,// true 表示需要使用缓存
+        isBack:false, //用于判断上一个页面是哪个
       }
     },
     {
@@ -24,7 +25,8 @@ export default new Router({
       name: 'myaddress',
       component: resolve => require(['@/components/adress/myaddress'], resolve), // 使用懒加载
       meta: {
-        keepAlive: true // true 表示需要使用缓存
+        keepAlive: true,// true 表示需要使用缓存
+        isBack:false, //用于判断上一个页面是哪个
       }
     },
     {
@@ -32,7 +34,8 @@ export default new Router({
       name: 'snapuplist',
       component: resolve => require(['@/components/snapUp/snapuplist'], resolve), // 使用懒加载
       meta: {
-        keepAlive: true // true 表示需要使用缓存
+        keepAlive: true,// true 表示需要使用缓存
+        isBack:false, //用于判断上一个页面是哪个
       }
     },
     {
@@ -40,7 +43,8 @@ export default new Router({
       name: 'luckycenter',
       component: resolve => require(['@/components/luckyDraw/luckycenter'], resolve), // 使用懒加载
       meta: {
-        keepAlive: true // true 表示需要使用缓存
+        keepAlive: true,// true 表示需要使用缓存
+        isBack:false, //用于判断上一个页面是哪个
       }
     },
     {
@@ -48,7 +52,8 @@ export default new Router({
       name: 'luckylist',
       component: resolve => require(['@/components/luckyDraw/luckylist'], resolve), // 使用懒加载
       meta: {
-        keepAlive: true // true 表示需要使用缓存
+        keepAlive: true,// true 表示需要使用缓存
+        isBack:false, //用于判断上一个页面是哪个
       }
     },
     {
@@ -56,7 +61,8 @@ export default new Router({
       name: 'winning',
       component: resolve => require(['@/components/luckyDraw/winning'], resolve), // 使用懒加载
       meta: {
-        keepAlive: true // true 表示需要使用缓存
+        keepAlive: true,// true 表示需要使用缓存
+        isBack:false, //用于判断上一个页面是哪个
       }
     },
     {
@@ -64,7 +70,8 @@ export default new Router({
       name: 'refundlist',
       component: resolve => require(['@/components/refund/refundlist'], resolve), // 使用懒加载
       meta: {
-        keepAlive: true // true 表示需要使用缓存
+        keepAlive: true,// true 表示需要使用缓存
+        isBack:false, //用于判断上一个页面是哪个
       }
     },
     {
@@ -72,7 +79,8 @@ export default new Router({
       name: 'refundindex',
       component: resolve => require(['@/components/refund/refundindex'], resolve), // 使用懒加载
       meta: {
-        keepAlive: true // true 表示需要使用缓存
+        keepAlive: true,// true 表示需要使用缓存
+        isBack:false, //用于判断上一个页面是哪个
       }
     },
     {
@@ -80,7 +88,8 @@ export default new Router({
       name: 'freight',
       component: resolve => require(['@/components/refund/freight'], resolve), // 使用懒加载
       meta: {
-        keepAlive: true // true 表示需要使用缓存
+        keepAlive: true,// true 表示需要使用缓存
+        isBack:false, //用于判断上一个页面是哪个
       }
     },
     {
@@ -88,7 +97,8 @@ export default new Router({
       name: 'myorder',
       component: resolve => require(['@/components/refund/myorder'], resolve), // 使用懒加载
       meta: {
-        keepAlive: true // true 表示需要使用缓存
+        keepAlive: true,// true 表示需要使用缓存
+        isBack:false, //用于判断上一个页面是哪个
       }
     },
     {
@@ -96,7 +106,8 @@ export default new Router({
       name: 'exchange',
       component: resolve => require(['@/components/exchange/exchange'], resolve), // 使用懒加载
       meta: {
-        keepAlive: true // true 表示需要使用缓存
+        keepAlive: true,// true 表示需要使用缓存
+        isBack:false, //用于判断上一个页面是哪个
       }
     },
     {
@@ -104,7 +115,8 @@ export default new Router({
       name: 'cash',
       component: resolve => require(['@/components/cash/cash'], resolve), // 使用懒加载
       meta: {
-        keepAlive: true // true 表示需要使用缓存
+        keepAlive: true,// true 表示需要使用缓存
+        isBack:false, //用于判断上一个页面是哪个
       }
     }
   ]

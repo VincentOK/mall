@@ -79,10 +79,11 @@
       },
       methods:{
         infinite(done) {
+          console.log("触发下拉加载");
           if(this.noData) {
             setTimeout(()=>{
               this.$refs.myscroller.finishInfinite(2);
-            })
+            });
             return;
           }
           let self = this;//this指向问题
@@ -93,12 +94,12 @@
           let pageNumber = self.count;
           let pageSize = '';
           setTimeout(() => {
-            console.log("页码:"+self.count)
-            console.log("status:"+status)
-            console.log("uid:"+uid)
-            console.log("pageNumber:"+pageNumber)
+            console.log("页码:"+self.count);
+            console.log("status:"+status);
+            console.log("uid:"+uid);
+            console.log("pageNumber:"+pageNumber);
             getOrder(status,uid,pageNumber).then(res =>{
-              console.log(res)
+              console.log(res);
               if(res.dataList.length != 0){
                 self.refund_list = self.refund_list.concat(res.dataList)
               }else {

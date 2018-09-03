@@ -41,54 +41,49 @@ export default {
       msg: 'Welcome to Your Vue.js App',
       childTitleword:'时间币专区',
       ex_list:[],
-      count:0
+      count:0,
+      isFirstEnter:false
     }
   },
+  created() {
+    this.isFirstEnter=true;
+    // 只有第一次进入或者刷新页面后才会执行此钩子函数
+    // 使用keep-alive后（2+次）进入不会再执行此钩子函数
+  },
+  activated() {
+    console.log('exchangeActivated:'+this.$route.meta.isBack+'='+this.isFirstEnter);
+    let self = this;
+    if(!this.$route.meta.isBack || this.isFirstEnter){
+      console.log('exchangeActivated请求新数据')
+      // 如果isBack是false，表明需要获取新数据，否则就不再请求，直接使用缓存的数据
+      // 如果isFirstEnter是true，表明是第一次进入此页面或用户刷新了页面，需获取新数据
+      this.ex_list=[];// 把数据清空，可以稍微避免让用户看到之前缓存的数据
+      self.noData = "";
+      self.count = 0;
+    }
+    // 恢复成默认的false，避免isBack一直是true，导致下次无法获取数据
+    this.$route.meta.isBack=false;
+    // 恢复成默认的false，避免isBack一直是true，导致每次都获取新数据
+    this.isFirstEnter=false;
+  },
+  deactivated(){
+    console.log('exchangeDeactivated')
+  },
+  beforeRouteEnter(to, from, next) {
+    console.log("路由："+from.name)
+    // 路由导航钩子，此时还不能获取组件实例 `this`，所以无法在data中定义变量（利用vm除外）
+    // 参考 https://router.vuejs.org/zh-cn/advanced/navigation-guards.html
+    // 所以，利用路由元信息中的meta字段设置变量，方便在各个位置获取。这就是为什么在meta中定义isBack
+    // 参考 https://router.vuejs.org/zh-cn/advanced/meta.html
+    if(from.name=='detail'){
+      to.meta.isBack=true;
+      //判断是从哪个路由过来的，
+      //如果是page2过来的，表明当前页面不需要刷新获取新数据，直接用之前缓存的数据即可
+    }
+
+    next();
+  },
   mounted(){
-    // this.ex_list = [
-    //   {
-    //     id:'1',
-    //     img_url:'/static/img/a1.jpg',
-    //     name:'海南贵妃特价海南贵妃 送货上门',
-    //     price:'120',
-    //     count:'121'
-    //   },
-    //   {
-    //     id:'2',
-    //     img_url:'/static/img/a1.jpg',
-    //     name:'海南贵妃特价海南贵妃 送货上门',
-    //     price:'120',
-    //     count:'122'
-    //   },
-    //   {
-    //     id:'3',
-    //     img_url:'/static/img/a1.jpg',
-    //     name:'海南贵妃特价海南贵妃 送货上门',
-    //     price:'120',
-    //     count:'123'
-    //   },
-    //   {
-    //     id:'4',
-    //     img_url:'/static/img/a1.jpg',
-    //     name:'海南贵妃特价海南贵妃 送货上门',
-    //     price:'120',
-    //     count:'124'
-    //   },
-    //   {
-    //     id:'5',
-    //     img_url:'/static/img/a1.jpg',
-    //     name:'海南贵妃特价海南贵妃 送货上门',
-    //     price:'120',
-    //     count:'125'
-    //   },
-    //   {
-    //     id:'6',
-    //     img_url:'/static/img/a1.jpg',
-    //     name:'海南贵妃特价海南贵妃 送货上门',
-    //     price:'120',
-    //     count:'126'
-    //   },
-    // ]
   },
   computed:{
   },
