@@ -60,8 +60,7 @@ export default new Router({
       name: 'refundindex',
       component: resolve => require(['@/components/refund/refundindex'], resolve), // 使用懒加载
       meta: {
-        keepAlive: true,// true 表示需要使用缓存
-        isBack:false, //用于判断上一个页面是哪个
+        keepAlive: false,// true 表示需要使用缓存
       }
     },
     // {
@@ -78,8 +77,7 @@ export default new Router({
       name: 'myorder',
       component: resolve => require(['@/components/refund/myorder'], resolve), // 使用懒加载
       meta: {
-        keepAlive: true,// true 表示需要使用缓存
-        isBack:false, //用于判断上一个页面是哪个
+        keepAlive: false,// true 表示需要使用缓存
       }
     },
     {
