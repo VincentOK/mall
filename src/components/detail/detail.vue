@@ -173,52 +173,7 @@ export default {
         debugger: true
       },
       paymoneyMsg:'',
-      isFirstEnter:false
     }
-  },
-  created() {
-    this.isFirstEnter=true;
-    // 只有第一次进入或者刷新页面后才会执行此钩子函数
-    // 使用keep-alive后（2+次）进入不会再执行此钩子函数
-  },
-  activated() {
-    console.log('detailActivated:'+this.$route.meta.isBack+'='+this.isFirstEnter);
-    let self = this;
-    if(!this.$route.meta.isBack || this.isFirstEnter){
-      console.log('detailActivated请求新数据')
-      // 如果isBack是false，表明需要获取新数据，否则就不再请求，直接使用缓存的数据
-      // 如果isFirstEnter是true，表明是第一次进入此页面或用户刷新了页面，需获取新数据
-      self.goodsDetail = '';
-      this.goodsStatus = this.$route.params.type;
-      this.commodityId = this.$route.params.id;
-      let type = this.$route.params.type
-      let commodityId = this.$route.params.id
-      let uid = this._protypeJs.getUserId()
-      getDetail(type,commodityId,uid).then(res =>{
-        console.log(JSON.stringify(res))
-        self.goodsDetail = res
-      })
-    }
-    // 恢复成默认的false，避免isBack一直是true，导致下次无法获取数据
-    this.$route.meta.isBack=false;
-    // 恢复成默认的false，避免isBack一直是true，导致每次都获取新数据
-    this.isFirstEnter=false;
-  },
-  deactivated(){
-    console.log('detailDeactivated')
-  },
-  beforeRouteEnter(to, from, next) {
-    console.log("detail路由："+from.name)
-    // 路由导航钩子，此时还不能获取组件实例 `this`，所以无法在data中定义变量（利用vm除外）
-    // 参考 https://router.vuejs.org/zh-cn/advanced/navigation-guards.html
-    // 所以，利用路由元信息中的meta字段设置变量，方便在各个位置获取。这就是为什么在meta中定义isBack
-    // 参考 https://router.vuejs.org/zh-cn/advanced/meta.html
-    if(from.name=='myaddress'){
-      to.meta.isBack=true;
-      //判断是从哪个路由过来的，
-      //如果是page2过来的，表明当前页面不需要刷新获取新数据，直接用之前缓存的数据即可
-    }
-    next();
   },
   mounted(){
     console.log("页面初始化")

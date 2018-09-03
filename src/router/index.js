@@ -16,8 +16,7 @@ export default new Router({
       name: 'detail',
       component: resolve => require(['@/components/detail/detail'], resolve), // 使用懒加载
       meta: {
-        keepAlive: true,// true 表示需要使用缓存
-        isBack:false, //用于判断上一个页面是哪个
+        keepAlive: false,// true 表示需要使用缓存
       }
     },
     {
@@ -57,24 +56,6 @@ export default new Router({
       }
     },
     {
-      path: '/winning',
-      name: 'winning',
-      component: resolve => require(['@/components/luckyDraw/winning'], resolve), // 使用懒加载
-      meta: {
-        keepAlive: true,// true 表示需要使用缓存
-        isBack:false, //用于判断上一个页面是哪个
-      }
-    },
-    {
-      path: '/refundlist',
-      name: 'refundlist',
-      component: resolve => require(['@/components/refund/refundlist'], resolve), // 使用懒加载
-      meta: {
-        keepAlive: true,// true 表示需要使用缓存
-        isBack:false, //用于判断上一个页面是哪个
-      }
-    },
-    {
       path: '/refundindex/:commodityId/:orderNumber',
       name: 'refundindex',
       component: resolve => require(['@/components/refund/refundindex'], resolve), // 使用懒加载
@@ -83,15 +64,15 @@ export default new Router({
         isBack:false, //用于判断上一个页面是哪个
       }
     },
-    {
-      path: '/freight/:id',
-      name: 'freight',
-      component: resolve => require(['@/components/refund/freight'], resolve), // 使用懒加载
-      meta: {
-        keepAlive: true,// true 表示需要使用缓存
-        isBack:false, //用于判断上一个页面是哪个
-      }
-    },
+    // {
+    //   path: '/freight/:id',
+    //   name: 'freight',
+    //   component: resolve => require(['@/components/refund/freight'], resolve), // 使用懒加载
+    //   meta: {
+    //     keepAlive: true,// true 表示需要使用缓存
+    //     isBack:false, //用于判断上一个页面是哪个
+    //   }
+    // },
     {
       path: '/myorder',
       name: 'myorder',
