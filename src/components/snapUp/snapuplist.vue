@@ -26,8 +26,9 @@
               </p>
               <p class="snap_title_on">
                 <label class="snap_style" v-show="item.carriage==0">{{item.carriage==0?'免邮':''}}</label>
-                <router-link :to="'/detail/' + item.commodityId + '/' + item.distributionChannel" v-show="buttonStatus == 'starting'"><label class="snap_button">即将开始</label></router-link>
-                <router-link :to="'/detail/' + item.commodityId + '/' + item.distributionChannel" v-show="buttonStatus == 'pendding'"><label class="snap_button" style="background-color: #ea3339;">立即抢购</label></router-link>
+                <label  class="snap_button" v-show="buttonStatus == 'starting'">即将开始</label>
+                <router-link :to="'/detail/' + item.commodityId + '/' + item.distributionChannel" v-show="buttonStatus == 'pendding' && item.inventory != 0"><label class="snap_button" style="background-color: #ea3339;">立即抢购</label></router-link>
+                <label  class="snap_button" v-show="buttonStatus == 'pendding' && item.inventory == 0" style="background-color: #333;">已抢完 </label>
                 <label  class="snap_button" v-show="buttonStatus == 'ending'" style="background-color: #333;">抢购结束</label>
               </p>
             </div>
@@ -74,7 +75,10 @@ export default {
         getFlash(8, 1)
           .then(res => {
             if (res.list.dataList.length != 0) {
-              if (self.startTime != res.startTime || self.endTime != res.endTime) {
+              if (
+                self.startTime != res.startTime ||
+                self.endTime != res.endTime
+              ) {
                 self.snaplist = [];
                 self.snaplist = self.snaplist.concat(res.list.dataList);
                 self.startTime = res.startTime;
@@ -100,13 +104,13 @@ export default {
     },
     getFlashData() {},
     infinite(done) {
-      let self = this; //this指向问题
-      if (self.noData) {
+      if (this.noData) {
         setTimeout(() => {
-          self.$refs.myscroller.finishInfinite(2);
+          this.$refs.myscroller.finishInfinite(2);
         });
         return;
       }
+      let self = this; //this指向问题
       self.count++;
       setTimeout(() => {
         console.log("页码" + self.count);
@@ -126,7 +130,7 @@ export default {
               self.noData = "没有更多数据";
             }
             self.$refs.myscroller.resize();
-            done(true);
+            done();
           })
           .catch(err => {
             console.log(err);
