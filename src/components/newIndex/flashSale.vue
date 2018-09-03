@@ -98,12 +98,13 @@ export default {
         getFlash(8, 1)
           .then(res => {
             if (res.list.dataList.length != 0) {
-              if (Boolean(res.startTime) && Boolean(res.endTime)) {
+              if (
+                self.startTime != res.startTime ||
+                self.endTime != res.endTime
+              ) {
                 self.snaplist = res.list.dataList;
-                // self.startTime = res.startTime;
-                // self.endTime = res.endTime;
-                self.startTime = "2018-08-31 18:37:10"
-                self.endTime = "2018-08-31 18:37:20"
+                self.startTime = res.startTime;
+                self.endTime = res.endTime;
               } else {
                 self.endTime = null;
                 self.startTime = null;
@@ -129,10 +130,8 @@ export default {
         if (res.list.dataList.length != 0) {
           self.cash_list = res.list.dataList;
           if (Boolean(res.startTime) && Boolean(res.endTime)) {
-            // self.startTime = res.startTime;
-            // self.endTime = res.endTime;
-            self.startTime = "2018-08-31 18:37:00"
-                self.endTime = "2018-08-31 18:37:05"
+            self.startTime = res.startTime;
+            self.endTime = res.endTime;
           } else {
             self.endTime = "0";
             self.startTime = "0";

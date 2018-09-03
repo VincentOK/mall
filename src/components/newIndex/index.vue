@@ -134,12 +134,12 @@ export default {
       console.log(this.targetStatus);
       if (this.targetStatus == "pendding") {
         this.endTimeChar = "距结束";
-        this.indexStyle = "indexStyle"
+        this.indexStyle = "indexStyle";
       } else if (this.targetStatus == "ending") {
         this.endTimeChar = "本轮抢购已结束，请等待下轮抢购开启";
       } else {
         this.endTimeChar = "距下轮开始";
-        this.indexStyle = "indexStyleBlack"
+        this.indexStyle = "indexStyleBlack";
       }
     },
     noDataNext: function(value) {
@@ -163,14 +163,12 @@ export default {
             } else {
               self.noData = "没有更多数据";
             }
-            done(true);
+            self.$refs.indexScroller.resize();
+            done();
           })
           .catch(err => {
             console.log(err);
           });
-        if (self.$refs.indexScroller) {
-          self.$refs.indexScroller.resize();
-        }
       }, 1000);
     }
   },

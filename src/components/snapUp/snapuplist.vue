@@ -67,20 +67,21 @@ export default {
   watch: {
     buttonStatus: function(value) {
       let self = this;
-      if(value == "pendding"){
-        self.endTimeChar = "距结束"
+      if (value == "pendding") {
+        self.endTimeChar = "距结束";
       }
       if (value == "ending") {
         getFlash(8, 1)
           .then(res => {
-            if (res.list.dataList.length != 0 && res.status != "0") {
-              self.snaplist = self.snaplist.concat(res.list.dataList);
-              if (Boolean(res.startTime) && Boolean(res.endTime)) {
+            if (res.list.dataList.length != 0) {
+              if (self.startTime != res.startTime || self.endTime != res.endTime) {
+                self.snaplist = [];
+                self.snaplist = self.snaplist.concat(res.list.dataList);
                 self.startTime = res.startTime;
                 self.endTime = res.endTime;
               } else {
-                self.endTime = "0";
-                self.startTime = "0";
+                self.endTime = null;
+                self.startTime = null;
               }
             } else {
               self.noNextData = true;
@@ -115,10 +116,8 @@ export default {
             if (res.list.dataList.length != 0) {
               self.snaplist = self.snaplist.concat(res.list.dataList);
               if (Boolean(res.startTime) && Boolean(res.endTime)) {
-                // self.startTime = res.startTime;
-                // self.endTime = res.endTime;
-                self.startTime = "2018-08-31 17:46:05"
-                self.endTime = "2018-08-31 17:46:10"
+                self.startTime = res.startTime;
+                self.endTime = res.endTime;
               } else {
                 self.endTime = "0";
                 self.startTime = "0";
@@ -126,9 +125,7 @@ export default {
             } else {
               self.noData = "没有更多数据";
             }
-            if (self.$refs.indexScroller) {
-              self.$refs.indexScroller.resize();
-            }
+            self.$refs.myscroller.resize();
             done(true);
           })
           .catch(err => {
