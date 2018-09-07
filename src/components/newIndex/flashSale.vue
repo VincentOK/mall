@@ -19,7 +19,7 @@
           <div class="view_more">
               <p>查看更多</p>
               <p>See more</p>
-              <p><img src="/static/img/more@2x.png" alt=""></p>
+              <p><img style="height: 26px;" src="/static/img/more@2x.png" alt=""></p>
           </div>
           </router-link>
         </swiper>

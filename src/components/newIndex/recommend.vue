@@ -101,7 +101,7 @@ export default {
   .time_icon{
     position: absolute;
     left: 0;
-    top: 3.5px;
+    top: 2px;
   }
 .recommend_title {
   margin: 0;
