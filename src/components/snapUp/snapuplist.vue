@@ -26,8 +26,9 @@
               </p>
               <p class="snap_title_on">
                 <label class="snap_style" v-show="item.carriage==0">{{item.carriage==0?'免邮':''}}</label>
-                <router-link :to="'/detail/' + item.commodityId + '/' + item.distributionChannel" v-show="buttonStatus == 'starting'"><label class="snap_button">即将开始</label></router-link>
-                <router-link :to="'/detail/' + item.commodityId + '/' + item.distributionChannel" v-show="buttonStatus == 'pendding'"><label class="snap_button" style="background-color: #ea3339;">立即抢购</label></router-link>
+                <label  class="snap_button" v-show="buttonStatus == 'starting'">即将开始</label>
+                <router-link :to="'/detail/' + item.commodityId + '/' + item.distributionChannel" v-show="buttonStatus == 'pendding' && item.inventory != 0"><label class="snap_button" style="background-color: #ea3339;">立即抢购</label></router-link>
+                <label  class="snap_button" v-show="buttonStatus == 'pendding' && item.inventory == 0" style="background-color: #333;">已抢完 </label>
                 <label  class="snap_button" v-show="buttonStatus == 'ending'" style="background-color: #333;">抢购结束</label>
               </p>
             </div>
@@ -62,7 +63,46 @@ export default {
   components: {
     timeDown
   },
-  mounted() {},
+  created() {
+    this.isFirstEnter = true;
+    // 只有第一次进入或者刷新页面后才会执行此钩子函数
+    // 使用keep-alive后（2+次）进入不会再执行此钩子函数
+  },
+  activated() {
+    console.log(
+      "cashActivated:" + this.$route.meta.isBack + "=" + this.isFirstEnter
+    );
+    let self = this;
+    if (!this.$route.meta.isBack || this.isFirstEnter) {
+      console.log("cashActivated请求新数据");
+      // 如果isBack是false，表明需要获取新数据，否则就不再请求，直接使用缓存的数据
+      // 如果isFirstEnter是true，表明是第一次进入此页面或用户刷新了页面，需获取新数据
+      this.ex_list = []; // 把数据清空，可以稍微避免让用户看到之前缓存的数据
+      self.noData = "";
+      self.count = 0;
+    }
+    // 恢复成默认的false，避免isBack一直是true，导致下次无法获取数据
+    this.$route.meta.isBack = false;
+    // 恢复成默认的false，避免isBack一直是true，导致每次都获取新数据
+    this.isFirstEnter = false;
+  },
+  deactivated() {
+    console.log("cashDeactivated");
+  },
+  beforeRouteEnter(to, from, next) {
+    console.log("路由：" + from.name);
+    // 路由导航钩子，此时还不能获取组件实例 `this`，所以无法在data中定义变量（利用vm除外）
+    // 参考 https://router.vuejs.org/zh-cn/advanced/navigation-guards.html
+    // 所以，利用路由元信息中的meta字段设置变量，方便在各个位置获取。这就是为什么在meta中定义isBack
+    // 参考 https://router.vuejs.org/zh-cn/advanced/meta.html
+    if (from.name == "detail") {
+      to.meta.isBack = true;
+      //判断是从哪个路由过来的，
+      //如果是page2过来的，表明当前页面不需要刷新获取新数据，直接用之前缓存的数据即可
+    }
+
+    next();
+  },
 
   watch: {
     buttonStatus: function(value) {
@@ -74,7 +114,10 @@ export default {
         getFlash(8, 1)
           .then(res => {
             if (res.list.dataList.length != 0) {
-              if (self.startTime != res.startTime || self.endTime != res.endTime) {
+              if (
+                self.startTime != res.startTime ||
+                self.endTime != res.endTime
+              ) {
                 self.snaplist = [];
                 self.snaplist = self.snaplist.concat(res.list.dataList);
                 self.startTime = res.startTime;
@@ -100,13 +143,13 @@ export default {
     },
     getFlashData() {},
     infinite(done) {
-      let self = this; //this指向问题
-      if (self.noData) {
+      if (this.noData) {
         setTimeout(() => {
-          self.$refs.myscroller.finishInfinite(2);
+          this.$refs.myscroller.finishInfinite(2);
         });
         return;
       }
+      let self = this; //this指向问题
       self.count++;
       setTimeout(() => {
         console.log("页码" + self.count);
@@ -126,7 +169,7 @@ export default {
               self.noData = "没有更多数据";
             }
             self.$refs.myscroller.resize();
-            done(true);
+            done();
           })
           .catch(err => {
             console.log(err);

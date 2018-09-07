@@ -41,10 +41,6 @@ export default new Router({
       path: '/luckycenter',
       name: 'luckycenter',
       component: resolve => require(['@/components/luckyDraw/luckycenter'], resolve), // 使用懒加载
-      meta: {
-        keepAlive: true,// true 表示需要使用缓存
-        isBack:false, //用于判断上一个页面是哪个
-      }
     },
     {
       path: '/luckylist',
