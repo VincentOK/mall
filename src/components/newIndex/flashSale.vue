@@ -19,6 +19,7 @@
           <div class="view_more">
               <p>查看更多</p>
               <p>See more</p>
+              <p><img src="/static/img/more@2x.png" alt=""></p>
           </div>
           </router-link>
         </swiper>
@@ -253,7 +254,7 @@ export default {
 .view_more {
   height: 185px;
   width: 100px;
-  border: 1px solid #eee;
+  border: 0.8px solid #eee;
 }
 .a_detail {
   text-decoration: none;

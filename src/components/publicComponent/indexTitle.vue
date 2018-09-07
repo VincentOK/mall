@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="shop_title">
-      <img class="close_shop" v-on:click="_protypeJs.JScloseWebView()" src="/static/img/pay_close.png" alt="">
-      时间商城
+      <img class="close_shop" v-on:click="_protypeJs.JScloseWebView()" src="/static/img/close@2x.png" alt="">
+      &nbsp;&nbsp;&nbsp;时间商城
     </div>
   </div>
 </template>
@@ -23,7 +23,7 @@
   .close_shop{
     position: absolute;
     height: 12px;
-    left: 10px;
+    left: 15px;
     top: 14px;
   }
   .shop_title{

@@ -155,8 +155,8 @@
     float: right;
   }
   .refund_now{
-    height: 49px;
-    line-height: 49px;
+    height: 30px;
+    line-height: 30px;
     padding-right: 12px;
   }
   .refund_btn{

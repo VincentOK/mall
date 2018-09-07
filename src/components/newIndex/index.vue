@@ -271,7 +271,7 @@ export default {
 }
 .flashSale {
   height: 49px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 0.8px solid #eee;
   vertical-align: middle;
 }
 .flashSale .flash_sale_char {

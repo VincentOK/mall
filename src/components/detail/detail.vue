@@ -25,8 +25,9 @@
               {{goodsDetail.map.realityPrice}}
             </label>
             <label class="money_real"  v-if="goodsDetail.map.timecoinPrice">
-              <label class="fontM">时间币</label>
-              {{goodsDetail.map.timecoinPrice}}
+              <!--<label class="fontM">时间币</label>-->
+              <img class="time_icon" style="height: 16px;width: 16px;" src="/static/img/icon@2x.png" alt="">
+              &nbsp; &nbsp; &nbsp;{{goodsDetail.map.timecoinPrice}}
             </label>
             <label class="money_over"   v-if="goodsDetail.map.suggest_price"><label class="fontM_i">￥</label>{{goodsDetail.map.suggestPrice}}</label>
             <label class="money_over_count">剩余{{goodsDetail.map.inventory}}件</label>
@@ -239,7 +240,10 @@ export default {
   }
 </style>
 <style scoped>
-
+.time_icon{
+  position: absolute;
+  top: 0px;
+}
   .block{
     display: block;
   }
@@ -399,6 +403,9 @@ export default {
     margin-top: 13px;
     margin-bottom: 15px;
     /*padding: 10px 0;*/
+    height: 20px;
+    line-height: 20px;
+    position: relative;
   }
   .money_real{
     color: #ec414d;

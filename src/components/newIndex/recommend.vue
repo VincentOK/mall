@@ -34,7 +34,7 @@
                         <router-link class="a_detail" :to="'/detail/' + Timeitem.commodityId +'/' + Timeitem.distributionChannel">
                         <img :src="Timeitem.imgUrl">
                         <p class="swiper_name">{{_protypeJs.maxSlice13(Timeitem.commodityName)}}</p>
-                        <p class="swiper_price">{{Timeitem.timecoinPrice | formatMoney}}<span>时间币</span></p>
+                        <p class="swiper_price"><img class="time_icon" style="height: 13px;width: 13px;" src="/static/img/icon@2x.png" alt="">{{Timeitem.timecoinPrice | formatMoney}}</p>
                         <p class="swiper_del_price"><del>￥{{Timeitem.suggestPrice | formatMoney}}</del></p>
                         <p class="swiper_surplus_count">剩余{{Timeitem.inventory}}件</p>
                         </router-link>
@@ -73,8 +73,8 @@ export default {
     }
   },
   filters: {
-  
-   
+
+
   },
   methods: {
     goodsTagStyle(id) {
@@ -98,6 +98,11 @@ export default {
 </script>
 
 <style scoped>
+  .time_icon{
+    position: absolute;
+    left: 0;
+    top: 3.5px;
+  }
 .recommend_title {
   margin: 0;
   height: 70px;
@@ -215,6 +220,10 @@ export default {
   font-size: 13px;
   color: #f10215;
   font-weight: bold;
+  height: 20px;
+  line-height: 20px;
+  position: relative;
+  text-indent: 15px;
 }
 .swiper_price span {
   margin-left: 2px;
