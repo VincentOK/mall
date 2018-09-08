@@ -1,5 +1,4 @@
 import fetch from '../config/fetch'
-
 /**
  * 首页用户信息
  * uid:用户id(*)
