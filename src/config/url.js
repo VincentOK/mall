@@ -12,10 +12,10 @@ let imgBaseUrl = '';
 
 console.log(process.env.NODE_ENV)
 if (process.env.NODE_ENV == 'development') {
-  baseUrl = 'http://192.168.0.146:8989';
+  baseUrl = 'http://192.168.0.154:8080/timestore/';
   imgBaseUrl = '/img/';
 }else if(process.env.NODE_ENV == 'production'){
-  baseUrl = 'http://www.nihaotime.com/timestore/';
+  baseUrl = 'https://www.nihaotime.com/timestore/';
   // imgBaseUrl = 'http://www.ninhaotime.com/';
 }
 
