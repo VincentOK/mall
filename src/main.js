@@ -28,11 +28,11 @@ Vue.config.productionTip = false;
   console.log("环境："+process.env.NODE_ENV);
   if(process.env.NODE_ENV == 'production'){//development   //production
     let aa = JS.getAppUserId();
-    alert("获取用户id:"+aa)
+    alert("获取用户id:"+aa);
     if(aa){
       localStorage.setItem('user',aa);
     }else{
-      alert('获取用户id失败，请重新进入')
+      alert('获取用户id失败，请重新进入');
       JS.closeWebView();
     }
   }
