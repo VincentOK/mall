@@ -105,17 +105,19 @@ export default {
       commodity_time_list: [],
       commodity_count_list: [],
       commodity_count: 0,
-      uid: ""
+      uid:""
     };
   },
   mounted() {
     let self = this;
     self.uid = self._protypeJs.getUserId();
+    console.log(self.uid+'aaa');
     getUserInfo(self.uid)
       .then(res => {
         self.headImgPath = res.headImgPath;
         self.nickName = res.nickName;
         self.availableCoin = res.availableCoin/100;
+        window.localStorage.setItem('availableCoin',res.availableCoin);
         console.log(res);
       })
       .catch(err => {

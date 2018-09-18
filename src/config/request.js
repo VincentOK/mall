@@ -185,4 +185,11 @@ export const sureRefund = (orderNumber) => fetch('order/confirmGoods', {
     orderNumber: orderNumber,
 }, 'POST')
 
+/**
+ * 预支付订单
+ * @param parms
+ * @returns {Promise<*>}
+ */
+export const payMoney = (parms) => fetch('commodity/addOrder', parms, 'POST', true);
+
 // export const searchplace = (callback) => fetch('announce/findann', callback);

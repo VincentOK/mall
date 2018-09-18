@@ -45,8 +45,8 @@
     </div>
     <div class="question_des">
       <p class="photo">
-        <input type="file" v-if="imgList.length <5"  id="file_input" v-on:click="change" accept="image/*">
-        <img :src="imgList.length <5 ? '/static/img/choosePhoto.png' : '/static/img/choosePhotoLast.png'"  alt="">
+        <input type="file" v-if="imgList.length <5"  id="file_input" v-on:click="change" accept="image/*" capture="camera">
+        <img :src="imgList.length <5 ? '/static/img/choosePhoto.png' : '/static/img/choosePhotoLast.png'" alt="">
       </p>
     </div>
     <div class="null_div"></div>
@@ -155,6 +155,7 @@
                 let length = vm.imgList.length;
                 console.log(length);
                 if(length < 5){
+                 alert("上传成功相册路径："+res.target);
                   vm.imgList.push(res.target)
                 }
               }).catch(err =>{

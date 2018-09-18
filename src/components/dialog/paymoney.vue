@@ -7,64 +7,92 @@
           <img v-on:click="closeModel" class="pay_money_close" src="/static/img/pay_close.png" alt="">
           <p class="pay_money_title">确认支付</p>
         </div>
+
         <div class="pay_style">
           <p class="pay_style_one">请选择支付方式</p>
-          <p class="alipay" v-on:click="chooseAlipay">
-            <img class="pay_one" src="/static/img/play@2x.png" alt="">
-            <label class="pay_two">支付宝支付</label>
-            <img class="pay_th" :src="alicheck" alt="">
-          </p>
-          <p class="wechat"  v-on:click="chooseWechat">
-            <img class="pay_one"  src="/static/img/wechat@2x.png" alt="">
-            <label class="pay_two">微信支付</label>
-            <img class="pay_th" :src="wechatcheck" alt="">
-          </p>
 
-          <!--<p class="wechat"  v-on:click="chooseChina">-->
-            <!--<img class="pay_one"  src="/static/img/card.png" alt="">-->
-            <!--<label class="pay_two">银行卡支付</label>-->
-            <!--<img class="pay_th" :src="chinacheck" alt="">-->
-          <!--</p>-->
+          <div  v-for="(item,index) in payStyle" :key="index">
+            <p class="alipay" v-on:click="chooseAlipay(item.payTypeId)">
+              <!--<img class="pay_one"  :src="item.img" alt="">-->
+              <label class="pay_two">{{item.typeName}}</label>
+              <img class="pay_th" v-if="item.flag" src="/static/img/select@2x.png" alt="">
+              <img class="pay_th" v-else src="/static/img/uncheck.png" alt="">
+            </p>
+
+            <!--<p class="wechat"  v-on:click="chooseWechat">-->
+              <!--<img class="pay_one"  src="/static/img/wechat@2x.png" alt="">-->
+              <!--<label class="pay_two">微信支付</label>-->
+              <!--<img class="pay_th" :src="wechatcheck" alt="">-->
+            <!--</p>-->
+
+            <!--<p class="wechat"  v-on:click="chooseChina">-->
+              <!--<img class="pay_one"  src="/static/img/card.png" alt="">-->
+              <!--<label class="pay_two">银行卡支付</label>-->
+              <!--<img class="pay_th" :src="chinacheck" alt="">-->
+            <!--</p>-->
+          </div>
         </div>
 
         <div class="get_ticket">
-          <p class="need_ticket">
-            <img v-on:click="chooseTicket" :src="ticket" alt="">
-            <label>需要开具发票</label>
-          </p>
 
 
-          <div v-if="needticket">
-              <p class="ticket_style">
-                <label>发票类型：</label>
-                <label  v-bind:class="choose_style ? 'person_i' : 'style_i'" v-on:click="chooseStyle">普通发票</label>
-                <label  v-bind:class="choose_style ? 'style_i' : 'person_i'" v-on:click="chooseStyle">增值税专用发票</label>
+          <div v-if="this.paySticket">
+              <p class="need_ticket">
+                <img v-on:click="chooseTicket" :src="ticket" alt="">
+                <label>需要开具发票</label>
               </p>
-              <p class="ticket_style" style="padding-bottom: 16px">
-                <label>发票抬头：</label>
-                <label  v-bind:class="choose_style_ticket ? 'person_i_i' : 'style_i_i'" v-on:click="chooseStyleTicket">个人</label>
-                <label  v-bind:class="choose_style_ticket ? 'style_i_i' : 'person_i_i'" v-on:click="chooseStyleTicket">单位</label>
-              </p>
-              <div class="input_word">
-                <input type="text" placeholder="请填写单位名称">
-                <input type="text" placeholder="请填写纳税人识别号">
+              <div v-if="needticket">
+
+
+                  <p class="ticket_style">
+                    <label>发票类型：</label>
+                    <label v-for="(item,index) in paySticket" :key="index">
+                      <label :class="item.flag?'person_i':'style_i'" v-on:click="choose_style_fn(item.typeId)">{{item.typeName}}</label>
+                    </label>
+                    <!--<label v-for="(item,index) in paySticket" :key="index" v-bind:class="choose_style ? 'person_i' : 'style_i'" v-on:click="chooseStyle">普通发票</label>-->
+                    <!--<label  v-bind:class="choose_style ? 'style_i' : 'person_i'" v-on:click="chooseStyle">增值税专用发票</label>-->
+                  </p>
+                  <p class="ticket_style" style="padding-bottom: 16px"  v-for="(item,index) in paySticket">
+                    <span v-if="item.typeId === 1 && item.flag === true">
+                      <label>发票抬头：</label>
+                      <label  v-bind:class="choose_style_ticket_i ? 'person_i_i' : 'style_i_i'" v-on:click="chooseStyleTicket_i">个人</label>
+                      <label  v-bind:class="choose_style_ticket_j ? 'person_i_i' : 'style_i_i'" v-on:click="chooseStyleTicket_j">单位</label>
+                    </span>
+                    <span  v-if="item.typeId === 2 && item.flag === true">商户将联系您沟通开具发票相关事项，请保持联系方式畅通。</span>
+                  </p>
+                  <div class="input_word" v-for="(item,index) in paySticket"  v-if="item.typeId === 1 && item.flag === true &&  choose_style_ticket_j">
+                    <input type="text" v-model="ponenyname" placeholder="请填写单位名称">
+                    <input type="text" v-model="ponenynum" placeholder="请填写纳税人识别号">
+                  </div>
+
               </div>
+
           </div>
+
 
           <div>
             <p class="goods_money">
               <label>商品总额</label>
-              <label class="money_all">￥34.00</label>
+              <label class="money_all"  v-if="this.paymoneyMsg.msg.realityPrice !== undefined">￥{{(this.paymoneyMsg.msg.realityPrice)*(this.paymoneyMsg.msg.count)}}</label>
+              <label class="money_all"  v-if="this.paymoneyMsg.msg.timecoinPrice !== undefined"><img class="time_icon" style="height: 14px;width: 14px;" src="/static/img/icon@2x.png" alt="">{{(this.paymoneyMsg.msg.timecoinPrice)*(this.paymoneyMsg.msg.count)}}</label>
             </p>
             <p class="yun_money">
               <label>运费</label>
-              <label class="money_all">￥34.00</label>
+              <label class="money_all">￥{{this.paymoneyMsg.msg.carriage }}</label>
             </p>
           </div>
-
         </div>
         <div class="pay_style_btn">
-          <label class="wai_label">实付款：<label class="all_money_i"><label class="money_ii">￥</label>49.00</label></label>
+          <label class="wai_label">实付款：
+            <label class="all_money_i" v-if="this.paymoneyMsg.msg.realityPrice !== undefined">
+              <label class="money_ii">￥</label>
+              {{((this.paymoneyMsg.msg.realityPrice)*(this.paymoneyMsg.msg.count))+this.paymoneyMsg.msg.carriage}}
+            </label>
+
+            <label class="all_money_i" v-if="this.paymoneyMsg.msg.timecoinPrice !== undefined">
+              <img class="time_icon" style="height: 16px;width: 16px;" src="/static/img/icon@2x.png" alt="">{{((this.paymoneyMsg.msg.timecoinPrice)*(this.paymoneyMsg.msg.count))+'+￥'+this.paymoneyMsg.msg.carriage }}
+            </label>
+          </label>
           <button @click="surepaymoney">确认付款</button>
         </div>
       </div>
@@ -72,19 +100,22 @@
 </template>
 
 <script>
-    export default {
+  import { payMoney } from "../../config/request";
+
+  export default {
         name: "paymoney",
         props:['paymoneyMsg'],
         data (){
           return {
+            ponenyname:'',
+            ponenynum:'',
             paymoney_status:false,
-            choose_style:true,
-            choose_style_ticket:true,
+            choose_style_ticket_i:true,
+            choose_style_ticket_j:false,
             ticket:'/static/img/5@2xuncheck.png',
             needticket:false,
-            alicheck:'/static/img/select@2x.png',
-            wechatcheck:'/static/img/uncheck.png',
-            chinacheck:'/static/img/uncheck.png'
+            payStyle:null,
+            paySticket:null
           }
         },
       watch: {
@@ -93,59 +124,142 @@
           console.log("bbbbbbbbbbbb"+oldVal)
         }
       },
+      created(){
+        console.log("人民币支付信息："+JSON.stringify(this.paymoneyMsg.msg.realityPrice));
+        if(this.paymoneyMsg.msg.distributionChannel === '1' || (this.paymoneyMsg.msg.distributionChannel === '2' && this.paymoneyMsg.msg.carriage !== 0)){
+          this.payStyle = JSON.parse(window.localStorage.getItem('commodityPayType'));
+          this.paySticket = JSON.parse(window.localStorage.getItem('commodityInvoiceType'));
+        }
+        console.log(this.payStyle)
+      },
       mounted(){
-        console.log("人民币支付信息："+this.paymoneyMsg)
+      },
+      destroyed(){
+          window.localStorage.removeItem('commodityPayType')
+        window.localStorage.removeItem('commodityInvoiceType')
       },
       methods:{
+          /**
+           * 获取支付方式
+           */
+          getPayStyle(arrStyle){
+            for (let i = 0;i<arrStyle.length;i++){
+              if(arrStyle[i].flag){
+                return arrStyle[i].payTypeId
+              }
+            }
+          },
+        /**
+         * 获取发票类型
+         */
+        getPayTicket(arrStyle){
+          for (let i = 0;i<arrStyle.length;i++){
+            if(arrStyle[i].flag){
+              return arrStyle[i].typeId
+            }
+          }
+        },
         /**
          * 确认支付
          */
         surepaymoney:function(){
-          // let obj = this.paymoneyMsg;//支付信息
-          let obj = '支付信息';//支付信息
-          this._protypeJs.appSurePayMoney(obj);
-        },
-        chooseStyle:function(){
-          if(this.choose_style){
-            this.choose_style = false
-          }else {
-            this.choose_style = true
+          let obj = this.paymoneyMsg;//支付信息
+          let payStatus = this.getPayStyle(this.payStyle);
+          let payTicket = null;
+          if(this.paySticket){
+             payTicket = this.getPayTicket(this.paySticket);
           }
-        },
-        chooseStyleTicket:function(){
-          if(this.choose_style_ticket){
-            this.choose_style_ticket = false
-          }else {
-            this.choose_style_ticket = true
+
+          if(payStatus){
+            obj.msg.payTypeId = payStatus;
           }
+          if(payTicket && this.needticket){
+            obj.msg.invoiceTypeId = payTicket;
+            if(payTicket === 1 && this.choose_style_ticket_j){
+              if(this.ponenyname && this.ponenynum){
+                obj.msg.invoiceName =this.ponenyname;
+                obj.msg.invoiceCode =this.ponenynum
+              }else{
+                alert("请填写发票信息");
+                return false;
+              }
+            }else {
+              delete obj.msg.invoiceName;
+              delete obj.msg.invoiceCode;
+            }
+          }else {
+           delete obj.msg.invoiceTypeId
+          }
+          alert("支付信息："+JSON.stringify(obj.msg))
+          payMoney(obj.msg).then(res =>{
+            console.log("支付成功回显："+res)
+          }).catch(err =>{
+            console.log(err)
+          })
+          // this._protypeJs.appSurePayMoney(obj);
         },
+        /**
+         * 选择支付抬头
+         */
+        chooseStyleTicket_i:function(){
+          this.choose_style_ticket_i = true
+          this.choose_style_ticket_j = false
+        },
+        chooseStyleTicket_j:function(){
+          this.choose_style_ticket_i = false
+          this.choose_style_ticket_j = true
+        },
+        /**
+         * 选择发票类型
+         */
+        choose_style_fn(val){
+          console.log(val)
+          let ticket = this.paySticket
+          for (let i = 0;i<ticket.length;i++){
+            if (ticket[i].typeId === val) {
+              ticket[i].flag = true
+            }else {
+              ticket[i].flag = false
+            }
+          }
+          this.paySticket = ticket
+        },
+        /**
+         * 是否需要开发票
+         */
         chooseTicket:function(){
-          let mychoose = this.ticket
+          let mychoose = this.ticket;
           if(mychoose == "/static/img/5@2x.png"){
             this.ticket = '/static/img/5@2xuncheck.png'
-            this.needticket = false
+            this.needticket = false;
           }else {
             this.ticket = '/static/img/5@2x.png'
             this.needticket = true
           }
         },
+        /**
+         * 关闭支付弹框
+         */
         closeModel:function () {
           this.$emit('childByValue',this.paymoney_status)
         },
-        chooseAlipay:function () {
-          this.alicheck = '/static/img/select@2x.png'
-          this.wechatcheck = '/static/img/uncheck.png'
-          this.chinacheck = '/static/img/uncheck.png'
-        },
-        chooseWechat:function () {
-          this.wechatcheck = '/static/img/select@2x.png'
-          this.alicheck = '/static/img/uncheck.png'
-          this.chinacheck = '/static/img/uncheck.png'
-        },
-        chooseChina:function () {
-          this.chinacheck = '/static/img/select@2x.png'
-          this.alicheck = '/static/img/uncheck.png'
-          this.wechatcheck = '/static/img/uncheck.png'
+        /**
+         * 选择支付方式
+         * @param val
+         */
+        chooseAlipay:function (val) {
+          console.log("支付方式ID："+val);
+          let arrStyle = this.payStyle;
+          for (let i = 0;i<arrStyle.length;i++){
+            if(arrStyle[i].payTypeId === val){
+              arrStyle[i].flag = true
+            }else {
+              arrStyle[i].flag = false
+            }
+          }
+          // console.log("支付方式ID："+JSON.stringify(arrStyle));
+          this.payStyle = arrStyle
+          console.log(this.payStyle)
         }
       }
     }
@@ -165,7 +279,7 @@
   }
   .all_money_i{
     color: #f10215;
-    font-size: 27.5px;
+    font-size: 24px;
     font-weight: 600;
   }
   .pay_style_btn{
