@@ -43,6 +43,7 @@
   </div>
   </scroller>
   <refund_dialog-view :checkStatus="checkStatus" v-on:childByValue="childByValue"  v-if="checkStatus_i"></refund_dialog-view>
+  <!--<refund_address-view></refund_address-view>-->
 </div>
 </template>
 
@@ -50,11 +51,14 @@
   import Vue from 'vue'
   import {getOrder} from '../../config/request'
   import refund_dialog from '../dialog/refund_dialog'
-  Vue.component('refund_dialog-view',refund_dialog)
+  import refund_address from '../dialog/refund_address'
+  Vue.component('refund_dialog-view',refund_dialog);
+  Vue.component('refund_address-view',refund_address);
     export default {
         name: "refundlist",
       comments:{
-        refund_dialog
+        refund_dialog,
+        refund_address
       },
         props:['refund_status'],
         data(){

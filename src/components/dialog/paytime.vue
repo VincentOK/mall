@@ -8,7 +8,7 @@
         <p class="pay_money_title">确认支付</p>
       </div>
       <div class="pay_style pay_time">
-        <label class="time_i">33.00<label class="word_time">时间币</label></label>
+        <label class="time_i">{{(this.paymoneyMsg.msg.timecoinPrice)*(this.paymoneyMsg.msg.count)}}<label class="word_time">时间币</label></label>
       </div>
       <div class="pay_style_btn">
         <button @click="surePayTime">确认支付</button>
@@ -18,6 +18,8 @@
 </template>
 
 <script>
+  import { payMoney } from "../../config/request";
+
   export default {
     name: "paymoney",
     props:['paymoneyMsg'],
@@ -26,12 +28,18 @@
       }
     },
     mounted(){
-      console.log("时间币支付信息："+this.paymoneyMsg)
+      console.log("时间币支付信息："+this.paymoneyMsg.msg)
     },
     methods:{
       surePayTime:function(){
-        let obj = this.paymoneyMsg
-        this._protypeJs.appSurePayMoney(obj);
+        let obj = this.paymoneyMsg.msg;
+        alert(JSON.stringify(obj));
+        payMoney(obj).then(res =>{
+          console.log("纯时间币商品支付成功："+res)
+        }).catch(err =>{
+          console.log(err)
+        })
+        // this._protypeJs.appSurePayMoney(obj);
       },
       closeModel:function () {
         this.$emit('childByValue',false)
