@@ -101,7 +101,7 @@ export default {
       childTitleword: "抽奖",
       whetherFree: false,
       whetherFreeCount: null,
-      expend: 0.5,
+      expend: 50,
       clickLottery: false,
       winThePrice: "",
       stateLottery: "",
@@ -207,10 +207,11 @@ export default {
       let self = this;
       let param = {
         uid: this.uId,
-        luckyId: this.luckyId
+        luckyId: this.luckyId,
+        expend:0
       };
       if (this.whetherFreeCount <= 0) {
-        param["expend"] = this.expend;
+        param.expend = this.expend;
       }
       getlucky(param)
         .then(res => {

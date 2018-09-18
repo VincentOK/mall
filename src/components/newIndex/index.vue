@@ -115,7 +115,7 @@ export default {
       .then(res => {
         self.headImgPath = res.headImgPath;
         self.nickName = res.nickName;
-        self.availableCoin = res.availableCoin;
+        self.availableCoin = res.availableCoin/100;
         console.log(res);
       })
       .catch(err => {

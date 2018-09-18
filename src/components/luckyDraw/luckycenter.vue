@@ -110,13 +110,13 @@ export default {
         };
         let param = {
           uid: this.uid,
-          commodityId: this.prizeInfo.prizeId,
-          commodityName: this.prizeInfo.prizeName,
+          commodityPrizeId: this.prizeInfo.prizeId,
+          commodityPrizeName: this.prizeInfo.prizeName,
           unit: this.prizeInfo.prizeUnit,
-          imgUrl: this.prizeInfo.prizeImgUrl,
-          shippingName: this.addressInfo.shippingName,
-          shippingPhone: this.addressInfo.shippingPhone,
-          shippingAddress: this.addressInfo.shippingAddress,
+          commodityPrizeimgUrl: this.prizeInfo.prizeImgUrl,
+          receivingName: this.addressInfo.shippingName,
+          receivingPhone: this.addressInfo.shippingPhone,
+          receivingAddress: this.addressInfo.shippingAddress,
           detailAddress: this.addressInfo.detailAddress
         };
         addLuchyAddress(param)
