@@ -130,21 +130,31 @@ export const uploadBlobImg = (photoFile) => fetch('order/uploadImages', photoFil
 
 
 /**
- * 提交退款申请
- * uid：用户id(*)
+ * 单击退还商品按钮时,显示商家退款地址信息
  * orderNumber：订单号(*)
- * commodityId：商品id(*)
- * reason：退款原因(*)
- * describes：问题描述
- * imgUrl：图片files对象数组
  */
-export const addRedund = (uid, orderNumber, commodityId, reason, describes, photoFile) => fetch('order/addRefund', {
+export const getTenantRefundAddress = (orderNumber, platform) => fetch('order/tenantRefundAddress', {
+        orderNumber: orderNumber,
+        platform: platform
+    }, 'POST', false)
+    /**
+     * 提交退款申请
+     * uid：用户id(*)
+     * orderNumber：订单号(*)
+     * commodityId：商品id(*)
+     * reason：退款原因(*)
+     * describes：问题描述
+     * imgUrl：图片files对象数组
+     */
+export const addRedund = (uid, orderNumber, commodityId, reason, describes, photoFile, name, phone) => fetch('order/addRefund', {
         uid: uid,
         orderNumber: orderNumber,
         commodityId: commodityId,
         reason: reason,
         describes: describes,
-        targetPath: photoFile
+        targetPath: photoFile,
+        contacts: name,
+        phone: phone
     }, 'POST')
     /**
      * 查询中奖公告
