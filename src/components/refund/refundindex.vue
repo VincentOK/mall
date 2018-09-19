@@ -227,7 +227,7 @@
               //请求服务端
               // alert("请求服务端提交申请")
               console.log(filesImg)
-              addRedund(uid,orderNumber,commodityId,reason,desc,strImgList).then(res =>{
+              addRedund(uid,orderNumber,commodityId,reason,desc,strImgList,name,phone).then(res =>{
                 console.log("确认提交申请："+JSON.stringify(res))
                 if(res){
                   this.$router.go(-1);//返回上一层

@@ -21,8 +21,8 @@
             <div class="snap_one_right">
               <p class="snap_right_title">{{item.commodityName}}</p>
               <p class="snap_title_pay">
-                <label class="snap_real_money">￥{{item.realityPrice}}</label>
-                <label class="snap_money_i">￥{{item.suggestPrice}}</label>
+                <label class="snap_real_money">￥{{item.realityPrice | formatMoney}}</label>
+                <label class="snap_money_i">￥{{item.suggestPrice | formatMoney}}</label>
               </p>
               <p class="snap_title_on">
                 <label class="snap_style" v-show="item.carriage==0">{{item.carriage==0?'免邮':''}}</label>
