@@ -95,18 +95,28 @@
           </label>
           <button @click="surepaymoney">确认付款</button>
         </div>
+        <dialog-view  :dialogblock="dialogblock"></dialog-view>
       </div>
     </div>
 </template>
 
 <script>
+  import Vue from 'vue'
   import { payMoney } from "../../config/request";
-
+  import mydialog from '../dialog/mydialog'
+  Vue.component('dialog-view',mydialog)
   export default {
         name: "paymoney",
+        comments:{
+          mydialog
+        },
         props:['paymoneyMsg'],
         data (){
           return {
+            dialogblock:{
+              flag:false,
+              msg:''
+            },
             ponenyname:'',
             ponenynum:'',
             paymoney_status:false,
@@ -133,12 +143,27 @@
         console.log(this.payStyle)
       },
       mounted(){
+        window['payMoneyStatus'] = (Boolean) => {
+          this.payBoolean(Boolean);
+        }
       },
       destroyed(){
           window.localStorage.removeItem('commodityPayType')
         window.localStorage.removeItem('commodityInvoiceType')
       },
       methods:{
+          /**
+           * android&IOS调用支付返回支付状态
+           */
+          payBoolean(Boolean){
+            if(Boolean){
+              alert('支付成功');
+              this.$emit('childByValue',this.paymoney_status)
+            }else {
+              alert('支付失败');
+              this.$emit('childByValue',this.paymoney_status)
+            }
+        },
           /**
            * 获取支付方式
            */
@@ -180,7 +205,10 @@
                 obj.msg.invoiceName =this.ponenyname;
                 obj.msg.invoiceCode =this.ponenynum
               }else{
-                alert("请填写发票信息");
+                this.dialogblock = {
+                  flag:true,
+                  msg:'请填写发票信息'
+                };
                 return false;
               }
             }else {
@@ -190,9 +218,17 @@
           }else {
            delete obj.msg.invoiceTypeId
           }
-          alert("支付信息："+JSON.stringify(obj.msg))
+          alert("支付信息："+JSON.stringify(obj.msg));
           payMoney(obj.msg).then(res =>{
-            console.log("支付成功回显："+res)
+            console.log("支付成功回显："+res);
+            if(res.orderStatus === "1"){//调起app支付
+             alert("订单号："+res.orderNumber);
+              this._protypeJs.appSurePayMoney(res.orderNumber);
+            }else {//支付完成
+              alert('支付完成');
+              // this._protypeJs.removeBodyHeight();
+              this.$emit('childByValue',this.paymoney_status)
+            }
           }).catch(err =>{
             console.log(err)
           })

@@ -23,6 +23,9 @@ export default {
     }
   },
   mounted(){
+    window['androidFuck'] = (bollen) => {
+      this.dioAlert(bollen);
+    }
   },
   computed:{
     // activated: function () {

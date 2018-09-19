@@ -117,7 +117,7 @@ export default {
         self.headImgPath = res.headImgPath;
         self.nickName = res.nickName;
         self.availableCoin = res.availableCoin/100;
-        window.localStorage.setItem('availableCoin',res.availableCoin);
+        window.localStorage.setItem('availableCoin',(res.availableCoin)/100);
         console.log(res);
       })
       .catch(err => {

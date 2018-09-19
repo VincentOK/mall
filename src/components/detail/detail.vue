@@ -97,8 +97,8 @@
         <paytime-view v-on:childByValue="childByValue"  :paymoneyMsg="paymoneyMsg" v-if="paytime"></paytime-view>
         <dialog-view  :dialogblock="dialogblock"></dialog-view>
         <div class="buy_it">
-          <button v-on:click="pay_money" v-if="btnBuy" class="moneyBtn">立即购买</button>
-          <button v-else class="timecoin">时间币不足</button>
+          <button v-on:click="pay_money" v-if="btnBuy" class="moneyBtn">{{allowbuy}}</button>
+          <button v-else class="timecoin">{{noallowbuy}}</button>
         </div>
     </div>
   </div>
@@ -128,6 +128,8 @@ export default {
   },
   data () {
     return {
+      allowbuy:'',
+      noallowbuy:'',
       childTitleword:'商品详情',
       btnBuy:true,//购买按钮
       dialogblock:{
@@ -195,14 +197,19 @@ export default {
     }
   },
   mounted(){
-    console.log("页面初始化")
-    console.log(this.$route.params.id)
-    console.log(this.$route.params.type)
+    console.log("页面初始化");
+    console.log(this.$route.params.id);
+    console.log(this.$route.params.type);
     this.goodsStatus = this.$route.params.type;
+    if(this.goodsStatus === '1'){
+      this.allowbuy = '立即购买'
+    }else {
+      this.allowbuy = '马上兑换'
+    }
     this.commodityId = this.$route.params.id;
     let type = this.$route.params.type;
-    let commodityId = this.$route.params.id
-    let uid = this._protypeJs.getUserId()
+    let commodityId = this.$route.params.id;
+    let uid = this._protypeJs.getUserId();
     let vm = this;
 
     /**
@@ -247,7 +254,6 @@ export default {
     // ],
     //   "addressMap": null
     // };
-
     /**
      * 时间币商品
      */
@@ -281,23 +287,33 @@ export default {
     //   "commodityInvoiceType": null,
     //   "addressMap": null
     // }
-    if(type === '2' && (vm.goodsDetail.map.timecoinPrice)/100 > window.localStorage.getItem('availableCoin')){
-      this.btnBuy = false
-    }
+    // if(type === '2' && (vm.goodsDetail.map.timecoinPrice)/100 > window.localStorage.getItem('availableCoin')){
+    //   this.btnBuy = false
+    // }
     getDetail(type,commodityId,uid).then(res =>{
       console.log(JSON.stringify(res));
-      if(type === '2' && (res.map.timecoinPrice)/100 > window.localStorage.getItem('availableCoin')){
-        this.btnBuy = false
+      vm.goodsDetail = res;
+      if(res.map.inventory <= 0){
+        this.btnBuy = false;
+        this.noallowbuy = '库存不足'
+        return false;
+      }else if(type === '2' && (res.map.timecoinPrice)/100 > window.localStorage.getItem('availableCoin')){
+        this.btnBuy = false;
+        this.noallowbuy = '时间币不足'
       }
-      vm.goodsDetail = res
     });
   },
   methods:{
     addCount(){
       this.counter = this.counter+1;
-      if(this.goodsStatus === '2'){
+      if(res.map.inventory < this.counter){
+        this.btnBuy = false;
+        this.noallowbuy = '库存不足';
+        return false;
+      }else if(this.goodsStatus === '2'){
         if((this.counter)*((this.goodsDetail.map.timecoinPrice)/100) > window.localStorage.getItem('availableCoin')){
-          this.btnBuy = false
+          this.btnBuy = false;
+          this.noallowbuy = '时间币不足'
         }
       }
     },
@@ -306,11 +322,17 @@ export default {
       console.log(count);
       if(count > 0){
         this.counter = count-1;
-        if(this.goodsStatus === '2'){
+        if(res.map.inventory < this.counter){
+          this.btnBuy = false;
+          this.noallowbuy = '库存不足';
+          return false;
+        }else if(this.goodsStatus === '2'){
           if(parseInt((this.counter)*((this.goodsDetail.map.timecoinPrice)/100)) <= parseInt(window.localStorage.getItem('availableCoin'))){
-            this.btnBuy = true
+            this.btnBuy = true;
+            this.noallowbuy = ''
           }else {
-            this.btnBuy = false
+            this.btnBuy = false;
+            this.noallowbuy = '时间币不足'
           }
         }
       }
@@ -347,7 +369,7 @@ export default {
           window.localStorage.setItem('commodityInvoiceType',JSON.stringify(this.goodsDetail.commodityInvoiceType))//发票类型列表
         }
 
-        if(this.goodsStatus == 1){//人民币商品
+        if(this.goodsStatus === '1'){//人民币商品
           let obj = {
             msg:{
               distributionChannel:this.goodsStatus,//商品类型
@@ -359,11 +381,13 @@ export default {
               receivingAddress:this.goodsDetail.addressMap.shippingAddress + this.goodsDetail.addressMap.detailAddress,//收货地址
               carriage:(this.goodsDetail.map.carriage)/100,//运费
               realityPrice:(this.goodsDetail.map.realityPrice)/100,//单价
+              entrance:window.localStorage.getItem('entrance'),//入口
+              platform:window.localStorage.getItem('platform'),//IOS或android
             },
           };
           this.paymoneyMsg = obj;
           this.paymoney = true;
-        }else if( this.goodsStatus == 2){//时间币商品
+        }else if( this.goodsStatus === '2'){//时间币商品
             if(this.goodsDetail.map.carriage !== 0){//运费不为0
               let obj = {
                 msg:{
@@ -376,6 +400,8 @@ export default {
                   receivingAddress:this.goodsDetail.addressMap.shippingAddress + this.goodsDetail.addressMap.detailAddress,//收货地址
                   carriage:(this.goodsDetail.map.carriage)/100,//运费
                   timecoinPrice:(this.goodsDetail.map.timecoinPrice)/100,//单价
+                  entrance:window.localStorage.getItem('entrance'),//入口
+                  platform:window.localStorage.getItem('platform'),//IOS或android
                 },
               };
               this.paymoneyMsg = obj;
@@ -391,6 +417,8 @@ export default {
                   receivingPhone:this.goodsDetail.addressMap.shippingPhone,//收货人姓名
                   receivingAddress:this.goodsDetail.addressMap.shippingAddress + this.goodsDetail.addressMap.detailAddress,//收货地址
                   timecoinPrice:(this.goodsDetail.map.timecoinPrice)/100,//单价
+                  entrance:window.localStorage.getItem('entrance'),//入口
+                  platform:window.localStorage.getItem('platform'),//IOS或android
                 },
               };
               this.paymoneyMsg = obj;
