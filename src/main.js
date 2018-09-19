@@ -26,7 +26,7 @@ Vue.config.productionTip = false;
 //获取用户ID
 (function(){
   console.log("环境："+process.env.NODE_ENV);
-  if(process.env.NODE_ENV == 'development'){//development   //production
+  if(process.env.NODE_ENV == 'production'){//development   //production
     let msg = JS.getAppUserId();
     alert("获取用户id:"+JSON.parse(msg).userId);
     alert("获取入口:"+JSON.parse(msg).entrance);

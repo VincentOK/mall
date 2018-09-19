@@ -12,7 +12,8 @@ let imgBaseUrl = '';
 
 console.log(process.env.NODE_ENV)
 if (process.env.NODE_ENV == 'development') {
-    baseUrl = 'http://192.168.0.142:8080/timestore/';
+    baseUrl = 'https://www.nihaotime.com/timestore/';
+  // baseUrl = 'http://192.168.142:8080/timestore/';
     imgBaseUrl = '/img/';
 } else if (process.env.NODE_ENV == 'production') {
     baseUrl = 'https://www.nihaotime.com/timestore/';

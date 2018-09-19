@@ -193,7 +193,7 @@ export const addLuchyAddress = ({ uid, commodityPrizeId, commodityPrizeName, uni
      */
 export const sureRefund = (orderNumber) => fetch('order/confirmGoods', {
     orderNumber: orderNumber,
-}, 'POST')
+}, 'POST');
 
 /**
  * 预支付订单

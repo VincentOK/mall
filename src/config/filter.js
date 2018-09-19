@@ -1,5 +1,4 @@
 let formatMoney = (value, statusId) => {
-    if (Boolean(value)) {
         let values = Number(value) / 100;
         let hasdot = String(values).indexOf('.') > 0
         switch (statusId) {
@@ -12,8 +11,8 @@ let formatMoney = (value, statusId) => {
             default:
                 return hasdot ? String(values).substr(0, String(values).indexOf(".") + 3) : values.toFixed(1);
         }
-    }
 }
+
 let formatGoodTags = (goodId) => {
     switch (goodId) {
         case "1":

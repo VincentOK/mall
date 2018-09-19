@@ -31,7 +31,11 @@
       <label class="refund_font">快递运单号：</label>
       <label class="color_refund" v-if="item.logisticsNumber">{{item.logisticsNumber}} <label v-if="item.logisticsName">({{item.logisticsName}})</label></label>
       <label class="color_refund" v-else>暂未获取运单号</label>
-      <label class="refund_money"><label class="refund_font">实付：</label><label class="real_money">￥{{item.orderPriceRmb | formatMoney}}</label></label>
+      <label class="refund_money"><label class="refund_font">实付：</label>
+        <label class="real_money" v-if="item.orderPriceRmb !== 0">￥{{(item.orderPriceRmb + item.carriage) | formatMoney}}</label>
+        <label class="real_money" v-if="item.orderPriceSjb !== 0"><img class="time_icon" style="height: 16px;width: 16px;" src="/static/img/icon@2x.png" alt=""> {{item.orderPriceSjb | formatMoney}} + ￥{{item.carriage  | formatMoney}}</label>
+        <label class="real_money" v-if="item.orderPriceRmb === 0 && item.orderPriceSjb === 0">￥0</label>
+      </label>
     </p>
     <p class="refund_now" v-show="item.orderStatus == '2' || item.orderStatus == '3' || item.orderStatus == '4' || item.orderStatus == '9' || item.orderStatus == '10'">
       <button class="refund_btn_one" v-if="item.orderStatus == '2' || item.orderStatus == '3'" @click="gotocheck(item.commodityPrizeId,item.orderNumber)">确认收货</button>

@@ -137,8 +137,8 @@
       created(){
         console.log("人民币支付信息："+JSON.stringify(this.paymoneyMsg.msg.realityPrice));
         if(this.paymoneyMsg.msg.distributionChannel === '1' || (this.paymoneyMsg.msg.distributionChannel === '2' && this.paymoneyMsg.msg.carriage !== 0)){
-          this.payStyle = JSON.parse(window.localStorage.getItem('commodityPayType'));
-          this.paySticket = JSON.parse(window.localStorage.getItem('commodityInvoiceType'));
+          this.payStyle = JSON.parse(this._protypeJs.getPlatform('commodityPayType'));
+          this.paySticket = JSON.parse(this._protypeJs.getPlatform('commodityInvoiceType'));
         }
         console.log(this.payStyle)
       },
@@ -157,13 +157,11 @@
            */
           payBoolean(Boolean){
             if(Boolean){
-              alert('支付成功');
               this.$emit('childByValue',this.paymoney_status)
             }else {
-              alert('支付失败');
               this.$emit('childByValue',this.paymoney_status)
             }
-        },
+          },
           /**
            * 获取支付方式
            */

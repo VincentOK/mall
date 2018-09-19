@@ -200,118 +200,127 @@ export default {
     console.log("页面初始化");
     console.log(this.$route.params.id);
     console.log(this.$route.params.type);
-    this.goodsStatus = this.$route.params.type;
-    if(this.goodsStatus === '1'){
-      this.allowbuy = '立即购买'
-    }else {
-      this.allowbuy = '马上兑换'
-    }
-    this.commodityId = this.$route.params.id;
-    let type = this.$route.params.type;
-    let commodityId = this.$route.params.id;
-    let uid = this._protypeJs.getUserId();
-    let vm = this;
-
-    /**
-     * 现金商品
-     */
-    // vm.goodsDetail = {
-    //   "imgList": [
-    //     {
-    //       "imgUrl": "http://e.hiphotos.baidu.com/image/pic/item/503d269759ee3d6dd17611f84e166d224f4ade55.jpg",
-    //       "imgRank": 1
-    //     }
-    //   ],
-    //   "commodityPayType": [
-    //     {
-    //       "typeName": "微信支付",
-    //       "payTypeId": 1
-    //     },
-    //     {
-    //       "typeName": "支付宝支付",
-    //       "payTypeId": 2
-    //     }
-    //   ],
-    //   "map": {
-    //     "unit": "1件",
-    //     "realityPrice": 500,
-    //     "detail": "<p class=\"text\" style=\"margin-top: 0px; margin-bottom: 28px; padding: 0px; word-wrap: break-word; font-family: &quot;Microsoft Yahei&quot;, Helvetica, sans-serif; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;\">\r\n    <span style=\"color: rgb(255, 0, 0);\">在Wear OS智能手表上</span>，你现在可以通过向左滑动来查看这些目标，以及你的其他活动。在那里，新的界面有类似Apple Watch的活动环。你也可以从这个屏幕开始记录锻炼。\r\n</p>\r\n<p class=\"text\" style=\"margin-top: 0px; margin-bottom: 28px; padding: 0px; word-wrap: break-word; font-family: &quot;Microsoft Yahei&quot;, Helvetica, sans-serif; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;\">\r\n    <strong>通知更容易查看和删除</strong>\r\n</p>\r\n<p class=\"text\" style=\"margin-top: 0px; margin-bottom: 28px; padding: 0px; word-wrap: break-word; font-family: &quot;Microsoft Yahei&quot;, Helvetica, sans-serif; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;\">\r\n    <br/>\r\n</p>\r\n<p style=\"margin-top: 0px; margin-bottom: 28px; padding: 0px; word-wrap: break-word; font-family: &quot;Microsoft Yahei&quot;, Helvetica, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">\r\n    <img src=\"http://inews.gtimg.com/newsapp_bt/0/5053748004/641\"/>\r\n</p>\r\n<p style=\"margin-top: 0px; margin-bottom: 28px; padding: 0px; word-wrap: break-word; font-family: &quot;Microsoft Yahei&quot;, Helvetica, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">\r\n    <br/>\r\n</p>\r\n<p class=\"text\" style=\"margin-top: 0px; margin-bottom: 28px; padding: 0px; word-wrap: break-word; font-family: &quot;Microsoft Yahei&quot;, Helvetica, sans-serif; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;\">\r\n    谷歌重新设计了Wear OS上的通知屏幕。它不仅看起来更美观，而且更容易一次查看更多的通知，并删除你已经看过的通知。\r\n</p>\r\n<p>\r\n    <br/>\r\n</p>",
-    //     "suggestPrice": 600,
-    //     "inventory": 0,
-    //     "carriage": 20,
-    //     "commodityName": "人民币商品12",
-    //     "commodityId": "RMBshanpin12"
-    //   },
-    // "commodityInvoiceType": [
-    //   {
-    //     "typeName": "普通发票",
-    //     "typeId": 1
-    //   },
-    //   {
-    //     "typeName": "增值税专用发票",
-    //     "typeId": 2
-    //   }
-    // ],
-    //   "addressMap": null
-    // };
-    /**
-     * 时间币商品
-     */
-    // vm.goodsDetail = {
-    //   "imgList": [
-    //     {
-    //       "imgUrl": "http://g.hiphotos.baidu.com/image/pic/item/bd3eb13533fa828b189d4ddaf01f4134970a5a49.jpg",
-    //       "imgRank": 1
-    //     }
-    //   ],
-    //   "commodityPayType": [
-    //     {
-    //       "typeName": "微信支付",
-    //       "payTypeId": 1
-    //     },
-    //     {
-    //       "typeName": "支付宝支付",
-    //       "payTypeId": 2
-    //     }
-    //   ],
-    //   "map": {
-    //     "unit": "1台",
-    //     "detail": "<p style=\"margin-top: 0px; margin-bottom: 25px; padding: 0px; text-indent: 28px; font-size: 14px; text-align: justify; word-wrap: break-word; word-break: normal; color: rgb(43, 43, 43); font-family: simsun, arial, helvetica, clean, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">\r\n    <span style=\"color: rgb(255, 0, 0);\">8月29日，日本东京大学等机构研究团队综合利用超高速荧光成像技术、超高速数据处理技术、微流体技术等跨领域技术，研发了这一名为“智能影像激活细胞分析仪”的设备。它能借助人工智</span>能的深度学习能力对细胞图像进行分析，以每秒约100个的高速识别细胞，并根据分析结果筛取目标细胞。\r\n</p>\r\n<p style=\"margin-top: 0px; margin-bottom: 25px; padding: 0px; text-indent: 28px; font-size: 14px; text-align: justify; word-wrap: break-word; word-break: normal; color: rgb(43, 43, 43); font-family: simsun, arial, helvetica, clean, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">\r\n    <img src=\"http://p0.ifengimg.com/pmop/2018/0830/4103F66239DAD193BFE810DDB773E2E6B6084BDD_size63_w580_h379.jpeg\"/>\r\n</p>\r\n<p style=\"margin-top: 0px; margin-bottom: 25px; padding: 0px; text-indent: 28px; font-size: 14px; text-align: justify; word-wrap: break-word; word-break: normal; color: rgb(43, 43, 43); font-family: simsun, arial, helvetica, clean, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">\r\n    ●1992年，美国国家航空航天局推出一项搜寻地外文明（SETI）的项目，并建造了两个巨大的射电望远镜，用来在夜空中搜寻宇宙深处可能来自于外星文明的信号，或者，地外文明所使用的技术痕迹。然而一年后，项目终止。前不久，美国众议院通过的一项新的法案——时隔25年后，美国国会准备给NASA拨款1000万美元（约6345万人民币），让其重启搜寻地外文明计划。\r\n</p>\r\n<p>\r\n    <br/>\r\n</p>",
-    //     "timecoinPrice": 500,
-    //     "suggestPrice": 600,
-    //     "carriage": 100,
-    //     "inventory": 4500,
-    //     "commodityName": "时间币商品4",
-    //     "commodityId": "timeShanpin04"
-    //   },
-    //   "commodityInvoiceType": null,
-    //   "addressMap": null
-    // }
-    // if(type === '2' && (vm.goodsDetail.map.timecoinPrice)/100 > window.localStorage.getItem('availableCoin')){
-    //   this.btnBuy = false
-    // }
-    getDetail(type,commodityId,uid).then(res =>{
-      console.log(JSON.stringify(res));
-      vm.goodsDetail = res;
-      if(res.map.inventory <= 0){
-        this.btnBuy = false;
-        this.noallowbuy = '库存不足'
-        return false;
-      }else if(type === '2' && (res.map.timecoinPrice)/100 > window.localStorage.getItem('availableCoin')){
-        this.btnBuy = false;
-        this.noallowbuy = '时间币不足'
-      }
-    });
+     this.getData();
   },
   methods:{
+    /**
+     * 初始化页面数据
+     */
+    getData(){
+      this.goodsStatus = this.$route.params.type;
+      if(this.goodsStatus === '1'){
+        this.allowbuy = '立即购买'
+      }else {
+        this.allowbuy = '马上兑换'
+      }
+      this.commodityId = this.$route.params.id;
+      let type = this.$route.params.type;
+      let commodityId = this.$route.params.id;
+      let uid = this._protypeJs.getUserId();
+      let vm = this;
+
+      /**
+       * 现金商品
+       */
+      // vm.goodsDetail = {
+      //   "imgList": [
+      //     {
+      //       "imgUrl": "http://e.hiphotos.baidu.com/image/pic/item/503d269759ee3d6dd17611f84e166d224f4ade55.jpg",
+      //       "imgRank": 1
+      //     }
+      //   ],
+      //   "commodityPayType": [
+      //     {
+      //       "typeName": "微信支付",
+      //       "payTypeId": 1
+      //     },
+      //     {
+      //       "typeName": "支付宝支付",
+      //       "payTypeId": 2
+      //     }
+      //   ],
+      //   "map": {
+      //     "unit": "1件",
+      //     "realityPrice": 500,
+      //     "detail": "<p class=\"text\" style=\"margin-top: 0px; margin-bottom: 28px; padding: 0px; word-wrap: break-word; font-family: &quot;Microsoft Yahei&quot;, Helvetica, sans-serif; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;\">\r\n    <span style=\"color: rgb(255, 0, 0);\">在Wear OS智能手表上</span>，你现在可以通过向左滑动来查看这些目标，以及你的其他活动。在那里，新的界面有类似Apple Watch的活动环。你也可以从这个屏幕开始记录锻炼。\r\n</p>\r\n<p class=\"text\" style=\"margin-top: 0px; margin-bottom: 28px; padding: 0px; word-wrap: break-word; font-family: &quot;Microsoft Yahei&quot;, Helvetica, sans-serif; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;\">\r\n    <strong>通知更容易查看和删除</strong>\r\n</p>\r\n<p class=\"text\" style=\"margin-top: 0px; margin-bottom: 28px; padding: 0px; word-wrap: break-word; font-family: &quot;Microsoft Yahei&quot;, Helvetica, sans-serif; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;\">\r\n    <br/>\r\n</p>\r\n<p style=\"margin-top: 0px; margin-bottom: 28px; padding: 0px; word-wrap: break-word; font-family: &quot;Microsoft Yahei&quot;, Helvetica, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">\r\n    <img src=\"http://inews.gtimg.com/newsapp_bt/0/5053748004/641\"/>\r\n</p>\r\n<p style=\"margin-top: 0px; margin-bottom: 28px; padding: 0px; word-wrap: break-word; font-family: &quot;Microsoft Yahei&quot;, Helvetica, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">\r\n    <br/>\r\n</p>\r\n<p class=\"text\" style=\"margin-top: 0px; margin-bottom: 28px; padding: 0px; word-wrap: break-word; font-family: &quot;Microsoft Yahei&quot;, Helvetica, sans-serif; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em;\">\r\n    谷歌重新设计了Wear OS上的通知屏幕。它不仅看起来更美观，而且更容易一次查看更多的通知，并删除你已经看过的通知。\r\n</p>\r\n<p>\r\n    <br/>\r\n</p>",
+      //     "suggestPrice": 600,
+      //     "inventory": 0,
+      //     "carriage": 20,
+      //     "commodityName": "人民币商品12",
+      //     "commodityId": "RMBshanpin12"
+      //   },
+      // "commodityInvoiceType": [
+      //   {
+      //     "typeName": "普通发票",
+      //     "typeId": 1
+      //   },
+      //   {
+      //     "typeName": "增值税专用发票",
+      //     "typeId": 2
+      //   }
+      // ],
+      //   "addressMap": null
+      // };
+      /**
+       * 时间币商品
+       */
+      // vm.goodsDetail = {
+      //   "imgList": [
+      //     {
+      //       "imgUrl": "http://g.hiphotos.baidu.com/image/pic/item/bd3eb13533fa828b189d4ddaf01f4134970a5a49.jpg",
+      //       "imgRank": 1
+      //     }
+      //   ],
+      //   "commodityPayType": [
+      //     {
+      //       "typeName": "微信支付",
+      //       "payTypeId": 1
+      //     },
+      //     {
+      //       "typeName": "支付宝支付",
+      //       "payTypeId": 2
+      //     }
+      //   ],
+      //   "map": {
+      //     "unit": "1台",
+      //     "detail": "<p style=\"margin-top: 0px; margin-bottom: 25px; padding: 0px; text-indent: 28px; font-size: 14px; text-align: justify; word-wrap: break-word; word-break: normal; color: rgb(43, 43, 43); font-family: simsun, arial, helvetica, clean, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">\r\n    <span style=\"color: rgb(255, 0, 0);\">8月29日，日本东京大学等机构研究团队综合利用超高速荧光成像技术、超高速数据处理技术、微流体技术等跨领域技术，研发了这一名为“智能影像激活细胞分析仪”的设备。它能借助人工智</span>能的深度学习能力对细胞图像进行分析，以每秒约100个的高速识别细胞，并根据分析结果筛取目标细胞。\r\n</p>\r\n<p style=\"margin-top: 0px; margin-bottom: 25px; padding: 0px; text-indent: 28px; font-size: 14px; text-align: justify; word-wrap: break-word; word-break: normal; color: rgb(43, 43, 43); font-family: simsun, arial, helvetica, clean, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">\r\n    <img src=\"http://p0.ifengimg.com/pmop/2018/0830/4103F66239DAD193BFE810DDB773E2E6B6084BDD_size63_w580_h379.jpeg\"/>\r\n</p>\r\n<p style=\"margin-top: 0px; margin-bottom: 25px; padding: 0px; text-indent: 28px; font-size: 14px; text-align: justify; word-wrap: break-word; word-break: normal; color: rgb(43, 43, 43); font-family: simsun, arial, helvetica, clean, sans-serif; white-space: normal; background-color: rgb(255, 255, 255);\">\r\n    ●1992年，美国国家航空航天局推出一项搜寻地外文明（SETI）的项目，并建造了两个巨大的射电望远镜，用来在夜空中搜寻宇宙深处可能来自于外星文明的信号，或者，地外文明所使用的技术痕迹。然而一年后，项目终止。前不久，美国众议院通过的一项新的法案——时隔25年后，美国国会准备给NASA拨款1000万美元（约6345万人民币），让其重启搜寻地外文明计划。\r\n</p>\r\n<p>\r\n    <br/>\r\n</p>",
+      //     "timecoinPrice": 500,
+      //     "suggestPrice": 600,
+      //     "carriage": 100,
+      //     "inventory": 4500,
+      //     "commodityName": "时间币商品4",
+      //     "commodityId": "timeShanpin04"
+      //   },
+      //   "commodityInvoiceType": null,
+      //   "addressMap": null
+      // }
+      // if(type === '2' && (vm.goodsDetail.map.timecoinPrice)/100 > window.localStorage.getItem('availableCoin')){
+      //   this.btnBuy = false
+      // }
+      getDetail(type,commodityId,uid).then(res =>{
+        console.log(JSON.stringify(res));
+        vm.goodsDetail = res;
+        if(res.map.inventory <= 0){
+          this.btnBuy = false;
+          this.noallowbuy = '库存不足'
+          return false;
+        }else if(type === '2' && (res.map.timecoinPrice)/100 > this._protypeJs.getPlatform('availableCoin')){
+          this.btnBuy = false;
+          this.noallowbuy = '时间币不足'
+        }
+      });
+    },
+    /**
+     * 增加数量
+     */
     addCount(){
       this.counter = this.counter+1;
-      if(res.map.inventory < this.counter){
+      if(this.goodsDetail.map.inventory < this.counter){
         this.btnBuy = false;
         this.noallowbuy = '库存不足';
         return false;
       }else if(this.goodsStatus === '2'){
-        if((this.counter)*((this.goodsDetail.map.timecoinPrice)/100) > window.localStorage.getItem('availableCoin')){
+        if((this.counter)*((this.goodsDetail.map.timecoinPrice)/100) > this._protypeJs.getPlatform('availableCoin')){
           this.btnBuy = false;
           this.noallowbuy = '时间币不足'
         }
@@ -322,12 +331,12 @@ export default {
       console.log(count);
       if(count > 0){
         this.counter = count-1;
-        if(res.map.inventory < this.counter){
+        if(this.goodsDetail.map.inventory < this.counter){
           this.btnBuy = false;
           this.noallowbuy = '库存不足';
           return false;
         }else if(this.goodsStatus === '2'){
-          if(parseInt((this.counter)*((this.goodsDetail.map.timecoinPrice)/100)) <= parseInt(window.localStorage.getItem('availableCoin'))){
+          if(parseInt((this.counter)*((this.goodsDetail.map.timecoinPrice)/100)) <= parseInt(this._protypeJs.getPlatform('availableCoin'))){
             this.btnBuy = true;
             this.noallowbuy = ''
           }else {
