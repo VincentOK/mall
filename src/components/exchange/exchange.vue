@@ -17,8 +17,8 @@
             <div class="word_i">
               <p class="word_name">{{item.commodityName}}</p>
               <p class="word_name_two">
-                <label class="word_money"><img class="time_icon" style="height: 13px;width: 13px;" src="/static/img/icon@2x.png" alt="">{{item.timecoinPrice}}</label>
-                <label class="be_money">￥{{item.suggestPrice}}</label>
+                <label class="word_money"><img class="time_icon" style="height: 13px;width: 13px;" src="/static/img/icon@2x.png" alt="">{{item.timecoinPrice | formatMoney}}</label>
+                <label class="be_money">￥{{item.suggestPrice | formatMoney}}</label>
               </p>
               <p class="last"> <label class="word_count">剩余{{item.inventory}}件</label></p>
             </div>
