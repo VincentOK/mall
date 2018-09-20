@@ -67,7 +67,7 @@
         },
         adressName:'',
         address:'',
-        phone:'18376614866',
+        phone:'',
         detailAdress:''
       }
     },

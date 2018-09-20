@@ -329,7 +329,7 @@ export default {
     remove_i:function () {
       let count = this.counter
       console.log(count);
-      if(count > 0){
+      if(count > 1){
         this.counter = count-1;
         if(this.goodsDetail.map.inventory < this.counter){
           this.btnBuy = false;

@@ -46,6 +46,7 @@
     <div class="question_des">
       <p class="photo">
         <input type="file" v-if="imgList.length <5"  id="file_input" v-on:click="change" accept="image/*" capture="camera">
+        <!--<button v-if="imgList.length <5"  id="file_input" v-on:click="changeOne"></button>-->
         <img :src="imgList.length <5 ? '/static/img/choosePhoto.png' : '/static/img/choosePhotoLast.png'" alt="">
       </p>
     </div>
@@ -134,10 +135,30 @@
       mounted(){
         this.commodityId = this.$route.params.commodityId;
         this.orderNumber = this.$route.params.orderNumber;
+        /**
+         * 抛出函数到window对象，方便app端调用
+         * @param str
+         */
+        window['photoFiles'] = (str) => {
+          this.myPhotoFiles(str);
+        }
       },
       methods:{
+        /**
+         * 相册
+         */
+        myPhotoFiles(str){
+          alert("android调用JS函数")
+          alert("返回图片信息："+str)
+        },
+        changeOne:function(){
+          alert(11);
+          this._protypeJs.appGetFiles();
+        },
+
+
         change:function (){
-          let vm = this
+          let vm = this;
           if(vm.imgList.length <5){
             let imginput = document.getElementById("file_input");
             imginput.onchange = function () {
@@ -146,7 +167,6 @@
               let url = URL.createObjectURL(files[0]);
               console.log(url)
               let filesName = files[0];
-
               console.log(filesName);
               let param = new FormData(); // 创建form对象
               param.append('files', filesName, filesName.name);  // 通过append向form对象添加数据
@@ -249,6 +269,10 @@
 </script>
 
 <style scoped>
+  #file_input{
+    background-color: white;
+    border: none;
+  }
   .myphoto{
     width: 80%;
     height: 80px;

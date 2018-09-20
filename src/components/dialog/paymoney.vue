@@ -156,6 +156,7 @@
            * android&IOS调用支付返回支付状态
            */
           payBoolean(Boolean){
+            alert("android调用了JS函数");
             if(Boolean){
               this.$emit('childByValue',this.paymoney_status)
             }else {
@@ -216,12 +217,16 @@
           }else {
            delete obj.msg.invoiceTypeId
           }
-          alert("支付信息："+JSON.stringify(obj.msg));
+          alert("创建预支付信息："+JSON.stringify(obj.msg));
           payMoney(obj.msg).then(res =>{
             console.log("支付成功回显："+res);
             if(res.orderStatus === "1"){//调起app支付
              alert("订单号："+res.orderNumber);
-              this._protypeJs.appSurePayMoney(res.orderNumber);
+             if(obj.msg.payTypeId === 2){//代表支付宝支付
+               this._protypeJs.appSurePayMoney(res.orderNumber,0);
+             }else {//微信支付
+               this._protypeJs.appSurePayMoney(res.orderNumber,1);
+             }
             }else {//支付完成
               alert('支付完成');
               // this._protypeJs.removeBodyHeight();

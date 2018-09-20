@@ -12,6 +12,10 @@
         <button class="_status" v-if="item.orderStatus == '4'">待退款</button>
         <button class="_status" v-if="item.orderStatus == '5'">已退款</button>
         <button class="_status" v-if="item.orderStatus == '6'">已完成</button>
+        <button class="_status" v-if="item.orderStatus == '7'">拒绝发货</button>
+        <button class="_status" v-if="item.orderStatus == '8'">拒绝退款</button>
+        <button class="_status" v-if="item.orderStatus == '9' || item.orderStatus == '10'">退款中</button>
+
         <label class="_time">{{item.orderTime}}</label>
       </p>
     <div class="refundlist_content">

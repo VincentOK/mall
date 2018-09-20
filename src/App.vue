@@ -23,14 +23,12 @@ export default {
     }
   },
   mounted(){
-    window['androidFuck'] = (bollen) => {
-      this.dioAlert(bollen);
+    window['androidFuck'] = () => {
+      alert("androidFuck调用JS函数")
     }
   },
   computed:{
-    // activated: function () {
-    //   this.$setgoindex()
-    // }
+
   },
   watch: {
     '$route' (to, from) {

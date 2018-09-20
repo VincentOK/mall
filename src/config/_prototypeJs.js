@@ -87,10 +87,19 @@ export default (Vue) => {
     /**
      * 确认支付
      */
-    appSurePayMoney: (obj) => {
+    appSurePayMoney: (obj,status) => {
       console.log("环境：" + process.env.NODE_ENV)
       if (process.env.NODE_ENV == 'development') {
-        JS.sendPayMsg(obj);
+        JS.sendPayMsg(obj,status);
+      }
+    },
+    /**
+     * 获取app图片对象信息
+     */
+    appGetFiles: () => {
+      console.log("环境：" + process.env.NODE_ENV);
+      if (process.env.NODE_ENV == 'development') {
+        JS.appGetFilesPhoto();
       }
     },
     /**
