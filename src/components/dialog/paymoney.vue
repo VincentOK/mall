@@ -223,9 +223,9 @@
             if(res.orderStatus === "1"){//调起app支付
              alert("订单号："+res.orderNumber);
              if(obj.msg.payTypeId === 2){//代表支付宝支付
-               this._protypeJs.appSurePayMoney(res.orderNumber,0);
+               this.appJS.appSurePayMoney(res.orderNumber,0);
              }else {//微信支付
-               this._protypeJs.appSurePayMoney(res.orderNumber,1);
+               this.appJS.appSurePayMoney(res.orderNumber,1);
              }
             }else {//支付完成
               alert('支付完成');

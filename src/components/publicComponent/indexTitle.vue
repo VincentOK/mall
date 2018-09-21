@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="shop_title">
-      <img class="close_shop" v-on:click="_protypeJs.JScloseWebView()" src="/static/img/close@2x.png" alt="">
+      <img class="close_shop" v-on:click="appJS.JScloseWebView()" src="/static/img/close@2x.png" alt="">
       &nbsp;&nbsp;&nbsp;时间商城
     </div>
   </div>

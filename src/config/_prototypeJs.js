@@ -76,38 +76,50 @@ export default (Vue) => {
       return localStorage.getItem('user');
     },
     /**
-     * 关闭webview
-     */
-    JScloseWebView: () => {
-      console.log("环境：" + process.env.NODE_ENV);
-      if (process.env.NODE_ENV == 'development') {
-        JS.closeWebView();
-      }
-    },
-    /**
-     * 确认支付
-     */
-    appSurePayMoney: (obj,status) => {
-      console.log("环境：" + process.env.NODE_ENV)
-      if (process.env.NODE_ENV == 'development') {
-        JS.sendPayMsg(obj,status);
-      }
-    },
-    /**
-     * 获取app图片对象信息
-     */
-    appGetFiles: () => {
-      console.log("环境：" + process.env.NODE_ENV);
-      if (process.env.NODE_ENV == 'development') {
-        JS.appGetFilesPhoto();
-      }
-    },
-    /**
      * 获取本地缓存平台类型
      */
     getPlatform: (platform) => {
       return localStorage.getItem(platform);
     },
 
+  };
+  Vue.prototype.appJS = {
+    /**
+     * 获取用户ID
+     */
+    JSgetAppUserId:()=>{
+      console.log("环境：" + process.env.NODE_ENV);
+      return JS.getAppUserId();
+      // if (process.env.NODE_ENV == 'development') {
+      //   return JS.getAppUserId();
+      // }
+    },
+    /**
+     * 关闭webview
+     */
+    JScloseWebView: () => {
+      JS.closeWebView();
+      // if (process.env.NODE_ENV == 'development') {
+      //   JS.closeWebView();
+      // }
+    },
+    /**
+     * 确认支付
+     */
+    appSurePayMoney: (obj,status) => {
+      JS.sendPayMsg(obj,status);
+      // if (process.env.NODE_ENV == 'development') {
+      //   JS.sendPayMsg(obj,status);
+      // }
+    },
+    /**
+     * 获取app图片对象信息
+     */
+    appGetFiles: () => {
+      JS.appGetFilesPhoto();
+      // if (process.env.NODE_ENV == 'development') {
+      //   JS.appGetFilesPhoto();
+      // }
+    },
   }
 }
