@@ -68,7 +68,7 @@ export default {
         vm.displayNone = false;
         vm.prizedialog = false;
         vm._protypeJs.removeBodyHeight()
-        vm.$router.push('../luckyDraw/luckylist');
+         vm.$router.go(-1);//返回上一层
       }, 2000);
     },
     // previousPage(){
