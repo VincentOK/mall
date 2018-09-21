@@ -3,7 +3,7 @@
     <div class="shop_title">
       <img v-on:click="returnBack" class="title_return" style="width: 10px;height: 17px" src="/static/img/back@2x.png" alt="">
       <!--<img class="close_shop" v-on:click="_protypeJs.JScloseWebView()" src="/static/img/close@2x.png" alt="">-->
-      <span class="close_word" v-on:click="_protypeJs.JScloseWebView()">关闭</span>
+      <span class="close_word" v-on:click="appJS.JScloseWebView()">关闭</span>
       {{childTitleword}}
     </div>
   </div>

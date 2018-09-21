@@ -12,7 +12,7 @@ Object.keys(filters).forEach(key => {
 import instruction from './config/instruction'
 Vue.use(instruction)
 import   _protypeJs   from './config/_prototypeJs'
-Vue.use(_protypeJs)
+Vue.use(_protypeJs);
 import Loading from './components/publicComponent/loading/loading'
 Vue.use(Loading)
 import shoptitle from './components/publicComponent/shoptitle/shoptitle'
@@ -26,8 +26,10 @@ Vue.config.productionTip = false;
 //获取用户ID
 (function(){
   console.log("环境："+process.env.NODE_ENV);
-  if(process.env.NODE_ENV == 'production'){//development   //production
+  if(process.env.NODE_ENV == 'development'){//development   //production
     let msg = JS.getAppUserId();
+    // let msg = Vue.prototype.JSgetAppUserId();
+    alert("msg:"+msg);
     alert("获取用户id:"+JSON.parse(msg).userId);
     alert("获取入口:"+JSON.parse(msg).entrance);
     alert("用户手机类型:"+JSON.parse(msg).platform);

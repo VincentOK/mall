@@ -37,7 +37,8 @@
         payMoney(obj).then(res =>{
           console.log("纯时间币商品支付成功："+res);
           if(res.orderStatus === "1"){//调起app支付
-            console.log("订单号："+res.orderNumber)
+            alert('支付完成');
+            this.$emit('childByValue',false)
           }else {//支付完成
             alert('支付完成');
             this.$emit('childByValue',false)
