@@ -42,7 +42,7 @@ export default new Router({
             component: resolve => require(['@/components/luckyDraw/luckycenter'], resolve), // 使用懒加载
         },
         {
-            path: '/luckylist',
+            path: '/luckyDraw/luckylist',
             name: 'luckylist',
             component: resolve => require(['@/components/luckyDraw/luckylist'], resolve), // 使用懒加载
             meta: {
