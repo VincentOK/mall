@@ -1,16 +1,16 @@
 let formatMoney = (value, statusId) => {
-        let values = Number(value) / 100;
-        let hasdot = String(values).indexOf('.') > 0
-        switch (statusId) {
-            case "1":
-                return hasdot ? "￥" + String(values).substr(0, String(values).indexOf(".") + 3) : "￥" + values.toFixed(1);;
-                break;
-            case "2":
-                return hasdot ? String(values).substr(0, String(values).indexOf(".") + 3) + "时间币" : values.toFixed(1) + "时间币";
-                break;
-            default:
-                return hasdot ? String(values).substr(0, String(values).indexOf(".") + 3) : values.toFixed(1);
-        }
+    let values = Number(value) / 100;
+    let hasdot = String(values).indexOf('.') > 0
+    switch (statusId) {
+        case "1":
+            return hasdot ? "￥" + String(values).substr(0, String(values).indexOf(".") + 3) : "￥" + values.toFixed(1);;
+            break;
+        case "2":
+            return hasdot ? String(values).substr(0, String(values).indexOf(".") + 3) + "时间币" : values.toFixed(1) + "时间币";
+            break;
+        default:
+            return hasdot ? String(values).substr(0, String(values).indexOf(".") + 3) : values.toFixed(1);
+    }
 }
 
 let formatGoodTags = (goodId) => {
@@ -28,4 +28,5 @@ let formatGoodTags = (goodId) => {
             return "";
     }
 }
+
 export { formatMoney, formatGoodTags }

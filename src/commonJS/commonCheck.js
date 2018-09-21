@@ -11,12 +11,11 @@ export const _check = {
   },
   //校验姓名
   checkName:function (str) {
-    console.log("收货名")
-    var myreg = /[@#\$%\^&\*]+/g;
-    if (!myreg.test(str)) {
-      return true;
-    } else {
-      return false;
+    var nameReg = /^[\u4E00-\u9FA5]{2,4}$/;
+    if(nameReg.test(str)){
+      return true
+    }else {
+      return false
     }
   },
 

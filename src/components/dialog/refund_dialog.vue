@@ -26,11 +26,11 @@
       },
       methods:{
         refundCancel:function () {
-          this.refund_display = false
+          this.refund_display = false;
           this.$emit('childByValue',{status:this.refund_display})
         },
         refundSure:function () {
-          console.log("订单号："+this.checkStatus)
+          console.log("订单号："+this.checkStatus);
           let orderNumber = this.checkStatus
           sureRefund(orderNumber).then(res =>{
             console.log("确认收货："+res)

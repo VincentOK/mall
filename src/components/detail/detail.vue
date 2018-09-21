@@ -691,6 +691,7 @@ export default {
   }
   .title_i{
     position: relative;
+    height: 200px;
   }
   .detail_img{
     width: 100%;

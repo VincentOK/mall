@@ -35,20 +35,17 @@
       <label class="refund_font">快递运单号：</label>
       <label class="color_refund" v-if="item.logisticsNumber">{{item.logisticsNumber}} <label v-if="item.logisticsName">({{item.logisticsName}})</label></label>
       <label class="color_refund" v-else>暂未获取运单号</label>
-      <label class="refund_money">
-        <label class="refund_font" v-if="item.orderStatus != '1'">实付：</label>
-        <label class="refund_font" v-else>待支付：</label>
-        <label class="real_money" v-if="item.orderPriceRmb !== 0">￥{{(item.orderPriceRmb + item.carriage) | formatMoney}}</label>
-        <label class="real_money" v-if="item.orderPriceSjb !== 0">
-          <img class="time_icon" style="height: 16px;width: 16px;" src="/static/img/icon@2x.png" alt="">
-          {{item.orderPriceSjb | formatMoney}} + ￥{{item.carriage  | formatMoney}}
-        </label>
-        <label class="real_money" v-if="item.orderPriceRmb && item.orderPriceSjb">￥0</label>
+        <label class="refund_money">
+          <label class="refund_font" v-if="item.orderStatus != '1'">实付：</label>
+          <label class="refund_font" v-else>待支付：</label>
+        <label class="real_money" v-if="formatGoodsCoin(item.orderPriceRmb)">￥{{(item.orderPriceRmb + item.carriage) | formatMoney}}</label>
+        <label class="real_money" v-if="formatGoodsCoin(item.orderPriceSjb)"><img class="time_icon" style="height: 16px;width: 16px;" src="/static/img/icon@2x.png" alt=""> {{item.orderPriceSjb | formatMoney}} + ￥{{item.carriage  | formatMoney}}</label>
+        <label class="real_money" v-if="!formatGoodsCoin(item.orderPriceRmb) && !formatGoodsCoin(item.orderPriceSjb)">￥0.0</label>
       </label>
     </p>
     <p class="refund_now" v-show="item.orderStatus == '2' || item.orderStatus == '3' || item.orderStatus == '4' || item.orderStatus == '9' || item.orderStatus == '10'">
       <button class="refund_btn_one" v-if="item.orderStatus == '2' || item.orderStatus == '3'" @click="gotocheck(item.commodityPrizeId,item.orderNumber)">确认收货</button>
-      <button class="refund_btn" v-if="item.orderStatus == '2' || item.orderStatus == '3' || item.orderStatus == '4' || item.orderStatus == '9'" @click="gotodetail(item.commodityPrizeId,item.orderNumber)">申请退款</button>
+      <button class="refund_btn" v-if="(item.orderStatus == '2' || item.orderStatus == '3' || item.orderStatus == '4' || item.orderStatus == '9') && ((formatGoodsCoin(item.orderPriceRmb)) || formatGoodsCoin(item.orderPriceSjb))" @click="gotodetail(item.commodityPrizeId,item.orderNumber)">申请退款</button>
 
       <button class="refund_btn_one"  v-if="item.orderStatus == '10'" @click="drawback(item.orderNumber)">退还商品</button>
       <!--<button class="refund_btn" @click="gotodetail(item.commodityId,item.orderNumber)">申请退款</button>-->
@@ -187,7 +184,17 @@ export default {
     },
     closeDialogs(value){
       this.drawback_i = value
+    },
+        /**
+     * 判断时间币与人民币格式
+     **/
+formatGoodsCoin(value){
+    if (Boolean(value)) {
+        return true;
+    } else {
+        return false;
     }
+}
   }
 };
 </script>
