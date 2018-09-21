@@ -30,17 +30,17 @@ Vue.config.productionTip = false;
     let msg = JS.getAppUserId();
     // let msg = Vue.prototype.JSgetAppUserId();
     alert("msg:"+msg);
-    alert("获取用户id:"+JSON.parse(msg).userId);
-    alert("获取入口:"+JSON.parse(msg).entrance);
-    alert("用户手机类型:"+JSON.parse(msg).platform);
-    if(JSON.parse(msg).userId){
-      localStorage.setItem('user',JSON.parse(msg).userId);
-      localStorage.setItem('entrance',JSON.parse(msg).entrance);
-      localStorage.setItem('platform',JSON.parse(msg).platform);
-    }else{
-      alert('获取用户id失败，请重新进入');
-      JS.closeWebView();
-    }
+    // alert("获取用户id:"+JSON.parse(msg).userId);
+    // alert("获取入口:"+JSON.parse(msg).entrance);
+    // alert("用户手机类型:"+JSON.parse(msg).platform);
+    // if(JSON.parse(msg).userId){
+    //   localStorage.setItem('user',JSON.parse(msg).userId);
+    //   localStorage.setItem('entrance',JSON.parse(msg).entrance);
+    //   localStorage.setItem('platform',JSON.parse(msg).platform);
+    // }else{
+    //   alert('获取用户id失败，请重新进入');
+    //   JS.closeWebView();
+    // }
   }
 
   let myuser = localStorage.getItem('user');
