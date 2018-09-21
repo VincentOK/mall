@@ -19,7 +19,7 @@
     </div>
     <div class="header_title">
         <div class="header_title_left">
-          <router-link class="a_detail" :to="'/luckylist'">
+          <router-link class="a_detail" :to="'luckyDraw/luckylist'">
             <div class="content_title">
               <img class="img_header" src="/static/img/lottery.png" alt="">
             </div>

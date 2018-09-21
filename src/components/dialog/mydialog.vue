@@ -47,7 +47,7 @@ export default {
       this.prizedialog = newVal.flag;
       this.prizeMsg = newVal.msg;
       if (newVal.flag) {
-        this.hiddenDialog();
+        this.previousPage();
       }
     }
   },
@@ -60,7 +60,24 @@ export default {
         vm.prizedialog = false;
         vm._protypeJs.removeBodyHeight()
       }, 2000);
-    }
+    },
+    previousPage: function() {
+      let vm = this;
+      clearTimeout(jump);
+      let jump = setTimeout(function() {
+        vm.displayNone = false;
+        vm.prizedialog = false;
+        vm._protypeJs.removeBodyHeight()
+        vm.$router.push('../luckyDraw/luckylist');
+      }, 2000);
+    },
+    // previousPage(){
+    //   let self = this;
+    //   clearTimeout(jump);
+    //   let jump = setTimeout(function() {
+        
+    //   }, 2000);
+    // }
   }
 };
 </script>
