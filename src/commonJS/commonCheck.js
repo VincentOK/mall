@@ -18,5 +18,4 @@ export const _check = {
       return false
     }
   },
-
 }

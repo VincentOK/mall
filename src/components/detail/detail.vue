@@ -5,7 +5,9 @@
   <div class="conent_all_h5">
     <div class="title_i">
       <swiper :options="swiperOption">
-        <swiper-slide v-for="(item,index) in goodsDetail.imgList" :key="index"><img class="detail_img" :src="item.imgUrl"></swiper-slide>
+        <swiper-slide v-for="(item,index) in goodsDetail.imgList" :key="index">
+          <img class="detail_img"  :src="item.imgUrl">
+        </swiper-slide>
         <!--<swiper-slide><img  class="detail_img" src="/static/img/a1.jpg"></swiper-slide>-->
         <!--<swiper-slide><img  class="detail_img" src="/static/img/a1.jpg"></swiper-slide>-->
         <!--<swiper-slide><img class="detail_img"  src="/static/img/a1.jpg"></swiper-slide>-->
@@ -695,6 +697,7 @@ export default {
   }
   .detail_img{
     width: 100%;
+    height: 200px;
   }
   #my_pa{
     position: absolute;

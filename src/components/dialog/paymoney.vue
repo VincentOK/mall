@@ -144,11 +144,12 @@
       },
       mounted(){
         window['payMoneyStatus'] = (Boolean) => {
+          // alert("8888888888");
           this.payBoolean(Boolean);
         }
       },
       destroyed(){
-          window.localStorage.removeItem('commodityPayType')
+          window.localStorage.removeItem('commodityPayType');
         window.localStorage.removeItem('commodityInvoiceType')
       },
       methods:{
@@ -156,7 +157,7 @@
            * android&IOS调用支付返回支付状态
            */
           payBoolean(Boolean){
-            alert("android调用了JS函数");
+            // alert("android调用了JS函数");
             if(Boolean){
               this.$emit('childByValue',this.paymoney_status)
             }else {
