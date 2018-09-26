@@ -44,7 +44,7 @@ export default {
     closePage() {
       let self = this;
       self.close = false;
-      getcountUserLuckyNumber(self.uId)
+      getcountUserLuckyNumber(self._protypeJs.getUserId())
         .then(res => {
           self.whetherFreeCount = res;
           console.log(self.whetherFreeCount);
