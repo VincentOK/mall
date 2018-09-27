@@ -133,6 +133,7 @@ export default {
   mounted() {
     this.uId = this._protypeJs.getUserId();
     this.getLuckyNumberCount();
+    debugger;
     getLuckyList(this.luckyId)
       .then(res => {
         this.luckyBannerImgUrl = res.luckyBannerImgUrl;

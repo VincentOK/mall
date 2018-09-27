@@ -316,7 +316,7 @@ export default {
      * 增加数量
      */
     addCount(){
-      this.counter = this.counter+1;
+      this.counter = parseInt(this.counter)+1;
       if(this.goodsDetail.map.inventory < this.counter){
         this.btnBuy = false;
         this.noallowbuy = '库存不足';
@@ -329,7 +329,7 @@ export default {
       }
     },
     remove_i:function () {
-      let count = this.counter
+      let count = parseInt(this.counter)
       console.log(count);
       if(count > 1){
         this.counter = count-1;
