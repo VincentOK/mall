@@ -9,11 +9,11 @@
         <button class="_status" v-if="item.orderStatus == '1'">待付款</button>
         <button class="_status" v-if="item.orderStatus == '2'">待发货</button>
         <button class="_status" v-if="item.orderStatus == '3'">已发货</button>
-        <button class="_status" v-if="item.orderStatus == '4' || item.orderStatus == '9'">退款中</button>
-        <button class="_status" v-if="item.orderStatus == '5'">已退款</button>
-        <button class="_status" v-if="item.orderStatus == '6'">已完成</button>
-        <button class="_status" v-if="item.orderStatus == '7'">拒绝发货</button>
-        <button class="_status" v-if="item.orderStatus == '8'">拒绝退款</button>
+        <button class="_status" v-if="item.orderStatus == '4' || item.orderStatus == '5'">退款中</button>
+        <button class="_status" v-if="item.orderStatus == '6'">已退款</button>
+        <button class="_status" v-if="item.orderStatus == '7'">已完成</button>
+        <button class="_status" v-if="item.orderStatus == '8'">退还商品</button>
+        <button class="_status" v-if="item.orderStatus == '9'">已关闭</button>
 
         <label class="_time">{{item.orderTime}}</label>
       </p>
@@ -26,6 +26,7 @@
         <label class="num">x{{item.count}}</label>
       </p>
     </div>
+    <p style="color: red;margin: 0;text-align: left;padding-left: 10px">{{item.reason}}</p>
     <p class="refund_number">
       <label class="refund_font">订单号：</label>
       <label class="color_refund">{{item.orderNumber}}</label>
@@ -46,19 +47,20 @@
     item.orderStatus == '2' ||
     item.orderStatus == '3' ||
     item.orderStatus == '4' ||
-    item.orderStatus == '9'">
+    item.orderStatus == '5' ||
+    item.orderStatus == '8'">
       <button class="refund_btn_one" v-if="
       item.orderStatus == '2' ||
       item.orderStatus == '3'"
               @click="gotocheck(item.commodityPrizeId,item.orderNumber)">确认收货</button>
       <button class="refund_btn" v-if="
-      (item.orderStatus == '2' || item.orderStatus == '3' || item.orderStatus == '4')
+      (item.orderStatus == '2' || item.orderStatus == '3' || item.orderStatus == '4' || item.orderStatus == '5')
        &&
        ((formatGoodsCoin(item.orderPriceRmb)) || formatGoodsCoin(item.orderPriceSjb))"
               @click="gotodetail(item.commodityPrizeId,item.orderNumber)">申请退款</button>
 
       <button class="refund_btn_one"  v-if="
-      item.orderStatus == '9'"
+      item.orderStatus == '8'"
               @click="drawback(item.orderNumber)">退还商品</button>
       <!--<button class="refund_btn" @click="gotodetail(item.commodityId,item.orderNumber)">申请退款</button>-->
     </p>

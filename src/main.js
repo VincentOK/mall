@@ -34,7 +34,7 @@ Vue.config.productionTip = false;
   //     alert("用户手机类型:"+JSON.parse(msg).platform);
   //   })
   // }
-  if(process.env.NODE_ENV == 'production'){//development   //production
+  if(process.env.NODE_ENV == 'development'){//development   //production
     let yourString = JS.getAppUserId();
     let entrance = JS.getAppEntrance();
     alert("用户ID："+yourString);
