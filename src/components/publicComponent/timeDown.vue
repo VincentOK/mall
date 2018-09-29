@@ -84,6 +84,9 @@ export default {
           var leftTime = 0;
           this.$emit("timeEnd", "ending");
         }
+      }else{
+        this.$emit("timeEnd", "none");
+        var leftTime = -1;
       }
       if (this.endTime == null || this.startTime == null) {
         var leftTime = -1;

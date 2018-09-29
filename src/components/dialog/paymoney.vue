@@ -52,7 +52,7 @@
                     <!--<label v-for="(item,index) in paySticket" :key="index" v-bind:class="choose_style ? 'person_i' : 'style_i'" v-on:click="chooseStyle">普通发票</label>-->
                     <!--<label  v-bind:class="choose_style ? 'style_i' : 'person_i'" v-on:click="chooseStyle">增值税专用发票</label>-->
                   </p>
-                  <p class="ticket_style" style="padding-bottom: 16px"  v-for="(item,index) in paySticket">
+                  <p class="ticket_style" style="padding-bottom: 16px"  v-for="(item,index) in paySticket" :key="index">
                     <span v-if="item.typeId === 1 && item.flag === true">
                       <label>发票抬头：</label>
                       <label  v-bind:class="choose_style_ticket_i ? 'person_i_i' : 'style_i_i'" v-on:click="chooseStyleTicket_i">个人</label>
@@ -60,7 +60,7 @@
                     </span>
                     <span  v-if="item.typeId === 2 && item.flag === true">商户将联系您沟通开具发票相关事项，请保持联系方式畅通。</span>
                   </p>
-                  <div class="input_word" v-for="(item,index) in paySticket"  v-if="item.typeId === 1 && item.flag === true &&  choose_style_ticket_j">
+                  <div class="input_word" v-for="(item,index) in paySticket" :key="index"  v-if="item.typeId === 1 && item.flag === true &&  choose_style_ticket_j">
                     <input type="text" v-model="ponenyname" placeholder="请填写单位名称">
                     <input type="text" v-model="ponenynum" placeholder="请填写纳税人识别号">
                   </div>

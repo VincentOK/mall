@@ -11,7 +11,7 @@
           <label>退货</label>
         </p>
         <div class="content_all">
-          <p v-for="item in list" v-on:click="sure_not(item)">{{item.msg}}</p>
+          <p v-for="(item,index) in list" :key="index" v-on:click="sure_not(item)">{{item.msg}}</p>
           <!--<p>不想要了</p>-->
           <!--<p>商品降价</p>-->
           <!--<p>发错货</p>-->

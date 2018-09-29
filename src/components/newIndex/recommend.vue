@@ -6,7 +6,7 @@
               <span>为您推荐</span>
               <i style="background-image: url('/static/img/recommend2.png')"></i>
             </p>
-            <div v-for="(item,index) in commodityCount" :key="index">
+            <div v-for="(item,index) in commodityCount" :key="index" class="exchange_content_wrap">
             <div class="exchange_content" v-if="item.listRMB.length !== 0">
               <router-link class="a_detail" v-for="(RMBitem,RMBindex) in item.listRMB" :key="RMBindex" :to="'/detail/' + RMBitem.commodityId +'/' + RMBitem.distributionChannel">
                 <div class="exchange_content_i">
@@ -19,7 +19,8 @@
                   <div class="word_i">
                     <p class="word_name">{{_protypeJs.maxSlice20(RMBitem.commodityName)}}</p>
                     <p class="word_name_two">
-                      <label class="word_money"><label class="time">￥</label>{{RMBitem.realityPrice | formatMoney}}</label>
+                      <label class="word_money" v-if="RMBitem.realityPrice"><label class="time">￥</label>{{RMBitem.realityPrice | formatMoney}}</label>
+                      <label class="word_money" v-if="RMBitem.timecoinPrice"><label class="time"><img style="height: 13px;width: 13px;margin-right:5px" src="/static/img/icon@2x.png" alt=""></label>{{RMBitem.timecoinPrice | formatMoney}}</label>
                       <label class="be_money"><del>￥{{RMBitem.suggestPrice | formatMoney}}</del></label>
                     </p>
                     <p class="last"> <label class="word_count">剩余{{RMBitem.inventory}}件</label></p>
@@ -254,9 +255,14 @@ export default {
   font-size: 13px;
   color: #333;
 }
-.exchange_content {
+.exchange_content_wrap{
   width: 100%;
+  background-color: #f5f7f9;
+}
+.exchange_content {
+  width: 95%;
   margin: auto;
+  text-align: left;
   background-color: #f5f7f9;
   padding-bottom: 9px;
 }
