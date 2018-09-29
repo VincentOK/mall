@@ -12,7 +12,7 @@
         <button class="_status" v-if="item.orderStatus == '4' || item.orderStatus == '5'">退款中</button>
         <button class="_status" v-if="item.orderStatus == '6'">已退款</button>
         <button class="_status" v-if="item.orderStatus == '7'">已完成</button>
-        <button class="_status" v-if="item.orderStatus == '8'">退还商品</button>
+        <button class="_status" v-if="item.orderStatus == '8'">退款中</button>
         <button class="_status" v-if="item.orderStatus == '9'">已关闭</button>
 
         <label class="_time">{{item.orderTime}}</label>
