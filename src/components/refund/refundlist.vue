@@ -26,7 +26,8 @@
         <label class="num">x{{item.count}}</label>
       </p>
     </div>
-    <p style="color: red;margin: 0;text-align: left;padding-left: 10px">{{item.reason}}</p>
+    <p class="refund_reason" v-if="item.reasonrefund">{{item.reasonrefund}}</p>
+    <p class="refund_reason" v-if="item.reasonfh">{{item.reasonfh}}</p>
     <p class="refund_number">
       <label class="refund_font">订单号：</label>
       <label class="color_refund">{{item.orderNumber}}</label>
@@ -141,7 +142,7 @@ export default {
             } else {
               self.noData = "没有更多数据";
             }
-            self.$refs.myscroller.resize();
+            self.$refs.myscroller.resize(2);
             done();
           })
           .catch(err => {
@@ -214,6 +215,9 @@ formatGoodsCoin(value){
 </script>
 
 <style scoped>
+  .refund_reason{
+    color: red;margin: 0;text-align: left;padding-left: 10px
+  }
 .num {
   color: #999999;
   font-size: 11px;

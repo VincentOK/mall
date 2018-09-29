@@ -22,10 +22,18 @@ import 'swiper/dist/css/swiper.css'
 Vue.use(VueAwesomeSwiper);
 import VueScroller from 'vue-scroller'
 Vue.use(VueScroller)
+
+
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
+
+NProgress.configure({ease:'ease',speed:1000});
+
+
 Vue.config.productionTip = false;
 //获取用户ID
 (function() {
-    console.log("环境：" + process.env.NODE_ENV);
+  console.log("环境：" + process.env.NODE_ENV);
     // if(process.env.NODE_ENV == 'development'){
     //   JS.getAppUserIdTest(function (msg) {
     //     alert("测试："+msg);
@@ -84,11 +92,15 @@ Vue.config.productionTip = false;
     //使用钩子函数对路由进行权限跳转
     router.beforeEach((to, from, next) => {
         if (myuser && myuser != "undefined") {
+            NProgress.start();
             next();
         } else {
             alert("非法访问")
         }
-    })
+    });
+    router.afterEach(transition => {
+      NProgress.done();
+    });
 })();
 /* eslint-disable no-new */
 new Vue({
