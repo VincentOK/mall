@@ -1,7 +1,7 @@
 # shopping
 
 > A Vue.js project
-
+移动端商城
 ## Build Setup
 
 ``` bash

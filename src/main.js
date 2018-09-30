@@ -33,16 +33,8 @@ NProgress.configure({ease:'ease',speed:1000});
 Vue.config.productionTip = false;
 //获取用户ID
 (function() {
-  console.log("环境：" + process.env.NODE_ENV);
-    // if(process.env.NODE_ENV == 'development'){
-    //   JS.getAppUserIdTest(function (msg) {
-    //     alert("测试："+msg);
-    //     alert("获取用户id:"+JSON.parse(msg).userId);
-    //     alert("获取入口:"+JSON.parse(msg).entrance);
-    //     alert("用户手机类型:"+JSON.parse(msg).platform);
-    //   })
-    // }
-    if (process.env.NODE_ENV == 'production') { //development   //production
+     console.log("环境：" + process.env.NODE_ENV);
+    if (process.env.NODE_ENV == 'development') { //development   //production
         let yourString = JS.getAppUserId();
         let entrance = JS.getAppEntrance();
         alert("用户ID：" + yourString);
@@ -64,28 +56,6 @@ Vue.config.productionTip = false;
             JS.closeWebView();
             return false;
         }
-        /**
-         * 分割字符串
-         */
-        // if(yourString){
-        //   let result=yourString.split(",");
-        //   for(let i=0;i<result.length;i++){
-        //     console.log(result[i]);
-        //     if(i === 0 ){
-        //       alert("用户ID："+result[i]);
-        //       localStorage.setItem('user',result[i]);
-        //     }else if(i===1){
-        //       alert("获取入口："+result[i]);
-        //       localStorage.setItem('entrance',result[i]);
-        //     }else if(i === 2){
-        //       alert("用户手机类型："+result[i]);
-        //       localStorage.setItem('platform',result[i]);
-        //     }
-        //   }
-        // }else {
-        //   alert('获取用户id失败，请重新进入');
-        //   JS.closeWebView();
-        // }
     }
     let myuser = localStorage.getItem('user');
     console.log(myuser + "==========" + typeof(myuser));
