@@ -2,7 +2,7 @@
 <template>
   <div>
     <shoptitle :childTitleword="childTitleword"></shoptitle>
-    <div  v-touch:swiperight="_protypeJs.touchRight">
+    <div  v-touch:swiperight="_protypeJs.touchRight" v-if="whether_snaplist">
       <div class="snap_title">
         <label class="end_title" v-show="buttonStatus != 'pendding'">本轮抢购已结束，请等待下轮抢购开启</label>
         <label class="end_title" v-show="buttonStatus == 'pendding'">抢购中，先下单先得</label>
@@ -37,6 +37,10 @@
         </scroller>
       </div>
     </div>
+    <div v-else class="noDataTmp">
+      <img src="/static/img/noGoods.png" alt="">
+      <p>该专区即将上架商品，请耐心等待</p>
+    </div>
   </div>
 </template>
 
@@ -51,6 +55,7 @@ export default {
       noData: "",
       childTitleword: "限时抢购",
       snaplist: [],
+      whether_snaplist: true,
       startTime: "",
       endTime: "",
       endTimeChar: "距下轮开启",
@@ -62,6 +67,16 @@ export default {
   },
   components: {
     timeDown
+  },
+  mounted() {
+    let self = this;
+    getFlash(8, 1).then(res => {
+      if (res.list.dataList.length != 0) {
+        self.whether_snaplist = true
+      } else {
+        self.whether_snaplist = false
+      }
+    });
   },
   created() {
     this.isFirstEnter = true;
@@ -271,4 +286,5 @@ export default {
   color: white;
   border-radius: 5px;
 }
+
 </style>

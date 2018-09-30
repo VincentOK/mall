@@ -1,5 +1,5 @@
 <template>
-<div>
+<div v-if="whetherDisplay">
   <scroller  :on-infinite="infinite"  :on-refresh = "refresh" ref="myscroller" :height="_protypeJs.getScrollerHeight(80)" style="top: 80px">
     <div style="height: 1px;"></div>
   <div class="refundlist" v-for="(item,index) in refund_list" :key="index">
@@ -70,6 +70,10 @@
   <refund_dialog-view :checkStatus="checkStatus" v-on:childByValue="childByValue"  v-if="checkStatus_i"></refund_dialog-view>
   <refund_address-view v-if="drawback_i"  v-on:closeDialog="closeDialogs" :tenantPhone="tenantPhone" :tenantAddress="tenantAddress" :tenantContacts="tenantContacts"></refund_address-view>
 </div>
+<div v-else class="noDataTmp">
+      <img src="/static/img/noOrder.png" alt="">
+      <p>您尚无订单记录</p>
+    </div>
 </template>
 
 <script>
@@ -99,7 +103,8 @@ export default {
       platform: "",
       tenantContacts: String,
       tenantPhone: String,
-      tenantAddress: String
+      tenantAddress: String,
+      whetherDisplay:true,
     };
   },
   watch: {
@@ -111,7 +116,20 @@ export default {
     }
   },
   mounted() {
+    let self = this;
     this.platform = this._protypeJs.getPlatform("platform");
+    if(self.whetherDisplay){
+    getOrder(self.status, self._protypeJs.getUserId(), 1)
+      .then(res => {
+        if (res && res.length != 0) {
+          // self.$emit("whetherImg", true);
+          this.whetherDisplay = true
+        } else {
+          this.whetherDisplay = false
+          // self.$emit("whetherImg", false);
+        }
+      })
+      }
   },
   methods: {
     infinite(done) {
@@ -197,27 +215,30 @@ export default {
           console.log(err);
         });
     },
-    closeDialogs(value){
-      this.drawback_i = value
+    closeDialogs(value) {
+      this.drawback_i = value;
     },
-        /**
+    /**
      * 判断时间币与人民币格式
      **/
-formatGoodsCoin(value){
-    if (Boolean(value)) {
+    formatGoodsCoin(value) {
+      if (Boolean(value)) {
         return true;
-    } else {
+      } else {
         return false;
+      }
     }
-}
   }
 };
 </script>
 
 <style scoped>
-  .refund_reason{
-    color: red;margin: 0;text-align: left;padding-left: 10px
-  }
+.refund_reason {
+  color: red;
+  margin: 0;
+  text-align: left;
+  padding-left: 10px;
+}
 .num {
   color: #999999;
   font-size: 11px;
@@ -319,5 +340,17 @@ formatGoodsCoin(value){
   margin-top: 18px;
   color: #999999;
   font-size: 11px;
+}
+.noDataTmp {
+  margin-top: 140px;
+}
+.noDataTmp img {
+  display: inline-block;
+  width: 158px;
+  height: 130px;
+}
+.noDataTmp p {
+  font-size: 13px;
+  color: #999;
 }
 </style>
